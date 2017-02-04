@@ -18,13 +18,13 @@ public class CMinusScanner implements Scanner {
 
     public CMinusScanner (BufferedReader file) {
         inFile = file;
-        nextToken = nextToken.scanToken();
+        nextToken = scanToken();
     }
     @Override
     public Token getNextToken () {
         Token returnToken = nextToken;
         if (nextToken.viewType() != Token.TokenType.EOF_TOKEN)
-            nextToken = nextToken.scanToken();
+            nextToken = scanToken();
         return returnToken;
     }
     @Override
@@ -32,8 +32,9 @@ public class CMinusScanner implements Scanner {
         return nextToken;
     }
     
-    public BufferedReader getBuffRead(){
-        return inFile;
+    public Token scanToken(){
+        //TODO
+        return new Token(Token.TokenType.IF_TOKEN);//Garbage
     }
 }
 

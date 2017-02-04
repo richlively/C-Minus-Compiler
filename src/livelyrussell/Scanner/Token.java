@@ -11,12 +11,35 @@ package livelyrussell.Scanner;
  */
 public class Token {
     public enum TokenType {
-        INT_TOKEN,
-        DOUBLE_TOKEN,
-        IF_TOKEN,
-        EOF_TOKEN,
-        // TODO: rest of tokens ....
-    }
+        ELSE_TOKEN,         //else
+        IF_TOKEN,           //if
+        INT_TOKEN,          //int
+        RETURN_TOKEN,       //return
+        VOID_TOKEN,         //void
+        WHILE_TOKEN,        //while
+        EOF_TOKEN,          //EOF
+        PLUS_TOKEN,         //+
+        MINUS_TOKEN,        //-
+        MULT_TOKEN,         //*
+        DIV_TOKEN,          // /
+        GREATERTHAN_TOKEN,  //>
+        GREATEREQUAL_TOKEN, //>=
+        LESSTHAN_TOKEN,     //<
+        LESSEQUALS_TOKEN,   //<=
+        EQUALS_TOKEN,       //==
+        NOTEQUALS_TOKEN,    //!=
+        ASSIGN_TOKEN,       //=
+        SEMICOLON_TOKEN,    //;
+        COMMA_TOKEN,        //,
+        LEFTPAREN_TOKEN,    //(
+        RIGHTPAREN_TOKEN,   //)
+        LEFTSQUARE_TOKEN,   //[
+        RIGHTSQUARE_TOKEN,  //]
+        LEFTCURLY_TOKEN,    //{
+        RIGHTCURLY_TOKEN,   //}
+        COMMENTSTART_TOKEN, // /*
+        COMMENTEND_TOKEN,   // */
+        }
 
     private TokenType tokenType;
     private Object tokenData;
@@ -30,13 +53,11 @@ public class Token {
         this (type, null);
     }
 
-    public Token scanToken(){
-        //TODO
-        return new Token(TokenType.DOUBLE_TOKEN);//Garbage
-    }
-
     public TokenType viewType(){
-        //TODO
-        return TokenType.IF_TOKEN;//Garbage
+       return tokenType;
+    }
+    
+    public Object viewData(){
+        return tokenData;
     }
 }
