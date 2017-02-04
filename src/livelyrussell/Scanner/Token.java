@@ -11,35 +11,21 @@ package livelyrussell.Scanner;
  */
 public class Token {
     public enum TokenType {
-        ELSE_TOKEN,         //else
-        IF_TOKEN,           //if
-        INT_TOKEN,          //int
-        RETURN_TOKEN,       //return
-        VOID_TOKEN,         //void
-        WHILE_TOKEN,        //while
-        EOF_TOKEN,          //EOF
-        PLUS_TOKEN,         //+
-        MINUS_TOKEN,        //-
-        MULT_TOKEN,         //*
-        DIV_TOKEN,          // /
-        GREATERTHAN_TOKEN,  //>
-        GREATEREQUAL_TOKEN, //>=
-        LESSTHAN_TOKEN,     //<
-        LESSEQUALS_TOKEN,   //<=
-        EQUALS_TOKEN,       //==
-        NOTEQUALS_TOKEN,    //!=
-        ASSIGN_TOKEN,       //=
-        SEMICOLON_TOKEN,    //;
-        COMMA_TOKEN,        //,
-        LEFTPAREN_TOKEN,    //(
-        RIGHTPAREN_TOKEN,   //)
-        LEFTSQUARE_TOKEN,   //[
-        RIGHTSQUARE_TOKEN,  //]
-        LEFTCURLY_TOKEN,    //{
-        RIGHTCURLY_TOKEN,   //}
-        COMMENTSTART_TOKEN, // /*
-        COMMENTEND_TOKEN,   // */
-        }
+        //Bookkeeping tokens
+        EOF, ERROR, 
+        //Reserved words
+        ELSE, IF,INT,RETURN, VOID,WHILE,        
+        //Special Symbols
+        PLUS,MINUS,STAR,SLASH,ASSIGN,SEMICOLON,COMMA, 
+        //Comparators
+        GREATER_THAN, GREATER_EQUAL, LESS_THAN,
+        LESS_EQUAL,EQUAL,NOT_EQUALS, 
+        //Separators
+        LEFTPAREN, RIGHTPAREN, LEFTSQUARE, RIGHTSQUARE, 
+        LEFTCURLY,RIGHTCURLY,
+        //Multicharacter token
+        ID, NUM, 
+    }
 
     private TokenType tokenType;
     private Object tokenData;

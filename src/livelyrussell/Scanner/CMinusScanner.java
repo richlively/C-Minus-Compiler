@@ -23,7 +23,7 @@ public class CMinusScanner implements Scanner {
     @Override
     public Token getNextToken () {
         Token returnToken = nextToken;
-        if (nextToken.viewType() != Token.TokenType.EOF_TOKEN)
+        if (nextToken.viewType() != Token.TokenType.EOF)
             nextToken = scanToken();
         return returnToken;
     }
@@ -34,7 +34,7 @@ public class CMinusScanner implements Scanner {
     
     public Token scanToken(){
         //TODO
-        return new Token(Token.TokenType.IF_TOKEN);//Garbage
+        return new Token(Token.TokenType.IF);//Garbage
     }
 }
 
