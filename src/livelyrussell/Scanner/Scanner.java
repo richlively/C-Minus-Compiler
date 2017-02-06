@@ -5,13 +5,15 @@
  */
 package livelyrussell.Scanner;
 
+import java.io.IOException;
+
 /**
  *
  * @author Jesse
  */
 public interface Scanner {
 
-    public Token getNextToken ();
+    public Token getNextToken() throws IOException;
     public Token viewNextToken ();
     
 }

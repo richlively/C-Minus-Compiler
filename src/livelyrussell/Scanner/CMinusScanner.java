@@ -235,6 +235,21 @@ public class CMinusScanner implements Scanner {
             
             if(save){
                 if(state == State.IN_NUM){
+                    if(isDigit(c)){
+                       String temp = (String) token.viewData();
+                       token.setData((Object) (temp + String.valueOf(c)));
+                    }else{
+                        inFile.reset();
+                    }
+                }else if(state == State.IN_ID){
+                    if(isLetter(c)){
+                        String temp = (String) token.viewData();
+                        token.setData((Object) (temp + String.valueOf(c)));
+                    }
+                    else{
+                        inFile.reset();
+                    }
+                }else if(state == State.IN_LT){
                     
                 }
             }

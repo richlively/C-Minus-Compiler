@@ -10,40 +10,49 @@ package livelyrussell.Scanner;
  * @author Jesse
  */
 public class Token {
+
     public enum TokenType {
         //Bookkeeping tokens
-        EOF, ERROR, 
+        EOF, ERROR,
         //Reserved words
-        ELSE, IF,INT,RETURN, VOID,WHILE,        
+        ELSE, IF, INT, RETURN, VOID, WHILE,
         //Special Symbols
-        PLUS,MINUS,STAR,SLASH,ASSIGN,SEMICOLON,COMMA, 
+        PLUS, MINUS, STAR, SLASH, ASSIGN, SEMICOLON, COMMA,
         //Comparators
         GREATER_THAN, GREATER_EQUAL, LESS_THAN,
-        LESS_EQUAL,EQUAL,NOT_EQUALS, 
+        LESS_EQUAL, EQUAL, NOT_EQUALS,
         //Separators
-        LEFTPAREN, RIGHTPAREN, LEFTSQUARE, RIGHTSQUARE, 
-        LEFTCURLY,RIGHTCURLY,
+        LEFTPAREN, RIGHTPAREN, LEFTSQUARE, RIGHTSQUARE,
+        LEFTCURLY, RIGHTCURLY,
         //Multicharacter token
-        ID, NUM, 
+        ID, NUM,
     }
 
     private TokenType tokenType;
     private Object tokenData;
-        
-    public Token (TokenType type, Object data) {
+
+    public Token(TokenType type, Object data) {
         tokenType = type;
         tokenData = data;
     }
-    
-    public Token (TokenType type) {
-        this (type, null);
+
+    public Token(TokenType type) {
+        this(type, null);
     }
 
-    public TokenType viewType(){
-       return tokenType;
+    public TokenType viewType() {
+        return tokenType;
     }
-    
-    public Object viewData(){
+
+    public Object viewData() {
         return tokenData;
+    }
+
+    public void setType(TokenType t) {
+        tokenType = t;
+    }
+
+    public void setData(Object o) {
+        tokenData = o;
     }
 }
