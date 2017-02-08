@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Jesse
+ * @author Jesse and Rich
  */
 public class CMinusScanner implements Scanner {
 
@@ -31,6 +31,7 @@ public class CMinusScanner implements Scanner {
     private Token nextToken;
     private final static char EOF = (char) -1;
     private static HashMap map = new HashMap();
+    private int lineNo = 1;
 
     private enum State {
         //Movement
@@ -47,10 +48,6 @@ public class CMinusScanner implements Scanner {
         
         inFile = file;
         outFile = new File("output.txt");
-        //remove old stuff
-        PrintStream ps = new PrintStream(outFile);
-        ps.print("");
-        ps.close();
 
         map.put("else", Token.TokenType.ELSE);
         map.put("if", Token.TokenType.IF);
@@ -95,6 +92,9 @@ public class CMinusScanner implements Scanner {
                 case START:
                     if (isWhitespace(c)) {
                         save = false;
+                        if(c=='\n') {
+                            lineNo++;
+                        }
                         break;
                     } else if (isDigit(c)) {
                         state = State.IN_NUM;
@@ -233,6 +233,9 @@ public class CMinusScanner implements Scanner {
                     if (c == '*') {
                         state = State.IN_COM2;
                     }
+                    if(c=='\n') {
+                            lineNo++;
+                        }
                     break;
                 case IN_COM2:
                     save = false;
@@ -243,6 +246,8 @@ public class CMinusScanner implements Scanner {
                         case '*':
                             state = State.IN_COM2;
                             break;
+                        case '\n':
+                            lineNo++;
                         default:
                             state = State.IN_COM1;
                             break;
@@ -277,7 +282,11 @@ public class CMinusScanner implements Scanner {
                 }
             }
         }
-
+        FileOutputStream fos = new FileOutputStream(outFile, true);
+        PrintStream ps = new PrintStream(fos);
+        ps.print(lineNo + ": ");
+        ps.close();
+        printToken(token);
         return token;
     }
 
@@ -294,43 +303,43 @@ public class CMinusScanner implements Scanner {
                 ps.printf("reserved word: %s\r\n", token.viewData());
                 break;
             case PLUS:
-                ps.printf("+\r\n");
+                ps.printf("operator: +\r\n");
                 break;
             case MINUS:
-                ps.printf("-\r\n");
+                ps.printf("operator: -\r\n");
                 break;
             case STAR:
-                ps.printf("*\r\n");
+                ps.printf("operator: *\r\n");
                 break;
             case SLASH:
-                ps.printf("/\r\n");
+                ps.printf("operator: /\r\n");
                 break;
             case ASSIGN:
-                ps.printf("=\r\n");
+                ps.printf("operator: =\r\n");
                 break;
             case SEMICOLON:
-                ps.printf(";\r\n");
+                ps.printf("\t;\r\n");
                 break;
             case COMMA:
-                ps.printf(",\r\n");
+                ps.printf("\t,\r\n");
                 break;
             case GREATER_THAN:
-                ps.printf(">\r\n");
+                ps.printf("operator: >\r\n");
                 break;
             case GREATER_EQUAL:
-                ps.printf(">=\r\n");
+                ps.printf("operator: >=\r\n");
                 break;
             case LESS_THAN:
-                ps.printf("<\r\n");
+                ps.printf("operator: <\r\n");
                 break;
             case LESS_EQUAL:
-                ps.printf("<=\r\n");
+                ps.printf("operator: <=\r\n");
                 break;
             case EQUAL:
-                ps.printf("==\r\n");
+                ps.printf("operator: ==\r\n");
                 break;
             case NOT_EQUALS:
-                ps.printf("!=\r\n");
+                ps.printf("operator: !=\r\n");
                 break;
             case LEFTPAREN:
                 ps.printf("(\r\n");
@@ -383,11 +392,21 @@ public class CMinusScanner implements Scanner {
             file = new BufferedReader(new FileReader(filename));
 
             CMinusScanner cms = new CMinusScanner(file);
+            
+            PrintStream ps = new PrintStream(new FileOutputStream(cms.outFile, false));
+            ps.printf("C- Compiler Lex Debug Output: %s\r\n\r\n", filename);
+            ps.close();
+            
             while (cms.viewNextToken().viewType() != Token.TokenType.EOF) {
-                cms.printToken(cms.getNextToken());
+                //cms.printToken(cms.getNextToken());
+                cms.getNextToken();
             }
 
-        } catch (IOException ex) {
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("The file " + filename + " could not be found.");
+        } 
+        
+        catch (IOException ex) {
             Logger.getLogger(CMinusScanner.class
                     .getName()).log(Level.SEVERE, null, ex);
         }

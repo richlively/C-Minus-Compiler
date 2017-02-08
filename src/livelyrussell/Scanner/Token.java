@@ -7,7 +7,7 @@ package livelyrussell.Scanner;
 
 /**
  *
- * @author Jesse
+ * @author Jesse and Rich
  */
 public class Token {
 

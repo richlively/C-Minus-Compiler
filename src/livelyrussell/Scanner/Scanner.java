@@ -9,7 +9,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Jesse
+ * @author Jesse and Rich
  */
 public interface Scanner {
 
