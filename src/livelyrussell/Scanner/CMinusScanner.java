@@ -66,7 +66,7 @@ public class CMinusScanner implements Scanner {
         
         //overwrite output file with introductory line
         PrintStream ps = new PrintStream(new FileOutputStream(outFile, false));
-        ps.printf("C- Compiler Lex Debug Output\r\n\r\n", filename);
+        ps.printf("C- Compiler Lex Debug Output: %s\r\n\r\n", filename);
         ps.close();
         
         nextToken = scanToken();
@@ -207,58 +207,56 @@ public class CMinusScanner implements Scanner {
                     if (c == '=') {
                         // !=
                         type = Token.TokenType.NOT_EQUALS;
-                        state = State.DONE;
                     } else {
-                        // !
+                        // ! Error
                         inFile.reset();
                         save = false;
                         type = Token.TokenType.ERROR;
                     }
+                    state = State.DONE;
                     break;
                 case IN_ASSIGN:
                     if (c == '=') {
                         // ==
                         type = Token.TokenType.EQUAL;
-                        state = State.DONE;
                     } else {
                         // =
                         inFile.reset();
                         save = false;
                         type = Token.TokenType.ASSIGN;
-                        state = State.DONE;
                     }
+                    state = State.DONE;
                     break;
                 case IN_GT:
                     if (c == '=') {
                         // >=
                         type = Token.TokenType.GREATER_EQUAL;
-                        state = State.DONE;
                     } else {
                         // >
                         inFile.reset();
                         save = false;
                         type = Token.TokenType.GREATER_THAN;
-                        state = State.DONE;
                     }
+                    state = State.DONE;
                     break;
                 case IN_LT:
                     if (c == '=') {
                         // <=
                         type = Token.TokenType.LESS_EQUAL;
-                        state = State.DONE;
                     } else {
                         // <
                         inFile.reset();
                         save = false;
                         type = Token.TokenType.LESS_THAN;
-                        state = State.DONE;
                     }
+                    state = State.DONE;
                     break;
                 case IN_SLASH:
                     if (c == '*') {
                         //beginning of comment
                         state = State.IN_COM1;
                         save = false;
+                        //clear any data that was in the token
                         token.setData(null);
                     } else {
                         // a '/' token
@@ -274,13 +272,18 @@ public class CMinusScanner implements Scanner {
                  */
                 case IN_COM1:
                     save = false;
-                    if (c == '*') {
+                    if (c=='*') {
                         state = State.IN_COM2;
                     }
                     //used for print function
-                    if(c=='\n') {
+                    else if(c=='\n') {
                             lineNo++;
-                        }
+                    }
+                    //handles a non-closing comment
+                    else if(c==EOF) {
+                        inFile.reset();
+                        state = State.START;
+                    }
                     break;
                 /*
                  * determines if the comment actually ended, could end,
@@ -296,6 +299,11 @@ public class CMinusScanner implements Scanner {
                         case '*':
                             //stay in state
                             state = State.IN_COM2;
+                            break;
+                        case EOF:
+                            //handles a non-closing comment
+                            inFile.reset();
+                            state = State.START;
                             break;
                         //used for print function
                         case '\n':
