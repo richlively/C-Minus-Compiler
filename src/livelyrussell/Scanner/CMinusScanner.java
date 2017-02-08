@@ -8,13 +8,11 @@ package livelyrussell.Scanner;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import static java.lang.Character.isDigit;
-import static java.lang.Character.isLetter;
-import static java.lang.Character.isWhitespace;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 import static java.lang.Character.isWhitespace;
@@ -46,9 +44,13 @@ public class CMinusScanner implements Scanner {
     }
 
     public CMinusScanner(BufferedReader file) throws IOException {
+        
         inFile = file;
-        nextToken = scanToken();
         outFile = new File("output.txt");
+        //remove old stuff
+        PrintStream ps = new PrintStream(outFile);
+        ps.print("");
+        ps.close();
 
         map.put("else", Token.TokenType.ELSE);
         map.put("if", Token.TokenType.IF);
@@ -56,6 +58,8 @@ public class CMinusScanner implements Scanner {
         map.put("return", Token.TokenType.RETURN);
         map.put("void", Token.TokenType.VOID);
         map.put("while", Token.TokenType.WHILE);
+        
+        nextToken = scanToken();
     }
 
     @Override
@@ -77,7 +81,7 @@ public class CMinusScanner implements Scanner {
         State state = State.START;
         Token.TokenType type = Token.TokenType.ERROR;
         //Default token type should be changed later on.
-        Token token = new Token(Token.TokenType.ERROR);
+        Token token = new Token(type);
         boolean save;
         while (state != State.DONE) {
             save = true;
@@ -90,6 +94,7 @@ public class CMinusScanner implements Scanner {
             switch (state) {
                 case START:
                     if (isWhitespace(c)) {
+                        save = false;
                         break;
                     } else if (isDigit(c)) {
                         state = State.IN_NUM;
@@ -252,10 +257,11 @@ public class CMinusScanner implements Scanner {
             }
 
             if (save) {
-                String temp;
-                temp = (String) token.viewData();
+                String temp = (String) token.viewData();
+                if (temp == null) {
+                    temp = "";
+                }
                 token.setData((Object) (temp + String.valueOf(c)));
-                break;
             }
             if (state == State.DONE) {
                 token.setType(type);
@@ -275,8 +281,9 @@ public class CMinusScanner implements Scanner {
         return token;
     }
 
-    private void printToken(Token token) throws FileNotFoundException {
-        PrintStream ps = new PrintStream(outFile);
+    private void printToken(Token token) throws FileNotFoundException, IOException {
+        FileOutputStream fos = new FileOutputStream(outFile, true);
+        PrintStream ps = new PrintStream(fos);
         switch (token.viewType()) {
             case IF:
             case ELSE:
@@ -284,56 +291,83 @@ public class CMinusScanner implements Scanner {
             case RETURN:
             case VOID:
             case WHILE:
-                ps.printf("reserved word: %s\n", token.viewData());
+                ps.printf("reserved word: %s\r\n", token.viewData());
+                break;
             case PLUS:
-                ps.printf("+\n");
+                ps.printf("+\r\n");
+                break;
             case MINUS:
-                ps.printf("-\n");
+                ps.printf("-\r\n");
+                break;
             case STAR:
-                ps.printf("*\n");
+                ps.printf("*\r\n");
+                break;
             case SLASH:
-                ps.printf("/\n");
+                ps.printf("/\r\n");
+                break;
             case ASSIGN:
-                ps.printf("=\n");
+                ps.printf("=\r\n");
+                break;
             case SEMICOLON:
-                ps.printf(";\n");
+                ps.printf(";\r\n");
+                break;
             case COMMA:
-                ps.printf(",\n");
+                ps.printf(",\r\n");
+                break;
             case GREATER_THAN:
-                ps.printf(">\n");
+                ps.printf(">\r\n");
+                break;
             case GREATER_EQUAL:
-                ps.printf(">=\n");
+                ps.printf(">=\r\n");
+                break;
             case LESS_THAN:
-                ps.printf("<\n");
+                ps.printf("<\r\n");
+                break;
             case LESS_EQUAL:
-                ps.printf("<=\n");
+                ps.printf("<=\r\n");
+                break;
             case EQUAL:
-                ps.printf("==\n");
+                ps.printf("==\r\n");
+                break;
             case NOT_EQUALS:
-                ps.printf("!=\n");
+                ps.printf("!=\r\n");
+                break;
             case LEFTPAREN:
-                ps.printf("(\n");
+                ps.printf("(\r\n");
+                break;
             case RIGHTPAREN:
-                ps.printf(")\n");
+                ps.printf(")\r\n");
+                break;
             case LEFTSQUARE:
-                ps.printf("[\n");
+                ps.printf("[\r\n");
+                break;
             case RIGHTSQUARE:
-                ps.printf("]\n");
+                ps.printf("]\r\n");
+                break;
             case LEFTCURLY:
-                ps.printf("{\n");
+                ps.printf("{\r\n");
+                break;
             case RIGHTCURLY:
-                ps.printf("}\n");
+                ps.printf("}\r\n");
+                break;
             case ID:
-                ps.printf("ID, name = %s\n", token.viewData());
+                ps.printf("ID, name = %s\r\n", token.viewData());
+                break;
             case NUM:
-                ps.printf("NUM, value = %i\n", token.viewData());
+                ps.printf("NUM, value = %d\r\n", token.viewData());
+                break;
             case ERROR:
-                ps.printf("ERROR: %s\n", token.viewData());
+                ps.printf("ERROR: %s\r\n", token.viewData());
+                break;
             case EOF:
                 ps.printf("EOF");
+                break;
             default:
                 ps.printf("wat");
+                break;
         }
+        ps.close();
+        fos.close();
     }
 
     public static void main(String args[]) {
