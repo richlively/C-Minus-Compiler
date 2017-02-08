@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package livelyrussell.Scanner;
 
 /**
- *
- * @author Jesse and Rich
+ * @author Jesse Russel
+ * @author Rich Lively
+ * @date Feb. 7, 2017
+ * Object representation of a lexical token for use in a scanner
  */
 public class Token {
 
