@@ -48,10 +48,11 @@ public class CMinusScanner implements Scanner {
 
     /**
      * Constructs the C- Scanner and automatically scans the first token.
-     * @param file that will be scanned
+     * @param file BufferedReader for file that will be scanned
+     * @param filename for the input file
      * @throws IOException 
      */
-    public CMinusScanner(BufferedReader file) throws IOException {
+    public CMinusScanner(BufferedReader file, String filename) throws IOException {
         inFile = file;
         outFile = new File("output.txt");
 
@@ -62,6 +63,11 @@ public class CMinusScanner implements Scanner {
         keywords.put("return", Token.TokenType.RETURN);
         keywords.put("void", Token.TokenType.VOID);
         keywords.put("while", Token.TokenType.WHILE);
+        
+        //overwrite output file with introductory line
+        PrintStream ps = new PrintStream(new FileOutputStream(outFile, false));
+        ps.printf("C- Compiler Lex Debug Output\r\n\r\n", filename);
+        ps.close();
         
         nextToken = scanToken();
     }
@@ -459,12 +465,7 @@ public class CMinusScanner implements Scanner {
             //create buffered reader BufferedReader file;
             file = new BufferedReader(new FileReader(filename));
 
-            CMinusScanner cms = new CMinusScanner(file);
-            
-            //overwrite output file with introductory line
-            PrintStream ps = new PrintStream(new FileOutputStream(cms.outFile, false));
-            ps.printf("C- Compiler Lex Debug Output: %s\r\n\r\n", filename);
-            ps.close();
+            CMinusScanner cms = new CMinusScanner(file, filename);
             
             //get all tokens
             while (cms.viewNextToken().viewType() != Token.TokenType.EOF) {
