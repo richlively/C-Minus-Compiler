@@ -18,16 +18,16 @@ import java.util.logging.Logger;
 /**
  * @author Jesse Russel
  * @author Rich Lively
- * @date Feb. 7, 2017
- * CMinusScanner.java
- * This class provides an implementation of a C- lexical scanner.
- * The state DFA was designed by hand.
+ * @date Feb. 7, 2017 CMinusScanner.java This class provides an implementation
+ * of a C- lexical scanner. The state DFA was designed by hand.
  */
 public class CMinusScanner implements Scanner {
+
     //objects for file i/o
+
     private BufferedReader inFile;
     private File outFile;
-    
+
     private final static char EOF = (char) -1;
     private int lineNo = 1;
     //look-up of C- keywords
@@ -36,7 +36,9 @@ public class CMinusScanner implements Scanner {
     private Token nextToken;
 
     private enum State {
+
         //Movement
+
         START, DONE,
         //Midway states
         IN_NUM, IN_ID,
@@ -48,9 +50,10 @@ public class CMinusScanner implements Scanner {
 
     /**
      * Constructs the C- Scanner and automatically scans the first token.
+     *
      * @param file BufferedReader for file that will be scanned
      * @param filename for the input file
-     * @throws IOException 
+     * @throws IOException
      */
     public CMinusScanner(BufferedReader file, String filename) throws IOException {
         inFile = file;
@@ -63,19 +66,20 @@ public class CMinusScanner implements Scanner {
         keywords.put("return", Token.TokenType.RETURN);
         keywords.put("void", Token.TokenType.VOID);
         keywords.put("while", Token.TokenType.WHILE);
-        
+
         //overwrite output file with introductory line
         PrintStream ps = new PrintStream(new FileOutputStream(outFile, false));
         ps.printf("C- Compiler Lex Debug Output: %s\r\n\r\n", filename);
         ps.close();
-        
+
         nextToken = scanToken();
     }
 
     /**
      * Returns the next token and automatically looks-ahead at the next token
+     *
      * @return the next token
-     * @throws IOException 
+     * @throws IOException
      */
     @Override
     public Token getNextToken() throws IOException {
@@ -88,6 +92,7 @@ public class CMinusScanner implements Scanner {
 
     /**
      * Return the next token without the look-ahead
+     *
      * @return the next token
      */
     @Override
@@ -97,8 +102,9 @@ public class CMinusScanner implements Scanner {
 
     /**
      * Scans and prints a complete, lexical token
+     *
      * @return the token scanned
-     * @throws IOException 
+     * @throws IOException
      */
     private Token scanToken() throws IOException {
         State state = State.START;
@@ -119,7 +125,7 @@ public class CMinusScanner implements Scanner {
                     if (isWhitespace(c)) {
                         save = false;
                         //used for print function
-                        if(c=='\n') {
+                        if (c == '\n') {
                             lineNo++;
                         }
                         break;
@@ -185,13 +191,20 @@ public class CMinusScanner implements Scanner {
                     }
                     break;
 
+                    //TODO: make sure there is whitespace between NUM and ID
+                    //i.e. xyz123 or 123xyz should be an error token
                 case IN_NUM:
                     if (!isDigit(c)) {
-                        //"unget" the character
-                        inFile.reset();
-                        save = false;
-                        state = State.DONE;
-                        type = Token.TokenType.NUM;
+                        if (isWhitespace(c)) {
+                            //"unget" the character
+                            inFile.reset();
+                            save = false;
+                            state = State.DONE;
+                            type = Token.TokenType.NUM;
+                        }
+                        else {
+                            //type = Toke
+                        }
                     }
                     break;
                 case IN_ID:
@@ -272,15 +285,13 @@ public class CMinusScanner implements Scanner {
                  */
                 case IN_COM1:
                     save = false;
-                    if (c=='*') {
+                    if (c == '*') {
                         state = State.IN_COM2;
-                    }
-                    //used for print function
-                    else if(c=='\n') {
-                            lineNo++;
-                    }
-                    //handles a non-closing comment
-                    else if(c==EOF) {
+                    } //used for print function
+                    else if (c == '\n') {
+                        lineNo++;
+                    } //handles a non-closing comment
+                    else if (c == EOF) {
                         inFile.reset();
                         state = State.START;
                     }
@@ -353,12 +364,13 @@ public class CMinusScanner implements Scanner {
         ps.print(lineNo + ": ");
         ps.close();
         printToken(token);
-        
+
         return token;
     }
 
     /**
      * Prints the token in the correct format based on its type
+     *
      * @param token
      * @throws FileNotFoundException
      * @throws IOException
@@ -459,7 +471,8 @@ public class CMinusScanner implements Scanner {
 
     /**
      * Uses the scanner to scan all the tokens from an input file
-     * @param args 
+     *
+     * @param args
      */
     public static void main(String args[]) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -474,7 +487,7 @@ public class CMinusScanner implements Scanner {
             file = new BufferedReader(new FileReader(filename));
 
             CMinusScanner cms = new CMinusScanner(file, filename);
-            
+
             //get all tokens
             while (cms.viewNextToken().viewType() != Token.TokenType.EOF) {
                 cms.getNextToken();
@@ -482,9 +495,7 @@ public class CMinusScanner implements Scanner {
 
         } catch (FileNotFoundException fnfe) {
             System.out.println("The file " + filename + " could not be found.");
-        } 
-        
-        catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(CMinusScanner.class
                     .getName()).log(Level.SEVERE, null, ex);
         }

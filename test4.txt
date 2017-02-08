@@ -1,0 +1,10 @@
+/*this code purposely has bad tokens*/
+
+void main($){
+	int[] x1;
+	int 2y;
+	iffy here
+	if x ! 3
+	if x != 3;
+	/* oops I forgot to close this comment
+}
