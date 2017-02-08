@@ -1,4 +1,4 @@
-C- Compiler Lex Debug Output
+C- Compiler Lex Debug Output: test1.txt
 
 4: reserved word: int
 4: ID, name = gcd

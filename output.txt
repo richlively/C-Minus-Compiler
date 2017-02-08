@@ -9,22 +9,23 @@ C- Compiler Lex Debug Output: test4.txt
 4: reserved word: int
 4: [
 4: ]
-4: ID, name = x
-4: NUM, value = 1
+4: ERROR: abc1
+4: NUM, value = 23
 4: ;
 5: reserved word: int
-5: NUM, value = 2
-5: ID, name = y
+5: ERROR: 987z
+5: ID, name = yx
 5: ;
 6: ID, name = iffy
-6: ID, name = here
+6: ID, name = returnit
 7: reserved word: if
 7: ID, name = x
 7: ERROR: !
 7: NUM, value = 3
-8: reserved word: if
+8: reserved word: else
 8: ID, name = x
 8: operator: !=
 8: NUM, value = 3
 8: ;
-10: EOF
+9: reserved word: return
+12: EOF

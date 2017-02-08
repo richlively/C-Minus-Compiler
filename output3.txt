@@ -1,4 +1,4 @@
-C- Compiler Lex Debug Output
+C- Compiler Lex Debug Output: test3.txt
 
 6: reserved word: void
 6: ID, name = main
