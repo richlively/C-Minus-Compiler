@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 public class CMinusScanner implements Scanner {
 
     //objects for file i/o
-
     private BufferedReader inFile;
     private File outFile;
 
@@ -38,7 +37,6 @@ public class CMinusScanner implements Scanner {
     private enum State {
 
         //Movement
-
         START, DONE,
         //Midway states
         IN_NUM, IN_ID,
@@ -191,29 +189,36 @@ public class CMinusScanner implements Scanner {
                     }
                     break;
 
-                    //TODO: make sure there is whitespace between NUM and ID
-                    //i.e. xyz123 or 123xyz should be an error token
+                //TODO: make sure there is whitespace between NUM and ID
+                //i.e. xyz123 or 123xyz should be an error token
                 case IN_NUM:
                     if (!isDigit(c)) {
-                        if (isWhitespace(c)) {
+                        state = State.DONE;
+                        //a number cannot have a letter; lexical error
+                        if (isLetter(c)) {
+                            type = Token.TokenType.ERROR;
+                        } //start of a new token
+                        else {
                             //"unget" the character
                             inFile.reset();
                             save = false;
-                            state = State.DONE;
                             type = Token.TokenType.NUM;
-                        }
-                        else {
-                            //type = Toke
                         }
                     }
                     break;
                 case IN_ID:
                     if (!isLetter(c)) {
-                        //"unget" the character
-                        inFile.reset();
-                        save = false;
                         state = State.DONE;
-                        type = Token.TokenType.ID;
+                        //an ID cannot have a digit; lexical error
+                        if (isDigit(c)) {
+                            type = Token.TokenType.ERROR;
+                        } //start of a new token
+                        else {
+                            //"unget" the character
+                            inFile.reset();
+                            save = false;
+                            type = Token.TokenType.ID;
+                        }
                     }
                     break;
                 case IN_NOT:
