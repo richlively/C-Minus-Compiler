@@ -373,7 +373,7 @@ public class CMinusScanner implements Scanner {
             //create buffered reader BufferedReader file;
             file = new BufferedReader(new FileReader(filename));
 
-            CMinusScannerb cms = new CMinusScannerb(file);
+            CMinusScannerb cms = new CMinusScannerb(file, filename);
 
             //get all tokens
             while (cms.viewNextToken().viewType() != Token.TokenType.EOF) {
