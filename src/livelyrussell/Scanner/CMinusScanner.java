@@ -13,9 +13,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import static java.lang.Character.isDigit;
-import static java.lang.Character.isLetter;
-import static java.lang.Character.isWhitespace;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +24,7 @@ import static java.lang.Character.isWhitespace;
  *
  * @author Jesse and Rich
  */
-public class CMinusScannerb implements Scanner {
+public class CMinusScanner implements Scanner {
 
     private BufferedReader inFile;
     private File outFile;
@@ -47,8 +44,8 @@ public class CMinusScannerb implements Scanner {
         IN_COM1, IN_COM2
     }
 
-    public CMinusScannerb(BufferedReader file) throws IOException {
-        
+    public CMinusScanner(BufferedReader file) throws IOException {
+
         inFile = file;
         outFile = new File("output.txt");
 
@@ -58,7 +55,7 @@ public class CMinusScannerb implements Scanner {
         map.put("return", Token.TokenType.RETURN);
         map.put("void", Token.TokenType.VOID);
         map.put("while", Token.TokenType.WHILE);
-        
+
         nextToken = scanToken();
     }
 
@@ -95,7 +92,7 @@ public class CMinusScannerb implements Scanner {
                 case START:
                     if (isWhitespace(c)) {
                         save = false;
-                        if(c=='\n') {
+                        if (c == '\n') {
                             lineNo++;
                         }
                         break;
@@ -236,9 +233,9 @@ public class CMinusScannerb implements Scanner {
                     if (c == '*') {
                         state = State.IN_COM2;
                     }
-                    if(c=='\n') {
-                            lineNo++;
-                        }
+                    if (c == '\n') {
+                        lineNo++;
+                    }
                     break;
                 case IN_COM2:
                     save = false;
@@ -394,12 +391,12 @@ public class CMinusScannerb implements Scanner {
             //create buffered reader BufferedReader file;
             file = new BufferedReader(new FileReader(filename));
 
-            CMinusScannerb cms = new CMinusScannerb(file);
-            
+            CMinusScanner cms = new CMinusScanner(file);
+
             PrintStream ps = new PrintStream(new FileOutputStream(cms.outFile, false));
             ps.printf("C- Compiler Lex Debug Output: %s\r\n\r\n", filename);
             ps.close();
-            
+
             while (cms.viewNextToken().viewType() != Token.TokenType.EOF) {
                 //cms.printToken(cms.getNextToken());
                 cms.getNextToken();
@@ -407,10 +404,8 @@ public class CMinusScannerb implements Scanner {
 
         } catch (FileNotFoundException fnfe) {
             System.out.println("The file " + filename + " could not be found.");
-        } 
-        
-        catch (IOException ex) {
-            Logger.getLogger(CMinusScannerb.class
+        } catch (IOException ex) {
+            Logger.getLogger(CMinusScanner.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
