@@ -8,12 +8,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import static java.lang.Character.isDigit;
-import static java.lang.Character.isLetter;
-import static java.lang.Character.isWhitespace;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isLetter;
+import static java.lang.Character.isWhitespace;
 
 /**
  * @author Jesse Russel
@@ -24,12 +24,12 @@ import java.util.logging.Logger;
 public class CMinusScanner implements Scanner {
 
     //objects for file i/o
-    private BufferedReader inFile;
-    private static File outFile;
+    private final BufferedReader inFile;
+    private static final File OUT_FILE = new File("output.txt");
 
     private final static char EOF = (char) -1;
     //look-up of C- keywords
-    private static final HashMap keywords = new HashMap();
+    private static final HashMap KEYWORDS = new HashMap();
     //stores what the next token will be for look-ahead behavior
     private Token nextToken;
 
@@ -54,18 +54,17 @@ public class CMinusScanner implements Scanner {
      */
     public CMinusScanner(BufferedReader file, String filename) throws IOException {
         inFile = file;
-        outFile = new File("output.txt");
 
         //key: string representation of token, value: actual token type
-        keywords.put("else", Token.TokenType.ELSE);
-        keywords.put("if", Token.TokenType.IF);
-        keywords.put("int", Token.TokenType.INT);
-        keywords.put("return", Token.TokenType.RETURN);
-        keywords.put("void", Token.TokenType.VOID);
-        keywords.put("while", Token.TokenType.WHILE);
+        KEYWORDS.put("else", Token.TokenType.ELSE);
+        KEYWORDS.put("if", Token.TokenType.IF);
+        KEYWORDS.put("int", Token.TokenType.INT);
+        KEYWORDS.put("return", Token.TokenType.RETURN);
+        KEYWORDS.put("void", Token.TokenType.VOID);
+        KEYWORDS.put("while", Token.TokenType.WHILE);
 
         //overwrite output file with introductory line
-        PrintStream ps = new PrintStream(new FileOutputStream(outFile, false));
+        PrintStream ps = new PrintStream(new FileOutputStream(OUT_FILE, false));
         ps.printf("C- Compiler Lex Debug Output: %s\r\n\r\n", filename);
         ps.close();
 
@@ -343,7 +342,7 @@ public class CMinusScanner implements Scanner {
                     Integer number = Integer.parseInt((String) data);
                     token.setData(number);
                 } else if (token.viewType() == Token.TokenType.ID) {
-                    type = (Token.TokenType) keywords.get((String) data);
+                    type = (Token.TokenType) KEYWORDS.get((String) data);
                     //if the ID is actually a keyword, set it to the correct type
                     if (type != null) {
                         token.setType(type);
@@ -379,7 +378,7 @@ public class CMinusScanner implements Scanner {
             //get all tokens
             while (cms.viewNextToken().viewType() != Token.TokenType.EOF) {
                 Token tok = cms.getNextToken();
-                tok.printToken(outFile);
+                tok.printToken(OUT_FILE);
             }
 
         } catch (FileNotFoundException fnfe) {
