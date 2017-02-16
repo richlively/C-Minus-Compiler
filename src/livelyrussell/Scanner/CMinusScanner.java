@@ -25,10 +25,9 @@ public class CMinusScanner implements Scanner {
 
     //objects for file i/o
     private BufferedReader inFile;
-    private File outFile;
+    private static File outFile;
 
     private final static char EOF = (char) -1;
-    private int lineNo = 1;
     //look-up of C- keywords
     private static final HashMap keywords = new HashMap();
     //stores what the next token will be for look-ahead behavior
@@ -122,10 +121,6 @@ public class CMinusScanner implements Scanner {
                 case START:
                     if (isWhitespace(c)) {
                         save = false;
-                        //used for print function
-                        if (c == '\n') {
-                            lineNo++;
-                        }
                         break;
                     } else if (isDigit(c)) {
                         state = State.IN_NUM;
@@ -292,9 +287,6 @@ public class CMinusScanner implements Scanner {
                     save = false;
                     if (c == '*') {
                         state = State.IN_COM2;
-                    } //used for print function
-                    else if (c == '\n') {
-                        lineNo++;
                     } //handles a non-closing comment
                     else if (c == EOF) {
                         inFile.reset();
@@ -321,9 +313,6 @@ public class CMinusScanner implements Scanner {
                             inFile.reset();
                             state = State.START;
                             break;
-                        //used for print function
-                        case '\n':
-                            lineNo++;
                         default:
                             state = State.IN_COM1;
                             break;
@@ -363,116 +352,10 @@ public class CMinusScanner implements Scanner {
                 }
             }
         }
-        //print the line number along with the token
-        FileOutputStream fos = new FileOutputStream(outFile, true);
-        PrintStream ps = new PrintStream(fos);
-        ps.print(lineNo + ": ");
-        ps.close();
-        printToken(token);
-
         return token;
     }
 
-    /**
-     * Prints the token in the correct format based on its type
-     *
-     * @param token
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
-    private void printToken(Token token) throws FileNotFoundException, IOException {
-        FileOutputStream fos = new FileOutputStream(outFile, true);
-        PrintStream ps = new PrintStream(fos);
-        switch (token.viewType()) {
-            //format for reserved words
-            case IF:
-            case ELSE:
-            case INT:
-            case RETURN:
-            case VOID:
-            case WHILE:
-                ps.printf("reserved word: %s\r\n", token.viewData());
-                break;
-            //format for operators
-            case PLUS:
-                ps.printf("operator: +\r\n");
-                break;
-            case MINUS:
-                ps.printf("operator: -\r\n");
-                break;
-            case STAR:
-                ps.printf("operator: *\r\n");
-                break;
-            case SLASH:
-                ps.printf("operator: /\r\n");
-                break;
-            case ASSIGN:
-                ps.printf("operator: =\r\n");
-                break;
-            case GREATER_THAN:
-                ps.printf("operator: >\r\n");
-                break;
-            case GREATER_EQUAL:
-                ps.printf("operator: >=\r\n");
-                break;
-            case LESS_THAN:
-                ps.printf("operator: <\r\n");
-                break;
-            case LESS_EQUAL:
-                ps.printf("operator: <=\r\n");
-                break;
-            case EQUAL:
-                ps.printf("operator: ==\r\n");
-                break;
-            case NOT_EQUALS:
-                ps.printf("operator: !=\r\n");
-                break;
-            //format for syntax and grouping
-            case SEMICOLON:
-                ps.printf(";\r\n");
-                break;
-            case COMMA:
-                ps.printf(",\r\n");
-                break;
-            case LEFTPAREN:
-                ps.printf("(\r\n");
-                break;
-            case RIGHTPAREN:
-                ps.printf(")\r\n");
-                break;
-            case LEFTSQUARE:
-                ps.printf("[\r\n");
-                break;
-            case RIGHTSQUARE:
-                ps.printf("]\r\n");
-                break;
-            case LEFTCURLY:
-                ps.printf("{\r\n");
-                break;
-            case RIGHTCURLY:
-                ps.printf("}\r\n");
-                break;
-            //format for special cases
-            case ID:
-                ps.printf("ID, name = %s\r\n", token.viewData());
-                break;
-            case NUM:
-                ps.printf("NUM, value = %d\r\n", token.viewData());
-                break;
-            case ERROR:
-                ps.printf("ERROR: %s\r\n", token.viewData());
-                break;
-            case EOF:
-                ps.printf("EOF");
-                break;
-            //should never happen
-            default:
-                ps.printf("Unknown token type");
-                break;
-        }
-        ps.close();
-        fos.close();
-    }
+
 
     /**
      * Uses the scanner to scan all the tokens from an input file
@@ -495,7 +378,8 @@ public class CMinusScanner implements Scanner {
 
             //get all tokens
             while (cms.viewNextToken().viewType() != Token.TokenType.EOF) {
-                cms.getNextToken();
+                Token tok = cms.getNextToken();
+                tok.printToken(outFile);
             }
 
         } catch (FileNotFoundException fnfe) {

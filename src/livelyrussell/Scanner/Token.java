@@ -1,5 +1,11 @@
 package livelyrussell.Scanner;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+
 /**
  * @author Jesse Russel
  * @author Rich Lively
@@ -51,5 +57,106 @@ public class Token {
 
     public void setData(Object o) {
         tokenData = o;
+    }
+    
+    /**
+     * Prints the token in the correct format based on its type
+     *
+     * @param outFile
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void printToken(File outFile) throws FileNotFoundException, IOException {
+        FileOutputStream fos = new FileOutputStream(outFile, true);
+        PrintStream ps = new PrintStream(fos);
+        switch (tokenType) {
+            //format for reserved words
+            case IF:
+            case ELSE:
+            case INT:
+            case RETURN:
+            case VOID:
+            case WHILE:
+                ps.printf("reserved word: %s\r\n", tokenData);
+                break;
+            //format for operators
+            case PLUS:
+                ps.printf("operator: +\r\n");
+                break;
+            case MINUS:
+                ps.printf("operator: -\r\n");
+                break;
+            case STAR:
+                ps.printf("operator: *\r\n");
+                break;
+            case SLASH:
+                ps.printf("operator: /\r\n");
+                break;
+            case ASSIGN:
+                ps.printf("operator: =\r\n");
+                break;
+            case GREATER_THAN:
+                ps.printf("operator: >\r\n");
+                break;
+            case GREATER_EQUAL:
+                ps.printf("operator: >=\r\n");
+                break;
+            case LESS_THAN:
+                ps.printf("operator: <\r\n");
+                break;
+            case LESS_EQUAL:
+                ps.printf("operator: <=\r\n");
+                break;
+            case EQUAL:
+                ps.printf("operator: ==\r\n");
+                break;
+            case NOT_EQUALS:
+                ps.printf("operator: !=\r\n");
+                break;
+            //format for syntax and grouping
+            case SEMICOLON:
+                ps.printf(";\r\n");
+                break;
+            case COMMA:
+                ps.printf(",\r\n");
+                break;
+            case LEFTPAREN:
+                ps.printf("(\r\n");
+                break;
+            case RIGHTPAREN:
+                ps.printf(")\r\n");
+                break;
+            case LEFTSQUARE:
+                ps.printf("[\r\n");
+                break;
+            case RIGHTSQUARE:
+                ps.printf("]\r\n");
+                break;
+            case LEFTCURLY:
+                ps.printf("{\r\n");
+                break;
+            case RIGHTCURLY:
+                ps.printf("}\r\n");
+                break;
+            //format for special cases
+            case ID:
+                ps.printf("ID, name = %s\r\n", tokenData);
+                break;
+            case NUM:
+                ps.printf("NUM, value = %d\r\n", tokenData);
+                break;
+            case ERROR:
+                ps.printf("ERROR: %s\r\n", tokenData);
+                break;
+            case EOF:
+                ps.printf("EOF");
+                break;
+            //should never happen
+            default:
+                ps.printf("Unknown token type");
+                break;
+        }
+        ps.close();
+        fos.close();
     }
 }
