@@ -1,0 +1,15 @@
+C- Compiler Lex Debug Output: test3.txt
+
+6: reserved word: void
+6: ID, name = main
+6: (
+6: reserved word: void
+6: )
+6: {
+9: reserved word: int
+9: ID, name = x
+9: operator: =
+9: NUM, value = 12
+9: ;
+10: }
+10: EOF

@@ -1,0 +1,31 @@
+C- Compiler Lex Debug Output: test4.txt
+
+3: reserved word: void
+3: ID, name = main
+3: (
+3: ERROR: $
+3: )
+3: {
+4: reserved word: int
+4: [
+4: ]
+4: ERROR: abc1
+4: NUM, value = 23
+4: ;
+5: reserved word: int
+5: ERROR: 987z
+5: ID, name = yx
+5: ;
+6: ID, name = iffy
+6: ID, name = returnit
+7: reserved word: if
+7: ID, name = x
+7: ERROR: !
+7: NUM, value = 3
+8: reserved word: else
+8: ID, name = x
+8: operator: !=
+8: NUM, value = 3
+8: ;
+9: reserved word: return
+12: EOF
