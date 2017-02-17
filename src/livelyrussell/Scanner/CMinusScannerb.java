@@ -39,12 +39,12 @@ public class CMinusScannerb implements Scanner {
    * Translates characters to character classes
    */
   private static final String ZZ_CMAP_PACKED = 
-    "\11\0\1\7\1\6\1\44\1\45\1\5\22\0\1\7\1\33\5\0"+
-    "\1\0\1\36\1\37\1\2\1\26\1\35\1\27\1\0\1\1\12\3"+
-    "\1\0\1\34\1\30\1\31\1\32\2\0\32\4\1\40\1\0\1\41"+
-    "\3\0\3\4\1\21\1\10\1\14\1\4\1\25\1\13\2\4\1\11"+
-    "\1\4\1\15\1\20\2\4\1\22\1\12\1\16\1\23\1\17\1\24"+
-    "\3\4\1\42\1\0\1\43\7\0\1\44\u1fa2\0\1\44\1\44\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
+    "\11\0\1\5\1\4\1\44\1\45\1\3\22\0\1\5\1\33\6\0"+
+    "\1\36\1\37\1\26\1\24\1\35\1\25\1\0\1\27\12\1\1\0"+
+    "\1\34\1\30\1\31\1\32\2\0\32\2\1\40\1\0\1\41\3\0"+
+    "\3\2\1\17\1\6\1\12\1\2\1\23\1\11\2\2\1\7\1\2"+
+    "\1\13\1\16\2\2\1\20\1\10\1\14\1\21\1\15\1\22\3\2"+
+    "\1\42\1\0\1\43\7\0\1\44\u1fa2\0\1\44\1\44\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\uffff\0\udfe6\0";
 
   /** 
    * Translates characters to character classes
@@ -57,11 +57,11 @@ public class CMinusScannerb implements Scanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\1\2\1\3\1\4\1\5\2\6\5\5"+
+    "\2\0\1\1\1\2\1\3\2\4\5\3\1\5\1\6"+
     "\1\7\1\10\1\11\1\12\1\13\1\1\1\14\1\15"+
-    "\1\16\1\17\1\20\1\21\1\22\1\23\3\24\1\25"+
-    "\1\5\1\26\4\5\1\27\1\30\1\31\1\32\1\33"+
-    "\1\5\1\34\3\5\1\35\1\36\3\5\1\37\1\40";
+    "\1\16\1\17\1\20\1\21\1\22\1\23\3\24\1\3"+
+    "\1\25\4\3\1\26\1\27\1\30\1\31\1\32\1\33"+
+    "\1\3\1\34\3\3\1\35\1\36\3\3\1\37\1\40";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[55];
@@ -89,13 +89,13 @@ public class CMinusScannerb implements Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\46\0\114\0\162\0\114\0\230\0\276\0\344"+
-    "\0\114\0\u010a\0\u0130\0\u0156\0\u017c\0\u01a2\0\114\0\114"+
+    "\0\0\0\46\0\114\0\162\0\230\0\276\0\114\0\344"+
+    "\0\u010a\0\u0130\0\u0156\0\u017c\0\114\0\114\0\114\0\u01a2"+
     "\0\u01c8\0\u01ee\0\u0214\0\u023a\0\114\0\114\0\114\0\114"+
-    "\0\114\0\114\0\114\0\114\0\114\0\u0260\0\u0286\0\114"+
-    "\0\u02ac\0\276\0\u02d2\0\u02f8\0\u031e\0\u0344\0\114\0\114"+
-    "\0\114\0\114\0\114\0\u036a\0\276\0\u0390\0\u03b6\0\u03dc"+
-    "\0\276\0\276\0\u0402\0\u0428\0\u044e\0\276\0\276";
+    "\0\114\0\114\0\114\0\114\0\114\0\u0260\0\u0286\0\u02ac"+
+    "\0\230\0\u02d2\0\u02f8\0\u031e\0\u0344\0\114\0\114\0\114"+
+    "\0\114\0\114\0\114\0\u036a\0\230\0\u0390\0\u03b6\0\u03dc"+
+    "\0\230\0\230\0\u0402\0\u0428\0\u044e\0\230\0\230";
 
   private static int [] zzUnpackRowMap() {
     int [] result = new int[55];
@@ -121,29 +121,29 @@ public class CMinusScannerb implements Scanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\3\1\4\1\5\1\6\1\7\1\10\2\11\1\12"+
-    "\2\7\1\13\3\7\1\14\2\7\1\15\1\7\1\16"+
-    "\1\7\1\17\1\20\1\21\1\22\1\23\1\24\1\25"+
+    "\1\3\1\4\1\5\1\6\2\7\1\10\2\5\1\11"+
+    "\3\5\1\12\2\5\1\13\1\5\1\14\1\5\1\15"+
+    "\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\25"+
     "\1\26\1\27\1\30\1\31\1\32\1\33\1\34\1\3"+
-    "\1\11\2\35\1\36\2\35\1\37\36\35\2\3\50\0"+
-    "\1\40\46\0\1\6\1\3\3\0\16\3\23\0\1\3"+
-    "\1\7\3\0\16\7\26\0\1\11\42\0\1\3\1\7"+
-    "\3\0\1\7\1\41\14\7\23\0\1\3\1\7\3\0"+
-    "\4\7\1\42\1\43\10\7\23\0\1\3\1\7\3\0"+
-    "\10\7\1\44\5\7\23\0\1\3\1\7\3\0\1\45"+
-    "\15\7\23\0\1\3\1\7\3\0\15\7\1\46\51\0"+
-    "\1\47\45\0\1\50\45\0\1\51\45\0\1\52\15\0"+
-    "\1\53\52\0\1\35\42\0\1\3\1\7\3\0\2\7"+
-    "\1\54\13\7\23\0\1\3\1\7\3\0\6\7\1\55"+
-    "\7\7\23\0\1\3\1\7\3\0\3\7\1\56\12\7"+
-    "\23\0\1\3\1\7\3\0\6\7\1\57\7\7\23\0"+
-    "\1\3\1\7\3\0\3\7\1\60\12\7\23\0\1\3"+
-    "\1\7\3\0\1\61\15\7\23\0\1\3\1\7\3\0"+
-    "\11\7\1\62\4\7\23\0\1\3\1\7\3\0\13\7"+
-    "\1\63\2\7\23\0\1\3\1\7\3\0\1\7\1\64"+
-    "\14\7\23\0\1\3\1\7\3\0\12\7\1\65\3\7"+
-    "\23\0\1\3\1\7\3\0\1\66\15\7\23\0\1\3"+
-    "\1\7\3\0\5\7\1\67\10\7\20\0";
+    "\1\7\3\35\1\36\22\35\1\37\15\35\2\3\47\0"+
+    "\1\4\1\3\3\0\16\3\23\0\1\3\1\5\3\0"+
+    "\16\5\26\0\1\7\42\0\1\3\1\5\3\0\1\5"+
+    "\1\40\14\5\23\0\1\3\1\5\3\0\4\5\1\41"+
+    "\1\42\10\5\23\0\1\3\1\5\3\0\10\5\1\43"+
+    "\5\5\23\0\1\3\1\5\3\0\1\44\15\5\23\0"+
+    "\1\3\1\5\3\0\15\5\1\45\50\0\1\46\50\0"+
+    "\1\47\45\0\1\50\45\0\1\51\45\0\1\52\20\0"+
+    "\1\35\70\0\1\53\17\0\1\3\1\5\3\0\2\5"+
+    "\1\54\13\5\23\0\1\3\1\5\3\0\6\5\1\55"+
+    "\7\5\23\0\1\3\1\5\3\0\3\5\1\56\12\5"+
+    "\23\0\1\3\1\5\3\0\6\5\1\57\7\5\23\0"+
+    "\1\3\1\5\3\0\3\5\1\60\12\5\23\0\1\3"+
+    "\1\5\3\0\1\61\15\5\23\0\1\3\1\5\3\0"+
+    "\11\5\1\62\4\5\23\0\1\3\1\5\3\0\13\5"+
+    "\1\63\2\5\23\0\1\3\1\5\3\0\1\5\1\64"+
+    "\14\5\23\0\1\3\1\5\3\0\12\5\1\65\3\5"+
+    "\23\0\1\3\1\5\3\0\1\66\15\5\23\0\1\3"+
+    "\1\5\3\0\5\5\1\67\10\5\22\0";
 
   private static int [] zzUnpackTrans() {
     int [] result = new int[1140];
@@ -184,8 +184,8 @@ public class CMinusScannerb implements Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\1\11\1\1\1\11\3\1\1\11\5\1\2\11"+
-    "\4\1\11\11\2\1\1\11\6\1\5\11\14\1";
+    "\2\0\1\11\3\1\1\11\5\1\3\11\5\1\11\11"+
+    "\10\1\6\11\14\1";
 
   private static int [] zzUnpackAttribute() {
     int [] result = new int[55];
@@ -315,7 +315,7 @@ Token nextToken;
     char [] map = new char[0x110000];
     int i = 0;  /* index in packed string  */
     int j = 0;  /* index in unpacked array */
-    while (i < 152) {
+    while (i < 150) {
       int  count = packed.charAt(i++);
       char value = packed.charAt(i++);
       do map[j++] = value; while (--count > 0);
@@ -668,31 +668,31 @@ Token nextToken;
             }
           case 33: break;
           case 2: 
-            { return new Token(Token.TokenType.SLASH);
+            { return new Token(Token.TokenType.NUM, Integer.parseInt(yytext()));
             }
           case 34: break;
           case 3: 
-            { return new Token(Token.TokenType.STAR);
+            { return new Token(Token.TokenType.ID, yytext());
             }
           case 35: break;
           case 4: 
-            { return new Token(Token.TokenType.NUM, Integer.parseInt(yytext()));
+            { /* ignore */
             }
           case 36: break;
           case 5: 
-            { return new Token(Token.TokenType.ID, yytext());
+            { return new Token(Token.TokenType.PLUS);
             }
           case 37: break;
           case 6: 
-            { /* ignore */
+            { return new Token(Token.TokenType.MINUS);
             }
           case 38: break;
           case 7: 
-            { return new Token(Token.TokenType.PLUS);
+            { return new Token(Token.TokenType.STAR);
             }
           case 39: break;
           case 8: 
-            { return new Token(Token.TokenType.MINUS);
+            { return new Token(Token.TokenType.SLASH);
             }
           case 40: break;
           case 9: 
@@ -744,11 +744,11 @@ Token nextToken;
             }
           case 52: break;
           case 21: 
-            { yybegin(COMMENT);
+            { return new Token(Token.TokenType.IF, "if");
             }
           case 53: break;
           case 22: 
-            { return new Token(Token.TokenType.IF, "if");
+            { yybegin(COMMENT);
             }
           case 54: break;
           case 23: 
