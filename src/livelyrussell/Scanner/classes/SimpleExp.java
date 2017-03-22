@@ -1,5 +1,7 @@
 package livelyrussell.Scanner.classes;
 
+import livelyrussell.Scanner.CMinusScanner;
+
 public class SimpleExp extends Expression{
     private AdditiveExp left;
     private AdditiveExp right;
@@ -9,5 +11,8 @@ public class SimpleExp extends Expression{
         left = l;
         right = r;
         relop = op;
+    }
+    public SimpleExp parseSimpleExp(CMinusScanner scan){
+        
     }
 }

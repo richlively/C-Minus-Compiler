@@ -12,6 +12,7 @@ public class Param {
 
     private String id;
     //If id == VOID, there were no params
+    //Also known as empty param-list.
     private boolean isArray;
     private Param nextParam;
 
@@ -47,10 +48,12 @@ public class Param {
                 if (scan.viewNextToken().viewType() == Token.TokenType.COMMA) {
                     scan.matchToken(Token.TokenType.COMMA);
                     next = parseParams(scan);
+                } else if (scan.viewNextToken().viewType() == Token.TokenType.RIGHTPAREN) {
+                    //Do nothing, but don't throw an exception
                 }
                 return new Param((String) holder.viewData(), array, next);
             default:
-                throw new CMinusParseException("Error parsing Param: expected ID or Void");
+                throw new CMinusParseException("Error parsing Param: expected INT or Void");
         }
         //Should never execute
         return null;

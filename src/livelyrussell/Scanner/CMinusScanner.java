@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 import static java.lang.Character.isWhitespace;
+import livelyrussell.Scanner.classes.CMinusParseException;
 
 /**
  * @author Jesse Russel
@@ -352,6 +353,19 @@ public class CMinusScanner implements Scanner {
             }
         }
         return token;
+    }
+    /**
+     * Allows for matching tokens in the parser
+     * 
+     * @param t
+     * @throws IOException
+     * @throws CMinusParseException 
+     */
+    public void matchToken(Token.TokenType t) throws IOException, CMinusParseException{
+        Token holder = scanToken();
+        if (holder.viewType() != t){
+            throw new CMinusParseException("Error parsing Token:");
+        }
     }
 
 

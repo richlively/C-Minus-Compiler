@@ -5,10 +5,15 @@
  */
 package livelyrussell.Scanner.classes;
 
+import livelyrussell.Scanner.CMinusScanner;
+
 /**
  *
  * @author Jesse
  */
 public class IterationStmt extends Statement {
-    
+
+    public IterationStmt parseIfStmt(CMinusScanner scan) {
+
+    }
 }

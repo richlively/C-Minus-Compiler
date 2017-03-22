@@ -30,9 +30,11 @@ public class VarDecl extends Declaration {
         Token holder = scan.getNextToken();
         int num = 0;
         Declaration d = null;
+        //vardecl -> ;
         if (holder.viewType() == Token.TokenType.SEMICOLON) {
             return new VarDecl(ID);
-        } else if (holder.viewType() == Token.TokenType.LEFTSQUARE) {
+        } //vardecl -> [ NUM ] ;
+        else if (holder.viewType() == Token.TokenType.LEFTSQUARE) {
             holder = scan.getNextToken();
             if (holder.viewType() == Token.TokenType.NUM) {
                 num = (Integer) holder.viewData();
@@ -42,6 +44,11 @@ public class VarDecl extends Declaration {
                 throw new CMinusParseException("Error parsing vardecl: Expected NUM");
             }
             holder = scan.viewNextToken();
+
+            //This is for the local-decls -> {vardecl'} case.
+            //However, if we are in decl and we have multiple vardecls in a row
+            //This will return all of them as one vardecl.  We may need to
+            //talk to Dr. G about this.
             if (holder.viewType() == Token.TokenType.INT) {
                 d = parseVarDeclPrime(scan);
             }
@@ -51,6 +58,8 @@ public class VarDecl extends Declaration {
     }
 
     private Declaration parseVarDeclPrime(CMinusScanner scan) throws IOException, CMinusParseException {
+        //This function will straight up parse a vardecl.
+        //This is needed for the local-decls -> {vardecl'} case.
         scan.matchToken(Token.TokenType.INT);
         Token holder = scan.getNextToken();
         String id = "";
@@ -79,6 +88,7 @@ public class VarDecl extends Declaration {
                     throw new CMinusParseException("Error parsing vardecl: Expected [ or ;");
             }
         }
+        //Checks if there are more vardecls to parse.
         holder = scan.viewNextToken();
         if (holder.viewType() == Token.TokenType.INT) {
             d = parseVarDeclPrime(scan);
