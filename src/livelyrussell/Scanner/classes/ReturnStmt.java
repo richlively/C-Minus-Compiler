@@ -15,6 +15,7 @@ import livelyrussell.Scanner.Token;
 public class ReturnStmt extends Statement {
     public ExpressionStmt estmt;
     public ReturnStmt(ExpressionStmt e){
+        super(null,"return");
         this.estmt = e;
     }
     public ReturnStmt parseReturn(CMinusScanner scan) throws Exception{

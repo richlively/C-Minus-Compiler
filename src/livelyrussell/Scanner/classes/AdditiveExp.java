@@ -5,10 +5,15 @@
  */
 package livelyrussell.Scanner.classes;
 
+import livelyrussell.Scanner.CMinusScanner;
+
 /**
  *
  * @author Jesse
  */
 public class AdditiveExp extends Expression{
     
+    public AdditiveExp parseAddExp(CMinusScanner scan){
+        
+    }
 }

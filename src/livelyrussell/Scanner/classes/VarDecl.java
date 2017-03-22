@@ -43,15 +43,6 @@ public class VarDecl extends Declaration {
             } else {
                 throw new CMinusParseException("Error parsing vardecl: Expected NUM");
             }
-            holder = scan.viewNextToken();
-
-            //This is for the local-decls -> {vardecl'} case.
-            //However, if we are in decl and we have multiple vardecls in a row
-            //This will return all of them as one vardecl.  We may need to
-            //talk to Dr. G about this.
-            if (holder.viewType() == Token.TokenType.INT) {
-                d = parseVarDeclPrime(scan);
-            }
             return new VarDecl(ID, n, d);
         }
         throw new CMinusParseException("Error parsing vardecl: Expected [ or ;");

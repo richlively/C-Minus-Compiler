@@ -6,7 +6,7 @@ import livelyrussell.Scanner.CMinusScanner;
  *
  * @author Jesse
  */
-public class Expression {
+public abstract class Expression {
     
     public Expression parseExpression(CMinusScanner scan){
         
