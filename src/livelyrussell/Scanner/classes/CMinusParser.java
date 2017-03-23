@@ -17,8 +17,8 @@ public class CMinusParser implements Parser {
     }
 
     /**
-     * Allows for matching tokens in the parser; throws an error if 
-     * the tokens don't match
+     * Allows for matching tokens in the parser; throws an error if the tokens
+     * don't match
      *
      * @param t
      * @throws IOException
@@ -242,14 +242,15 @@ public class CMinusParser implements Parser {
                     if (faker.viewType() != Token.TokenType.ID) {
                         throw new CMinusParseException("Error parsing decl: Expected ID");
                     }
+                    String idval = (String) faker.viewData();
                     holder = scan.viewNextToken().viewType();
                     //Decl'
                     if (holder == Token.TokenType.LEFTSQUARE || holder == Token.TokenType.SEMICOLON) {
                         //Var-decl
-                        return parseVarDecl((String) faker.viewData());
+                        return parseVarDecl(idval);
                     } else if (holder == Token.TokenType.LEFTPAREN) {
                         //Fun-decl
-                        return parseFunDecl((String) faker.viewData(), "Int");
+                        return parseFunDecl(idval, "Int");
                     } else {
                         throw new CMinusParseException("Error parsing decl: Expected [, ;, or (");
                     }
@@ -266,32 +267,126 @@ public class CMinusParser implements Parser {
 
             }
         }
+        //Should never get here
+        return null;
     }
 
-    //This Exp group will be really tricky.
-    //be careful that you return the right children of Expression here.
+    //J: This Exp group will be really tricky.
+    //Be careful that you return the right subclasses of Expression here.
     //Also be mindful that you will have to pass some IDs and NUMs down.
     //For the part of the grammar called factor-follow, just do a switch
     //where all the cases in factor-follow match that token, and call
     //parseSimpleExpPrime()
-    public Expression parseExp() {
+    public Expression parseExp() throws IOException, CMinusParseException {
+        if (null != scan.viewNextToken().viewType()) {
+            switch (scan.viewNextToken().viewType()) {
+                case NUM: {
+                    int holder = (Integer) scan.getNextToken().viewData();
+                    return parseSimpleExpPrime(new NumExp(holder));
+                }
+                case LEFTPAREN:
+                    matchToken(Token.TokenType.LEFTPAREN);
+                    Expression exp = parseExp();
+                    matchToken(Token.TokenType.RIGHTPAREN);
+                    return parseSimpleExpPrime(exp);
+                case ID: {
+                    String holder = (String) scan.getNextToken().viewData();
+                    return parseExpPrime(holder);
+                }
+                default:
+                    throw new CMinusParseException("Error parsing Expression: Expected ID, NUM or {");
+            }
+        }
+        //Netbeans is angry if you delete this.
+        return null;
+    }
+
+    public Expression parseExpPrime(String id) throws IOException, CMinusParseException {
+        if (null != scan.viewNextToken().viewType()) {
+            switch (scan.viewNextToken().viewType()) {
+                case ASSIGN:
+                    matchToken(Token.TokenType.ASSIGN);
+                    return new AssignExp(new VarDecl(id), parseExp());
+                case LEFTPAREN:
+                    matchToken(Token.TokenType.LEFTPAREN);
+                    ArrayList<Expression> args = parseArgs();
+                    matchToken(Token.TokenType.RIGHTPAREN);
+                    return parseSimpleExpPrime(new CallExp(id, args));
+                case LEFTSQUARE:
+                    matchToken(Token.TokenType.LEFTSQUARE);
+                    Expression e = parseExp();
+                    matchToken(Token.TokenType.RIGHTSQUARE);
+                    return parseExpDoublePrime(new VarExp(id,e));
+                case SEMICOLON //factor follow stuff
+                case RIGHTCURLY//J: I'm not sure I understand this part
+                case RIGHTPAREN
+                case RIGHTSQUARE
+                case STAR
+                case SLASH
+                case PLUS
+                case MINUS
+                default:
+                    throw new CMinusParseException("Error parsing expression': Expected =, (, [, or factor-follow stuff.");
+            }
+        }
+    }
+
+    public Expression parseExpDoublePrime(Expression left) {
 
     }
 
-    public Expression parseExpPrime() {
-
+    public Expression parseSimpleExpPrime(Expression pass) throws IOException, CMinusParseException {
+        Expression left = parseAddExpPrime(pass);
+        BinaryExp.op oper = null;
+        if (null != scan.viewNextToken().viewType()) {
+            switch (scan.viewNextToken().viewType()) {
+                case GREATER_THAN:
+                    matchToken(Token.TokenType.GREATER_THAN);
+                    oper = BinaryExp.op.GREATER_THAN;
+                    break;
+                case GREATER_EQUAL:
+                    matchToken(Token.TokenType.GREATER_EQUAL);
+                    oper = BinaryExp.op.GREATER_EQUAL;
+                    break;
+                case LESS_THAN:
+                    matchToken(Token.TokenType.LESS_THAN);
+                    oper = BinaryExp.op.LESS_THAN;
+                    break;
+                case LESS_EQUAL:
+                    matchToken(Token.TokenType.LESS_EQUAL);
+                    oper = BinaryExp.op.LESS_EQUAL;
+                    break;
+                case EQUAL:
+                    matchToken(Token.TokenType.EQUAL);
+                    oper = BinaryExp.op.EQUAL;
+                    break;
+                case NOT_EQUALS:
+                    matchToken(Token.TokenType.NOT_EQUALS);
+                    oper = BinaryExp.op.NOT_EQUALS;
+                    break;
+                case SEMICOLON:
+                case RIGHTCURLY:
+                case RIGHTPAREN:
+                case RIGHTSQUARE:
+                    return left;
+                default:
+                    throw new CMinusParseException("Error parsing SimpleExp': Expected a relop");
+            }
+        }
+        Expression right = parseAddExp();
+        return new BinaryExp(left, oper, right);
     }
 
-    public Expression parseExpDoublePrime() {
-
-    }
-
-    public Expression parseSimpleExpPrime() {
-
-    }
-
-    public Statement parseStmtList() {
-        //iterate over parseStmt()
+    public ArrayList<Statement> parseStmtList() {
+        ArrayList<Statement> al = new ArrayList<>();
+        //Wanna see the worst while loop in history?
+        while (scan.viewNextToken().viewType() != Token.TokenType.SEMICOLON
+                && scan.viewNextToken().viewType() != Token.TokenType.RIGHTCURLY
+                && scan.viewNextToken().viewType() != Token.TokenType.RIGHTSQUARE
+                && scan.viewNextToken().viewType() != Token.TokenType.RIGHTPAREN) {
+            al.add(parseStmt());
+        }
+        return al;
     }
 
     public Statement parseStmt() {
@@ -304,7 +399,7 @@ public class CMinusParser implements Parser {
         Expression e = parseExp();
         matchToken(Token.TokenType.RIGHTPAREN);
         Statement s = parseStmt();
-        return new IterationStmt(e, s);//Statement will check nexts.
+        return new IterationStmt(e, s);
     }
 
     public CompoundStmt parseCompStmt() {
@@ -425,7 +520,7 @@ public class CMinusParser implements Parser {
         //parseTerm()
     }
 
-    public BinaryExp parseAddExpPrime(Object catchall) {
+    public BinaryExp parseAddExpPrime(Expression exp) {
         //it depends on where this came from what catchall actually is.
         //This is sloppy and will need fixing
     }
