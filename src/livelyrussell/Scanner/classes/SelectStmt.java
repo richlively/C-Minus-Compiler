@@ -13,5 +13,9 @@ public class SelectStmt extends Statement {
         ifstmt = ifs;
         elsestmt = elses;
     }
+    
+    public SelectStmt(Expression e, Statement ifs){
+        this(e, ifs, null);
+    }
 
 }

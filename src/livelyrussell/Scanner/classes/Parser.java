@@ -1,14 +1,8 @@
 package livelyrussell.Scanner.classes;
 
-import java.io.BufferedReader;
-import livelyrussell.Scanner.Token;
-import sun.reflect.generics.tree.Tree;
+import java.io.IOException;
 
-/**
- *
- * @author Jesse
- */
 public interface Parser {
-
-    public abstract Program parseFile(BufferedReader file, String filename);
+    
+    public abstract Program parseFile() throws IOException;
 }

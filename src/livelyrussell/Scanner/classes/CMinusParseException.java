@@ -1,7 +1,9 @@
 
 package livelyrussell.Scanner.classes;
 
-public class CMinusParseException extends Exception{
+import java.io.IOException;
+
+public class CMinusParseException extends IOException{
     public CMinusParseException(String e){
         super(e);
     }

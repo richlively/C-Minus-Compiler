@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
 import static java.lang.Character.isWhitespace;
-import livelyrussell.Scanner.classes.CMinusParseException;
 
 /**
  * @author Jesse Russell

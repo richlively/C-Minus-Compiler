@@ -15,5 +15,8 @@ public class VarExp extends Expression {
         id = i;
         exp = e;
     }
+    public VarExp(String i){
+        this(i, null);
+    }
     
 }
