@@ -10,5 +10,5 @@ import sun.reflect.generics.tree.Tree;
  */
 public interface Parser {
 
-    public abstract Declaration parseFile(BufferedReader file, String filename);
+    public abstract Program parseFile(BufferedReader file, String filename);
 }

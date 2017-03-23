@@ -1,10 +1,17 @@
 package livelyrussell.Scanner.classes;
 
-import livelyrussell.Scanner.CMinusScanner;
-
 public class SelectStmt extends Statement {
 
-    public SelectStmt parseSelectStmt(CMinusScanner scan) {
+    //IF ( exp ) stmt [ELSE stmt]
+    private Expression exp;
+    private Statement ifstmt;
+    private Statement elsestmt;
 
+    public SelectStmt(Expression e, Statement ifs, Statement elses) {
+        super(Statement.type.SELECT);
+        exp = e;
+        ifstmt = ifs;
+        elsestmt = elses;
     }
+
 }

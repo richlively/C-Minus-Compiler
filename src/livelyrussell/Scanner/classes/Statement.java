@@ -1,23 +1,14 @@
-
 package livelyrussell.Scanner.classes;
 
-import livelyrussell.Scanner.CMinusScanner;
-
-
 public abstract class Statement {
-    private Statement next;
-    private String type;
-    
-    Statement(Statement n, String t){
-        next = n;
-        type = t;
+
+    public enum type {
+        COMPOUND, EXP, SELECT, ITERATE, RETURN
     }
-    
-    public Statement parseStmt(CMinusScanner scan){
-        
+    private Statement.type kind;
+
+    Statement(Statement.type t) {
+        kind = t;
     }
-    
-    public Statement parseStmtList(CMinusScanner scan){
-        
-    }
+
 }

@@ -1,33 +1,21 @@
 package livelyrussell.Scanner.classes;
 
-import java.io.IOException;
-import livelyrussell.Scanner.CMinusScanner;
-import livelyrussell.Scanner.Token;
+import java.util.ArrayList;
 
-/**
- *
- * @author Jesse
- */
-public class FunDecl extends Declaration{
-    private Token.TokenType type;
+public class FunDecl extends Declaration {
+    public enum type{
+        VOID, INT
+    }
+    private FunDecl.type kind;
     private String id;
     private CompoundStmt cs;
-    private Param params;
-    
-    FunDecl(String i, CompoundStmt c, Param p, Token.TokenType ttype, Declaration d){
-        super(d);
-        type = ttype;
+    private ArrayList<Param> params;
+
+    FunDecl(String i, CompoundStmt c, ArrayList<Param> p, FunDecl.type t) {
+        kind = t;
         id = i;
         cs = c;
         params = p;
     }
-    
-    public FunDecl parseFunDecl(CMinusScanner scan, String ID, Token.TokenType t) throws IOException, CMinusParseException{
-        scan.matchToken(Token.TokenType.LEFTPAREN);
-        Param p = params.parseParams(scan);
-        scan.matchToken(Token.TokenType.RIGHTPAREN);
-        CompoundStmt c = cs.parseCompStmt(scan);
-        return new FunDecl(ID, c, p, t, null);
-    }
-    
+
 }

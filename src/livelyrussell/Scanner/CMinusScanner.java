@@ -17,7 +17,7 @@ import static java.lang.Character.isWhitespace;
 import livelyrussell.Scanner.classes.CMinusParseException;
 
 /**
- * @author Jesse Russel
+ * @author Jesse Russell
  * @author Rich Lively
  * @date Feb. 7, 2017 CMinusScanner.java This class provides an implementation
  * of a C- lexical scanner. The state DFA was designed by hand.
@@ -353,19 +353,6 @@ public class CMinusScanner implements Scanner {
             }
         }
         return token;
-    }
-    /**
-     * Allows for matching tokens in the parser
-     * 
-     * @param t
-     * @throws IOException
-     * @throws CMinusParseException 
-     */
-    public void matchToken(Token.TokenType t) throws IOException, CMinusParseException{
-        Token holder = scanToken();
-        if (holder.viewType() != t){
-            throw new CMinusParseException("Error parsing Token:");
-        }
     }
 
 

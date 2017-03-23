@@ -1,15 +1,15 @@
 package livelyrussell.Scanner.classes;
 
-import livelyrussell.Scanner.CMinusScanner;
-
-/**
- *
- * @author Jesse
- */
 public abstract class Expression {
     
-    public Expression parseExpression(CMinusScanner scan){
-        
+    public enum type{
+        VAR,NUM,BINARY,CALL,ASSIGN
+    }
+    
+    private Expression.type kind;
+    
+    Expression(Expression.type t){
+        kind = t;
     }
     
     
