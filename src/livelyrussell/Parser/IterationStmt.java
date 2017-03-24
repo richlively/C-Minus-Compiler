@@ -1,5 +1,7 @@
 package livelyrussell.Parser;
 
+import java.io.PrintStream;
+
 public class IterationStmt extends Statement {
     //WHILE ( exp ) stmt
     private Expression exp;
@@ -9,5 +11,10 @@ public class IterationStmt extends Statement {
         super(Statement.type.ITERATE);
         exp = e;
         stmt = s;
+    }
+
+    @Override
+    public void print(PrintStream out) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

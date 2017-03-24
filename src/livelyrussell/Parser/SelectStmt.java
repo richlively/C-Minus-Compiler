@@ -1,5 +1,7 @@
 package livelyrussell.Parser;
 
+import java.io.PrintStream;
+
 public class SelectStmt extends Statement {
 
     //IF ( exp ) stmt [ELSE stmt]
@@ -16,6 +18,11 @@ public class SelectStmt extends Statement {
     
     public SelectStmt(Expression e, Statement ifs){
         this(e, ifs, null);
+    }
+
+    @Override
+    public void print(PrintStream out) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

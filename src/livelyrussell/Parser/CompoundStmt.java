@@ -3,7 +3,7 @@ package livelyrussell.Parser;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-public class CompoundStmt extends Statement implements ParseObject{
+public class CompoundStmt extends Statement {
     private ArrayList<VarDecl> localdecls;
     private ArrayList<Statement> stmtlist;
     

@@ -1,6 +1,8 @@
 package livelyrussell.Parser;
 
-public class Param {
+import java.io.PrintStream;
+
+public class Param implements ParseObject{
 
     private boolean isvoid;
     private String id;
@@ -28,6 +30,11 @@ public class Param {
 
     Param() {
         this("", false, true);
+    }
+
+    @Override
+    public void print(PrintStream out) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
