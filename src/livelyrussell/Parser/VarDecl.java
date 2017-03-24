@@ -1,21 +1,24 @@
 package livelyrussell.Parser;
 
-public class VarDecl extends Declaration {
+import java.io.PrintStream;
 
-    //if n=0, there was no parentheses
+public class VarDecl extends Declaration{
+
+    //if n=null, there was no parentheses
     private Integer n;
-    private String id;
 
     VarDecl(String i, Integer num) {
+        super(i);
         n = num;
-        id = i;
-
     }
 
     //For a non-array
     VarDecl(String i) {
-        this(i, 0);
+        this(i, null);
     }
 
-    
+    @Override
+    public void print(PrintStream out) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
