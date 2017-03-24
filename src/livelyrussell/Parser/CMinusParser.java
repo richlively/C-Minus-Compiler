@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import livelyrussell.Scanner.CMinusScanner;
 import livelyrussell.Scanner.Token;
 
@@ -569,6 +571,7 @@ public class CMinusParser implements Parser {
         if (null != scan.viewNextToken().viewType()) {
             switch (scan.viewNextToken().viewType()) {
                 case VOID:
+                    matchToken(Token.TokenType.VOID);
                     params.add(new Param());
                     return params;
                 case INT:
@@ -761,6 +764,7 @@ public class CMinusParser implements Parser {
                 case EQUAL:
                 case NOT_EQUALS:
                 case RIGHTSQUARE:
+                case COMMA:
                     return left;
                 default:
                     throw new CMinusParseException("Error parsing AddExp: Expected + or -");
@@ -919,11 +923,12 @@ public class CMinusParser implements Parser {
 
             CMinusParser cmp = new CMinusParser(file, filename);
 
-            cmp.parseFile();
+            Program p = cmp.parseFile();
+            int hi = 5;
 
             //print AST
         } catch (Exception ex) {
-            System.out.println("bad stuff happened");
+             Logger.getLogger(CMinusParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
