@@ -17,6 +17,36 @@ public class CMinusParser implements Parser {
     }
 
     /**
+     *
+     * @return @throws java.io.IOException in the form of CMinusParseException
+     * @throws livelyrussell.Parser.CMinusParseException
+     */
+    @Override
+    public Program parseFile() throws IOException, CMinusParseException {
+        ArrayList<Declaration> decls = new ArrayList<>();
+        while (scan.viewNextToken().viewType() != Token.TokenType.EOF) {
+            decls.add(parseDecl());
+        }
+        return new Program(decls);
+    }
+
+    @Override
+    public void print() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
+     * Produces a message for a CMinusParseException
+     * @param expected this parse object
+     * @param terminals the first set of expected
+     * @param got this thing instead
+     * @return the error message
+     */
+    private String errorStr(String expected, String terminals, Object got) {
+        return "Error parsing " + expected + ": expected <" + terminals + "> and got: " + got;
+    }
+
+    /**
      * Allows for matching tokens in the parser; throws an error if the tokens
      * don't match
      *
@@ -228,59 +258,46 @@ public class CMinusParser implements Parser {
     }
 
     /**
-     *
-     * @return @throws java.io.IOException in the form of CMinusParseException
-     */
-    @Override
-    public Program parseFile() throws IOException {
-        ArrayList<Declaration> decls = new ArrayList<>();
-        while (scan.viewNextToken().viewType() != Token.TokenType.EOF) {
-            decls.add(parseDecl());
-        }
-        return new Program(decls);
-    }
-
-    /**
-     *
-     * @return @throws IOException
-     * @throws CMinusParseException
+     * Parses a Declaration
+     * @return the declaration
+     * @throws IOException scanner error
+     * @throws CMinusParseException for un-parseable code
      */
     public Declaration parseDecl() throws IOException, CMinusParseException {
-        Token.TokenType holder = scan.getNextToken().viewType();
-        if (null != holder) //Decl -> INT ID decl'
-        {
-            switch (holder) {
-                case INT: {
-                    Token faker = scan.getNextToken();
-                    if (faker.viewType() != Token.TokenType.ID) {
-                        throw new CMinusParseException("Error parsing decl: Expected ID");
+        Token.TokenType type = scan.getNextToken().viewType();
+        if (type != null) {
+            switch (type) {
+                case INT: {//Decl -> INT ID decl'
+                    Token id = scan.getNextToken();
+                    if (id.viewType() != Token.TokenType.ID) {
+                        throw new CMinusParseException(errorStr("Declaration", "ID", id.viewType()));
                     }
-                    String idval = (String) faker.viewData();
-                    holder = scan.viewNextToken().viewType();
+                    String idVal = (String) id.viewData();
+                    type = scan.viewNextToken().viewType();
                     //Decl'
-                    if (holder == Token.TokenType.LEFTSQUARE || holder == Token.TokenType.SEMICOLON) {
+                    if (type == Token.TokenType.LEFTSQUARE || type == Token.TokenType.SEMICOLON) {
                         //Var-decl
-                        return parseVarDecl(idval);
-                    } else if (holder == Token.TokenType.LEFTPAREN) {
+                        return parseVarDecl(idVal);
+                    } else if (type == Token.TokenType.LEFTPAREN) {
                         //Fun-decl
-                        return parseFunDecl(idval, "Int");
+                        return parseFunDecl(idVal, "Int");
                     } else {
-                        throw new CMinusParseException("Error parsing decl: Expected [, ;, or (");
+                        throw new CMinusParseException(errorStr("Declaration", "[ ; (", type));
                     }
                 }
                 case VOID: {//Decl -> VOID ID fun-decl
-                    Token faker = scan.getNextToken();
-                    if (faker.viewType() != Token.TokenType.ID) {
-                        throw new CMinusParseException("Error parsing decl: Expected ID");
+                    Token id = scan.getNextToken();
+                    if (id.viewType() != Token.TokenType.ID) {
+                        throw new CMinusParseException(errorStr("Declaration", "ID", id.viewType()));
                     }
-                    return parseFunDecl((String) faker.viewData(), "Void");
+                    return parseFunDecl((String) id.viewData(), "Void");
                 }
                 default:
-                    throw new CMinusParseException("Error parsing decl: Expected INT or VOID");
-
+                    throw new CMinusParseException(errorStr("Declaration", "ID VOID", type));
             }
+        } else {
+            throw new CMinusParseException("Critical Error parsing Declation: Expected INT or VOID and got: null");
         }
-        throw new CMinusParseException("Critical Error parsing decl: Expected INT or VOID");
     }
 
     /**
@@ -555,8 +572,9 @@ public class CMinusParser implements Parser {
     /**
      *
      * @return @throws java.io.IOException
+     * @throws livelyrussell.Parser.CMinusParseException
      */
-    public ArrayList<Param> parseParamList() throws IOException {
+    public ArrayList<Param> parseParamList() throws IOException, CMinusParseException {
         ArrayList<Param> params = new ArrayList<>();
         if (null != scan.viewNextToken().viewType()) {
             switch (scan.viewNextToken().viewType()) {
@@ -755,7 +773,8 @@ public class CMinusParser implements Parser {
 
     /**
      * Parses a file and prints the Abstract Syntax Tree
-     * @param args 
+     *
+     * @param args
      */
     public static void main(String args[]) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -767,7 +786,7 @@ public class CMinusParser implements Parser {
             filename = br.readLine();
             //create buffered reader for the file
             file = new BufferedReader(new FileReader(filename));
-            
+
             CMinusParser cmp = new CMinusParser(file, filename);
             //parse the file
             cmp.parseFile();
@@ -775,6 +794,7 @@ public class CMinusParser implements Parser {
             //TODO: cmp.print()
 
         } catch (Exception ex) {
+            //TODO: better error handling
             System.out.println("bad stuff happened");
         }
     }
