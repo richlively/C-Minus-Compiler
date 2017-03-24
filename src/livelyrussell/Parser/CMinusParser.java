@@ -1,9 +1,11 @@
 package livelyrussell.Parser;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -912,9 +914,10 @@ public class CMinusParser implements Parser {
     public static void main(String args[]) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("File Name:");
-        String filename = new String();
+        String filename;
+        String outputLocation;
         BufferedReader file;
-
+        PrintStream out;
         try {
             //get filename
             filename = br.readLine();
@@ -923,10 +926,23 @@ public class CMinusParser implements Parser {
 
             CMinusParser cmp = new CMinusParser(file, filename);
 
+            //parse the program
             Program p = cmp.parseFile();
-            int hi = 5;
 
+            //choose to print to System.out or File
+            System.out.println("Print to File/System.out");
+            outputLocation = br.readLine();
+            if ("System.out".equals(outputLocation)) {
+                out = System.out;
+            }
+            else {
+                File outputFile = new File(outputLocation);
+                out = new PrintStream(outputFile);
+                out.println(outputLocation);
+            }
+            out.println("AST for " + filename);
             //print AST
+            p.print(out);
         } catch (Exception ex) {
              Logger.getLogger(CMinusParser.class.getName()).log(Level.SEVERE, null, ex);
         }
