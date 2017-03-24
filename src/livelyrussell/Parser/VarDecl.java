@@ -5,9 +5,9 @@ import java.io.PrintStream;
 public class VarDecl extends Declaration{
 
     //if n=null, there was no brackets
-    private Integer n;
+    private NumExp n;
 
-    VarDecl(String i, Integer num) {
+    VarDecl(String i, NumExp num) {
         super(i);
         n = num;
     }
@@ -23,10 +23,9 @@ public class VarDecl extends Declaration{
         for (int i = 0; i < indent; i++) {
             tabs+="\t";
         }
-        out.print(tabs + "VarDecl: INT " + id);
+        out.println(tabs + "VarDecl: INT " + id);
         if (n!=null) {
-            out.print(" ["+n+"]");
+            n.print(out, indent+1);
         }
-        out.println();
     }
 }

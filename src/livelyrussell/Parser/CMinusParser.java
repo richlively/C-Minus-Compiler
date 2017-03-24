@@ -626,7 +626,7 @@ public class CMinusParser implements Parser {
      */
     public VarDecl parseVarDecl(String ID) throws IOException, CMinusParseException {
         Token holder = scan.getNextToken();
-        int num = 0;
+        NumExp num = null;
         //vardecl -> ;
         if (holder.viewType() == Token.TokenType.SEMICOLON) {
             return new VarDecl(ID);
@@ -635,7 +635,7 @@ public class CMinusParser implements Parser {
             matchToken(Token.TokenType.LEFTSQUARE);
             holder = scan.getNextToken();
             if (holder.viewType() == Token.TokenType.NUM) {
-                num = (Integer) holder.viewData();
+                num = new NumExp((Integer) holder.viewData());
                 matchToken(Token.TokenType.RIGHTSQUARE);
                 matchToken(Token.TokenType.SEMICOLON);
             } else {
@@ -682,7 +682,7 @@ public class CMinusParser implements Parser {
         matchToken(Token.TokenType.INT);
         Token holder = scan.getNextToken();
         String id = "";
-        Integer num = null;
+        NumExp num = null;
         if (holder.viewType() != Token.TokenType.ID) {
             throw new CMinusParseException("Error parsing vardecl: Expected ID");
         }
@@ -698,7 +698,7 @@ public class CMinusParser implements Parser {
                     if (holder.viewType() != Token.TokenType.NUM) {
                         throw new CMinusParseException("Error parsing vardecl: Expected NUM");
                     }
-                    num = (Integer) holder.viewData();
+                    num = new NumExp((Integer) holder.viewData());
                     matchToken(Token.TokenType.RIGHTSQUARE);
                     matchToken(Token.TokenType.SEMICOLON);
                     break;
@@ -717,26 +717,34 @@ public class CMinusParser implements Parser {
     public Expression parseAddExp() throws IOException {
         Expression left = parseTerm();
         BinaryExp.op oper = null; //initialize only to make Netbeans happy
-        if (null != scan.viewNextToken().viewType()) {
-            switch (scan.viewNextToken().viewType()) {
-                case PLUS:
-                    matchToken(Token.TokenType.PLUS);
-                    oper = BinaryExp.op.PLUS;
-                    return new BinaryExp(left, oper, parseAddExp());
-                case MINUS:
-                    matchToken(Token.TokenType.MINUS);
-                    oper = BinaryExp.op.MINUS;
-                    return new BinaryExp(left, oper, parseAddExp());
-                case SEMICOLON:
-                case RIGHTPAREN:
-                case RIGHTSQUARE:
-                case COMMA:
-                    return left;
-                default:
-                    throw new CMinusParseException("Error parsing AddExp: Expected + or -");
+        Token.TokenType temp = scan.viewNextToken().viewType();
+        while (temp != Token.TokenType.PLUS
+                && temp != Token.TokenType.MINUS
+                && temp != Token.TokenType.SEMICOLON
+                && temp != Token.TokenType.RIGHTPAREN
+                && temp != Token.TokenType.RIGHTSQUARE
+                && temp != Token.TokenType.COMMA) {
+            if (null != scan.viewNextToken().viewType()) {
+                switch (scan.viewNextToken().viewType()) {
+                    case PLUS:
+                        matchToken(Token.TokenType.PLUS);
+                        oper = BinaryExp.op.PLUS;
+                        left = new BinaryExp(left, oper, parseTerm());
+                    case MINUS:
+                        matchToken(Token.TokenType.MINUS);
+                        oper = BinaryExp.op.MINUS;
+                        left = new BinaryExp(left, oper, parseTerm());
+                    case SEMICOLON:
+                    case RIGHTPAREN:
+                    case RIGHTSQUARE:
+                    case COMMA:
+                        break;
+                    default:
+                        throw new CMinusParseException("Error parsing AddExp: Expected + or -");
+                }
             }
         }
-        throw new CMinusParseException("Critical Error parsing AddExp: Expected + or -");
+        return left;
     }
 
     /**
@@ -772,7 +780,7 @@ public class CMinusParser implements Parser {
                     throw new CMinusParseException("Error parsing AddExp: Expected + or -");
             }
         }
-        Expression right = parseAddExp();
+        Expression right = parseTerm();
         return new BinaryExp(left, oper, right);
     }
 
@@ -783,35 +791,53 @@ public class CMinusParser implements Parser {
      */
     public Expression parseTermPrime(Expression left) throws CMinusParseException, IOException {
         BinaryExp.op oper = null; //initialize only to make Netbeans happy
-        if (null != scan.viewNextToken().viewType()) {
-            switch (scan.viewNextToken().viewType()) {
-                case STAR:
-                    matchToken(Token.TokenType.STAR);
-                    oper = BinaryExp.op.STAR;
-                    break;
-                case SLASH:
-                    matchToken(Token.TokenType.SLASH);
-                    oper = BinaryExp.op.SLASH;
-                    break;
-                case SEMICOLON:
-                case RIGHTPAREN:
-                case PLUS:
-                case MINUS:
-                case GREATER_THAN:
-                case GREATER_EQUAL:
-                case LESS_THAN:
-                case LESS_EQUAL:
-                case EQUAL:
-                case NOT_EQUALS:
-                case RIGHTSQUARE:
-                case COMMA:
-                    return left;
-                default:
-                    throw new CMinusParseException("Error parsing AddExp: Expected + or -");
+        Token.TokenType temp = scan.viewNextToken().viewType();
+        while (temp == Token.TokenType.PLUS
+                || temp == Token.TokenType.MINUS
+                || temp == Token.TokenType.STAR
+                || temp == Token.TokenType.SLASH
+                || temp == Token.TokenType.SEMICOLON
+                || temp == Token.TokenType.RIGHTPAREN
+                || temp == Token.TokenType.GREATER_EQUAL
+                || temp == Token.TokenType.GREATER_THAN
+                || temp == Token.TokenType.LESS_THAN
+                || temp == Token.TokenType.LESS_EQUAL
+                || temp == Token.TokenType.EQUAL
+                || temp == Token.TokenType.NOT_EQUALS
+                || temp == Token.TokenType.RIGHTSQUARE
+                || temp == Token.TokenType.COMMA) {
+            if (null != scan.viewNextToken().viewType()) {
+                switch (scan.viewNextToken().viewType()) {
+                    case STAR:
+                        matchToken(Token.TokenType.STAR);
+                        oper = BinaryExp.op.STAR;
+                        break;
+                    case SLASH:
+                        matchToken(Token.TokenType.SLASH);
+                        oper = BinaryExp.op.SLASH;
+                        break;
+                    case SEMICOLON:
+                    case RIGHTPAREN:
+                    case PLUS:
+                    case MINUS:
+                    case GREATER_THAN:
+                    case GREATER_EQUAL:
+                    case LESS_THAN:
+                    case LESS_EQUAL:
+                    case EQUAL:
+                    case NOT_EQUALS:
+                    case RIGHTSQUARE:
+                    case COMMA:
+                        return left;
+                    default:
+                        throw new CMinusParseException("Error parsing AddExp: Expected + or -");
+                }
             }
+
+            Expression right = parseFactor();
+            left = new BinaryExp(left, oper, right);
         }
-        Expression right = parseTerm();
-        return new BinaryExp(left, oper, right);
+        return left;
     }
 
     /**

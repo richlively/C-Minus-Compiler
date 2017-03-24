@@ -1,4 +1,4 @@
-test1.ast
+test.ast
 AST for test1.txt
 
 Program:
@@ -23,11 +23,11 @@ Program:
 								Variable Expression: v
 								Binary Expression: -
 									Variable Expression: u
-									Binary Expression: *
-										Binary Expression: /
-											Variable Expression: u
+									Binary Expression: /
+										Variable Expression: u
+										Binary Expression: *
 											Variable Expression: v
-										Variable Expression: v
+											Variable Expression: v
 	FunDecl: VOID main
 		Param: VOID
 		Compound Statement:
