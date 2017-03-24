@@ -1,5 +1,5 @@
 
-package livelyrussell.Scanner.classes;
+package livelyrussell.Parser;
 
 //simple exp -> add exp -> term -> factor -> var
 public class VarExp extends Expression {

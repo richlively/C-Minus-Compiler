@@ -1,5 +1,5 @@
 
-package livelyrussell.Scanner.classes;
+package livelyrussell.Parser;
 
 public class AssignExp extends Expression{
     //first thing on right side of line 18 on page 492

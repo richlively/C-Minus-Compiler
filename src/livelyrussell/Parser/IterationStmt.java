@@ -1,4 +1,4 @@
-package livelyrussell.Scanner.classes;
+package livelyrussell.Parser;
 
 public class IterationStmt extends Statement {
     //WHILE ( exp ) stmt
