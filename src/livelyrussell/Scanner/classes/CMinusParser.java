@@ -261,7 +261,7 @@ public class CMinusParser implements Parser {
                         return parseVarDecl(idval);
                     } else if (holder == Token.TokenType.LEFTPAREN) {
                         //Fun-decl
-                        return parseFunDecl(idval, "Int");
+                        return parseFunDecl(idval, FunDecl.type.INT);
                     } else {
                         throw new CMinusParseException("Error parsing decl: Expected [, ;, or (");
                     }
@@ -271,7 +271,7 @@ public class CMinusParser implements Parser {
                     if (faker.viewType() != Token.TokenType.ID) {
                         throw new CMinusParseException("Error parsing decl: Expected ID");
                     }
-                    return parseFunDecl((String) faker.viewData(), "Void");
+                    return parseFunDecl((String) faker.viewData(), FunDecl.type.VOID);
                 }
                 default:
                     throw new CMinusParseException("Error parsing decl: Expected INT or VOID");
@@ -640,7 +640,7 @@ public class CMinusParser implements Parser {
      * @param type
      * @return
      */
-    public Declaration parseFunDecl(String id, String type) {
+    public Declaration parseFunDecl(String id, FunDecl.type type) {
         //call parseParamList
     }
 
