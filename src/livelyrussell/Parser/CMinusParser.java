@@ -447,10 +447,11 @@ public class CMinusParser implements Parser {
     public ArrayList<Statement> parseStmtList() throws IOException {
         ArrayList<Statement> al = new ArrayList<>();
         //Wanna see the worst while loop in history?
-        while (scan.viewNextToken().viewType() != Token.TokenType.SEMICOLON
-                && scan.viewNextToken().viewType() != Token.TokenType.RIGHTCURLY
-                && scan.viewNextToken().viewType() != Token.TokenType.RIGHTSQUARE
-                && scan.viewNextToken().viewType() != Token.TokenType.RIGHTPAREN) {
+        Token.TokenType type = scan.viewNextToken().viewType();
+        while (type != Token.TokenType.SEMICOLON
+                && type != Token.TokenType.RIGHTCURLY
+                && type != Token.TokenType.RIGHTSQUARE
+                && type != Token.TokenType.RIGHTPAREN) {
             al.add(parseStmt());
         }
         return al;
@@ -503,7 +504,11 @@ public class CMinusParser implements Parser {
      * @return @throws java.io.IOException
      */
     public CompoundStmt parseCompStmt() throws IOException {
-        return new CompoundStmt(parseLocalDecls(), parseStmtList());
+        matchToken(Token.TokenType.LEFTCURLY);
+        ArrayList<VarDecl> localDecls = parseLocalDecls();
+        ArrayList<Statement> stmtList = parseStmtList();
+        matchToken(Token.TokenType.RIGHTCURLY);
+        return new CompoundStmt(localDecls, stmtList);
     }
 
     /**
@@ -656,14 +661,15 @@ public class CMinusParser implements Parser {
     private ArrayList<VarDecl> parseLocalDecls() throws IOException {
         ArrayList<VarDecl> localdecls = new ArrayList<>();
         //never mind, THIS is the worse while loop in the world
-        while (scan.viewNextToken().viewType() != Token.TokenType.SEMICOLON
-                && scan.viewNextToken().viewType() != Token.TokenType.NUM
-                && scan.viewNextToken().viewType() != Token.TokenType.LEFTPAREN
-                && scan.viewNextToken().viewType() != Token.TokenType.ID
-                && scan.viewNextToken().viewType() != Token.TokenType.IF
-                && scan.viewNextToken().viewType() != Token.TokenType.WHILE
-                && scan.viewNextToken().viewType() != Token.TokenType.RETURN
-                && scan.viewNextToken().viewType() != Token.TokenType.LEFTCURLY) {
+        Token.TokenType type = scan.viewNextToken().viewType();
+        while (type != Token.TokenType.SEMICOLON
+                && type != Token.TokenType.NUM
+                && type != Token.TokenType.LEFTPAREN
+                && type != Token.TokenType.ID
+                && type != Token.TokenType.IF
+                && type != Token.TokenType.WHILE
+                && type != Token.TokenType.RETURN
+                && type != Token.TokenType.LEFTCURLY) {
             localdecls.add(parseVarDeclPrime());
         }
         return localdecls;
