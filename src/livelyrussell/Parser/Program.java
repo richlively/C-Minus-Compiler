@@ -11,4 +11,8 @@ public class Program {
         decls = d;
     }
     
+    public void print(){
+        //TODO: recursivly call the other print functions.
+    }
+    
 }

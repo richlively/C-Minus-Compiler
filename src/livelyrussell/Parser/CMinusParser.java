@@ -645,8 +645,12 @@ public class CMinusParser implements Parser {
      * @param type
      * @return
      */
-    public Declaration parseFunDecl(String id, FunDecl.type type) {
-        
+    public FunDecl parseFunDecl(String id, FunDecl.type type) throws IOException {
+        matchToken(Token.TokenType.LEFTPAREN);
+        ArrayList<Param> params = parseParamList();
+        matchToken(Token.TokenType.RIGHTPAREN);
+        CompoundStmt cs = parseCompStmt();
+        return new FunDecl(id, cs, params, type);
     }
 
     private ArrayList<VarDecl> parseLocalDecls() throws IOException {

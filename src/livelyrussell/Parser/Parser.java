@@ -15,8 +15,4 @@ public interface Parser {
      * @throws livelyrussell.Parser.CMinusParseException 
      */
     public Program parseFile() throws IOException, CMinusParseException;
-    /**
-     * Prints the Abstract Syntax Tree
-     */
-    public void print(/*TODO: use some kind of output printer*/);
 }
