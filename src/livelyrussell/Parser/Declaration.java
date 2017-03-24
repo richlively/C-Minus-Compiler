@@ -1,7 +1,8 @@
 package livelyrussell.Parser;
 
-public abstract class Declaration {
+import java.io.PrintStream;
 
-    Declaration() {
-    }
+public abstract class Declaration implements ParseObject{
+    @Override
+    public abstract void print(PrintStream out);
 }

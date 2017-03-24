@@ -1,18 +1,24 @@
 
 package livelyrussell.Parser;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
-public class Program {
-    private ArrayList<Declaration> decls;
+public class Program implements ParseObject{
+    private final ArrayList<Declaration> decls;
     
     public Program(ArrayList<Declaration> d){
         decls = d;
     }
-    
-    public void print(){
-        //TODO: recursivly call the other print functions.
+
+    @Override
+    public void print(PrintStream out) {
+        for (Iterator<Declaration> it = decls.iterator(); it.hasNext();) {
+            Declaration decl = it.next();
+            decl.print(out);
+        }
     }
     
 }
