@@ -28,9 +28,7 @@ public class VarExp extends Expression {
         }
         out.println(tabs + "Variable Expression: " + id);
         if (exp != null) {
-            out.println(tabs + "[");
             exp.print(out, indent + 1);
-            out.println(tabs + "]");
         }
     }
 

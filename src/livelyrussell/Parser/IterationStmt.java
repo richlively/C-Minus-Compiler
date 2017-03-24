@@ -23,5 +23,6 @@ public class IterationStmt extends Statement {
         }
         out.println(tabs + "Iteration Statement: " + "WHILE");
         exp.print(out, indent+1);
+        stmt.print(out, indent+1);
     }
 }

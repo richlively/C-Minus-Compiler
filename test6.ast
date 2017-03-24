@@ -1,0 +1,174 @@
+test6.ast
+AST for test6.txt
+
+Program:
+	VarDecl: INT x
+		Num Expression: 10
+	FunDecl: INT minloc
+		Param: a []
+		Param: low
+		Param: high
+		Compound Statement:
+			Local Decls:
+				VarDecl: INT i
+				VarDecl: INT x
+				VarDecl: INT k
+			Statement List:
+				Expression Statement:
+					Assign Expression: =
+						Variable Expression: k
+						Variable Expression: low
+				Expression Statement:
+					Assign Expression: =
+						Variable Expression: x
+						Variable Expression: a
+							Variable Expression: low
+				Expression Statement:
+					Assign Expression: =
+						Variable Expression: i
+						Binary Expression: +
+							Variable Expression: low
+							Num Expression: 1
+				Iteration Statement: WHILE
+					Binary Expression: <
+						Variable Expression: i
+						Variable Expression: high
+					Compound Statement:
+						Local Decls:
+							None
+						Statement List:
+							Select Statement: IF
+								Binary Expression: <
+									Variable Expression: a
+										Variable Expression: i
+									Variable Expression: x
+								Compound Statement:
+									Local Decls:
+										None
+									Statement List:
+										Expression Statement:
+											Assign Expression: =
+												Variable Expression: x
+												Variable Expression: a
+													Variable Expression: i
+										Expression Statement:
+											Assign Expression: =
+												Variable Expression: k
+												Variable Expression: i
+							Expression Statement:
+								Assign Expression: =
+									Variable Expression: i
+									Binary Expression: +
+										Variable Expression: i
+										Num Expression: 1
+				Return Statement: RETURN
+					Expression Statement:
+						Variable Expression: k
+	FunDecl: VOID sort
+		Param: a []
+		Param: low
+		Param: high
+		Compound Statement:
+			Local Decls:
+				VarDecl: INT i
+				VarDecl: INT k
+			Statement List:
+				Expression Statement:
+					Assign Expression: =
+						Variable Expression: i
+						Variable Expression: low
+				Iteration Statement: WHILE
+					Binary Expression: <
+						Variable Expression: i
+						Binary Expression: -
+							Variable Expression: high
+							Num Expression: 1
+					Compound Statement:
+						Local Decls:
+							VarDecl: INT t
+						Statement List:
+							Expression Statement:
+								Assign Expression: =
+									Variable Expression: k
+									Call Expression: minloc
+										Variable Expression: a
+										Variable Expression: i
+										Variable Expression: high
+							Expression Statement:
+								Assign Expression: =
+									Variable Expression: t
+									Variable Expression: a
+										Variable Expression: k
+							Expression Statement:
+								Assign Expression: =
+									Variable Expression: a
+										Variable Expression: k
+									Variable Expression: a
+										Variable Expression: i
+							Expression Statement:
+								Assign Expression: =
+									Variable Expression: a
+										Variable Expression: i
+									Variable Expression: t
+							Expression Statement:
+								Assign Expression: =
+									Variable Expression: i
+									Binary Expression: +
+										Variable Expression: i
+										Num Expression: 1
+	FunDecl: VOID main
+		Param: VOID
+		Compound Statement:
+			Local Decls:
+				VarDecl: INT i
+			Statement List:
+				Expression Statement:
+					Assign Expression: =
+						Variable Expression: i
+						Num Expression: 0
+				Iteration Statement: WHILE
+					Binary Expression: <
+						Variable Expression: i
+						Num Expression: 10
+					Compound Statement:
+						Local Decls:
+							None
+						Statement List:
+							Expression Statement:
+								Assign Expression: =
+									Variable Expression: x
+										Variable Expression: i
+									Call Expression: input
+							Expression Statement:
+								Assign Expression: =
+									Variable Expression: i
+									Binary Expression: +
+										Variable Expression: i
+										Num Expression: 1
+				Expression Statement:
+					Call Expression: sort
+						Variable Expression: x
+						Num Expression: 0
+						Num Expression: 10
+				Expression Statement:
+					Assign Expression: =
+						Variable Expression: i
+						Num Expression: 0
+				Iteration Statement: WHILE
+					Binary Expression: <
+						Variable Expression: i
+						Num Expression: 10
+					Compound Statement:
+						Local Decls:
+							None
+						Statement List:
+							Expression Statement:
+								Call Expression: output
+									Variable Expression: x
+										Variable Expression: i
+							Expression Statement:
+								Assign Expression: =
+									Variable Expression: i
+									Binary Expression: +
+										Variable Expression: i
+										Num Expression: 1

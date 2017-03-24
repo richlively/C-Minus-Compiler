@@ -556,6 +556,11 @@ public class CMinusParser implements Parser {
                     return new SelectStmt(exp, ifstmt, parseStmt());
                 // no else
                 case RIGHTCURLY:
+                case NUM:
+                case LEFTPAREN:
+                case ID:
+                case WHILE:
+                case RETURN:
                     return new SelectStmt(exp, ifstmt);
                 default:
                     throw new CMinusParseException("Error parsing SelectStmt: Expected ELSE or }");
@@ -632,7 +637,6 @@ public class CMinusParser implements Parser {
             return new VarDecl(ID);
         } //vardecl -> [ NUM ] ;
         else if (holder.viewType() == Token.TokenType.LEFTSQUARE) {
-            matchToken(Token.TokenType.LEFTSQUARE);
             holder = scan.getNextToken();
             if (holder.viewType() == Token.TokenType.NUM) {
                 num = new NumExp((Integer) holder.viewData());
@@ -718,12 +722,12 @@ public class CMinusParser implements Parser {
         Expression left = parseTerm();
         BinaryExp.op oper = null; //initialize only to make Netbeans happy
         Token.TokenType temp = scan.viewNextToken().viewType();
-        while (temp != Token.TokenType.PLUS
-                && temp != Token.TokenType.MINUS
-                && temp != Token.TokenType.SEMICOLON
-                && temp != Token.TokenType.RIGHTPAREN
-                && temp != Token.TokenType.RIGHTSQUARE
-                && temp != Token.TokenType.COMMA) {
+        while (temp == Token.TokenType.PLUS
+                || temp == Token.TokenType.MINUS
+                || temp == Token.TokenType.SEMICOLON
+                || temp == Token.TokenType.RIGHTPAREN
+                || temp == Token.TokenType.RIGHTSQUARE
+                || temp == Token.TokenType.COMMA) {
             if (null != scan.viewNextToken().viewType()) {
                 switch (scan.viewNextToken().viewType()) {
                     case PLUS:
@@ -738,7 +742,7 @@ public class CMinusParser implements Parser {
                     case RIGHTPAREN:
                     case RIGHTSQUARE:
                     case COMMA:
-                        break;
+                        return left;
                     default:
                         throw new CMinusParseException("Error parsing AddExp: Expected + or -");
                 }
