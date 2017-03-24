@@ -1,7 +1,9 @@
 package livelyrussell.Scanner.classes;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import livelyrussell.Scanner.CMinusScanner;
 import livelyrussell.Scanner.Token;
@@ -751,4 +753,26 @@ public class CMinusParser implements Parser {
         return retval;
     }
 
+    public static void main(String args[]) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("File Name:");
+        String filename = new String();
+        BufferedReader file;
+
+        try {
+            //get filename
+            filename = br.readLine();
+            //create buffered reader BufferedReader file;
+            file = new BufferedReader(new FileReader(filename));
+
+            CMinusParser cmp = new CMinusParser(file, filename);
+
+            cmp.parseFile();
+            
+            //print AST
+
+        } catch (Exception ex) {
+            System.out.println("bad stuff happened");
+        }
+    }
 }
