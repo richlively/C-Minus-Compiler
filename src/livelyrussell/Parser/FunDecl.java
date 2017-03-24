@@ -1,4 +1,4 @@
-package livelyrussell.Scanner.classes;
+package livelyrussell.Parser;
 
 import java.util.ArrayList;
 

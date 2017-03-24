@@ -1,5 +1,5 @@
 
-package livelyrussell.Scanner.classes;
+package livelyrussell.Parser;
 
 public class ExpressionStmt extends Statement{
     // exp ;

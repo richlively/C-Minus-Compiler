@@ -1,4 +1,4 @@
-package livelyrussell.Scanner.classes;
+package livelyrussell.Parser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -27,8 +27,8 @@ public class CMinusParser implements Parser {
     public void matchToken(Token.TokenType t) throws IOException, CMinusParseException {
         Token holder = scan.getNextToken();
         if (holder.viewType() != t) {
-            String tval = "";
-            String holderval = "";
+            String tval;
+            String holderval;
             switch (t) {
                 //format for reserved words
                 case IF:
@@ -753,23 +753,26 @@ public class CMinusParser implements Parser {
         return retval;
     }
 
+    /**
+     * Parses a file and prints the Abstract Syntax Tree
+     * @param args 
+     */
     public static void main(String args[]) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("File Name:");
-        String filename = new String();
+        String filename;
         BufferedReader file;
-
         try {
             //get filename
             filename = br.readLine();
-            //create buffered reader BufferedReader file;
+            //create buffered reader for the file
             file = new BufferedReader(new FileReader(filename));
-
-            CMinusParser cmp = new CMinusParser(file, filename);
-
-            cmp.parseFile();
             
-            //print AST
+            CMinusParser cmp = new CMinusParser(file, filename);
+            //parse the file
+            cmp.parseFile();
+            //print the AST
+            //TODO: cmp.print()
 
         } catch (Exception ex) {
             System.out.println("bad stuff happened");
