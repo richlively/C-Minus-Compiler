@@ -930,21 +930,21 @@ public class CMinusParser implements Parser {
             Program p = cmp.parseFile();
 
             //choose to print to System.out or File
-            System.out.println("Print to File/System.out");
-            outputLocation = br.readLine();
+            System.out.println("Print to File.ast/System.out");
+            outputLocation = br.readLine() + ".ast";
             if ("System.out".equals(outputLocation)) {
                 out = System.out;
-            }
-            else {
+            } else {
                 File outputFile = new File(outputLocation);
                 out = new PrintStream(outputFile);
                 out.println(outputLocation);
             }
             out.println("AST for " + filename);
+            out.println();
             //print AST
-            p.print(out, 0);
+            p.print(out, 1);
         } catch (Exception ex) {
-             Logger.getLogger(CMinusParser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CMinusParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

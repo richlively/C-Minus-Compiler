@@ -1,12 +1,12 @@
-
 package livelyrussell.Parser;
 
 import java.io.PrintStream;
 
-public class ExpressionStmt extends Statement{
+public class ExpressionStmt extends Statement {
+
     // exp ;
     private Expression exp;
-    
+
     public ExpressionStmt(Expression ee) {
         super(Statement.type.EXP);
         exp = ee;
@@ -19,12 +19,10 @@ public class ExpressionStmt extends Statement{
             tabs += "\t";
         }
         out.println(tabs + "Expression Statement:");
-        if(exp!=null) {
-            exp.print(out, indent+1);
+        if (exp != null) {
+            exp.print(out, indent + 1);
+        } else {
+            out.println(tabs + "No Expression");
         }
-        else {
-            out.print("No Expression");
-        }
-        out.println(";");
     }
 }

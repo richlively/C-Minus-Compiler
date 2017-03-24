@@ -4,8 +4,10 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class FunDecl extends Declaration{
-    public enum type{
+public class FunDecl extends Declaration {
+
+    public enum type {
+
         VOID, INT
     }
     private final FunDecl.type kind;
@@ -18,25 +20,20 @@ public class FunDecl extends Declaration{
         params = p;
         kind = t;
     }
-    
+
     @Override
     public void print(PrintStream out, int indent) {
         String tabs = "";
         for (int i = 0; i < indent; i++) {
-            tabs+="\t";
+            tabs += "\t";
         }
         out.println(tabs + "FunDecl: " + kind + " " + id);
-        if (params.isEmpty()) {
-            out.println(tabs+"()");
+
+        for (Iterator<Param> it = params.iterator(); it.hasNext();) {
+            Param param = it.next();
+            param.print(out, indent + 1);
         }
-        else {
-            out.println(tabs+"(");
-            for (Iterator<Param> it = params.iterator(); it.hasNext();) {
-                Param param = it.next();
-                param.print(out, indent+1);
-            }
-            out.println(tabs+")");
-        }
-        cs.print(out, indent+1);
+
+        cs.print(out, indent + 1);
     }
 }

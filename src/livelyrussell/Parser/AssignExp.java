@@ -21,9 +21,8 @@ public class AssignExp extends Expression {
         for (int i = 0; i < indent; i++) {
             tabs += "\t";
         }
-        out.println(tabs + "Assign Expression:");
+        out.println(tabs + "Assign Expression: =");
         var.print(out, indent + 1);
-        out.println(tabs + "=");
         exp.print(out, indent + 1);
     }
 }

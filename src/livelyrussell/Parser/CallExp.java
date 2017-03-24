@@ -25,12 +25,10 @@ public class CallExp extends Expression {
             tabs += "\t";
         }
         out.println(tabs + "Call Expression: " + id);
-        out.println(tabs + "(");
         for (Iterator<Expression> it = arglist.iterator(); it.hasNext();) {
             Expression arg = it.next();
             arg.print(out, indent + 1);
         }
-        out.println(tabs + ")");
     }
 
 }

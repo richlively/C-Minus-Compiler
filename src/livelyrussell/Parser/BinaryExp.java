@@ -59,9 +59,8 @@ public class BinaryExp extends Expression {
         for (int i = 0; i < indent; i++) {
             tabs += "\t";
         }
-        out.println(tabs + "Binary Expression:");
+        out.println(tabs + "Binary Expression: " + optype);
         left.print(out, indent + 1);
-        out.println(tabs + optype);
         right.print(out, indent + 1);
     }
 }

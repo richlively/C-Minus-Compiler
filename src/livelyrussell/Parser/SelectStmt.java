@@ -27,9 +27,7 @@ public class SelectStmt extends Statement {
             tabs += "\t";
         }
         out.println(tabs + "Select Statement: IF");
-        out.println(tabs + "(");
         exp.print(out, indent + 1);
-        out.println(tabs + ")");
         ifstmt.print(out, indent + 1);
         if (elsestmt != null) {
             out.println(tabs + "ELSE");
