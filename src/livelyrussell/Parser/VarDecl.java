@@ -3,10 +3,10 @@ package livelyrussell.Parser;
 public class VarDecl extends Declaration {
 
     //if n=0, there was no parentheses
-    private int n;
+    private Integer n;
     private String id;
 
-    VarDecl(String i, int num) {
+    VarDecl(String i, Integer num) {
         n = num;
         id = i;
 

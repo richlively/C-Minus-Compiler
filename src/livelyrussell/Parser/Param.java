@@ -8,28 +8,26 @@ public class Param {
     //Also known as empty param-list.
     private boolean isArray;
 
-    Param(String i, boolean a, Param p, boolean v) {
+    Param(String i, boolean a, boolean v) {
         id = i;
         isArray = a;
         isvoid = v;
     }
 
-    Param(String i, boolean a, Param p) {
+    Param(String i, boolean a) {
         id = i;
         isArray = a;
         isvoid = false;
     }
 
-    Param(String i, boolean a) {
-        this(i, a, null, false);
-    }
+    
 
     Param(String i) {
-        this(i, false, null, false);
+        this(i, false, false);
     }
 
     Param() {
-        this("", false, null, true);
+        this("", false, true);
     }
 
 }
