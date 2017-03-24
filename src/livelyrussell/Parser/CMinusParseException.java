@@ -1,14 +1,15 @@
-
 package livelyrussell.Parser;
 
-import java.io.IOException;
-
-public class CMinusParseException extends IOException{
-    public CMinusParseException(String e){
-        super(e);
+/**
+ * Thrown during parse for code that is un-parsable
+ * @author Rich Lively and Jesse Russell
+ */
+public class CMinusParseException extends Exception{
+    public CMinusParseException(String message){
+        super(message);
     }
     
     public CMinusParseException(){
-        super("Ya done messed up the parse!");
+        super();
     }
 }
