@@ -10,6 +10,7 @@ public interface ParseObject {
     /**
      * Prints the object
      * @param out where to print (usually to file or System.out)
+     * @param indent how many times each line should be indented
      */
-    public void print(PrintStream out);
+    public void print(PrintStream out, int indent);
 }

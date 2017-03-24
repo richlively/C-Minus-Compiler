@@ -14,10 +14,10 @@ public class Program implements ParseObject{
     }
 
     @Override
-    public void print(PrintStream out) {
+    public void print(PrintStream out, int indent) {
         for (Iterator<Declaration> it = decls.iterator(); it.hasNext();) {
             Declaration decl = it.next();
-            decl.print(out);
+            decl.print(out, indent);
         }
     }
     

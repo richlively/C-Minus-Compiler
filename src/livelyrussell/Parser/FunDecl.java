@@ -20,21 +20,23 @@ public class FunDecl extends Declaration{
     }
     
     @Override
-    public void print(PrintStream out) {
-        out.println("FunDecl: " + kind + " " + id);
+    public void print(PrintStream out, int indent) {
+        String tabs = "";
+        for (int i = 0; i < indent; i++) {
+            tabs+="\t";
+        }
+        out.println(tabs + "FunDecl: " + kind + " " + id);
         if (params.isEmpty()) {
-            out.println("\t()");
+            out.println(tabs+"()");
         }
         else {
-            out.println("\t(");
+            out.println(tabs+"(");
             for (Iterator<Param> it = params.iterator(); it.hasNext();) {
                 Param param = it.next();
-                out.print("\t\t");
-                param.print(out);
+                param.print(out, indent+1);
             }
-            out.println("\t)");
+            out.println(tabs+")");
         }
-        out.print("\t");
-        
+        cs.print(out, indent+1);
     }
 }

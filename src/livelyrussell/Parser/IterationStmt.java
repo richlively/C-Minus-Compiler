@@ -3,7 +3,9 @@ package livelyrussell.Parser;
 import java.io.PrintStream;
 
 public class IterationStmt extends Statement {
+
     //WHILE ( exp ) stmt
+
     private Expression exp;
     private Statement stmt;
 
@@ -14,7 +16,14 @@ public class IterationStmt extends Statement {
     }
 
     @Override
-    public void print(PrintStream out) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void print(PrintStream out, int indent) {
+        String tabs = "";
+        for (int i = 0; i < indent; i++) {
+            tabs += "\t";
+        }
+        out.println(tabs + "Iteration Statement: " + "WHILE");
+        out.println(tabs + "(");
+        exp.print(out, indent+1);
+        out.println(tabs + ")");
     }
 }

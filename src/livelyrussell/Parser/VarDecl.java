@@ -4,7 +4,7 @@ import java.io.PrintStream;
 
 public class VarDecl extends Declaration{
 
-    //if n=null, there was no parentheses
+    //if n=null, there was no brackets
     private Integer n;
 
     VarDecl(String i, Integer num) {
@@ -18,7 +18,15 @@ public class VarDecl extends Declaration{
     }
 
     @Override
-    public void print(PrintStream out) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void print(PrintStream out, int indent) {
+        String tabs = "";
+        for (int i = 0; i < indent; i++) {
+            tabs+="\t";
+        }
+        out.print(tabs + "VarDecl: INT " + id);
+        if (n!=null) {
+            out.print(" ["+n+"]");
+        }
+        out.println();
     }
 }

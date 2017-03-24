@@ -2,7 +2,7 @@ package livelyrussell.Parser;
 
 import java.io.PrintStream;
 
-public class Param implements ParseObject{
+public class Param implements ParseObject {
 
     private boolean isvoid;
     private String id;
@@ -22,8 +22,6 @@ public class Param implements ParseObject{
         isvoid = false;
     }
 
-    
-
     Param(String i) {
         this(i, false, false);
     }
@@ -33,8 +31,20 @@ public class Param implements ParseObject{
     }
 
     @Override
-    public void print(PrintStream out) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void print(PrintStream out, int indent) {
+        String tabs = "";
+        for (int i = 0; i < indent; i++) {
+            tabs += "\t";
+        }
+        out.print(tabs + "Param: ");
+        if (isvoid) {
+            out.print("VOID");
+        } else {
+            out.print(id);
+            if (isArray) {
+                out.print(" []");
+            }
+        }
+        out.println();
     }
-
 }

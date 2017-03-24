@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 public class NumExp extends Expression {
 
-    private int num;
+    private final int num;
 
     public NumExp(int n) {
         super(Expression.type.NUM);
@@ -15,8 +15,12 @@ public class NumExp extends Expression {
     }
 
     @Override
-    public void print(PrintStream out) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void print(PrintStream out, int indent) {
+        String tabs = "";
+        for (int i = 0; i < indent; i++) {
+            tabs += "\t";
+        }
+        out.println(tabs + "Num Expression: " + num);
     }
 
 }

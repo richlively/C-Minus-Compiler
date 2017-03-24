@@ -942,7 +942,7 @@ public class CMinusParser implements Parser {
             }
             out.println("AST for " + filename);
             //print AST
-            p.print(out);
+            p.print(out, 0);
         } catch (Exception ex) {
              Logger.getLogger(CMinusParser.class.getName()).log(Level.SEVERE, null, ex);
         }
