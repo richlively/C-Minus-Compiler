@@ -1,17 +1,14 @@
 package livelyrussell.Parser;
 
-public abstract class Expression {
-    
-    public enum type{
+public abstract class Expression implements ParseObject{
+    protected enum type{
         VAR,NUM,BINARY,CALL,ASSIGN
     }
     
-    private Expression.type kind;
+    protected final Expression.type kind;
     
     Expression(Expression.type t){
         kind = t;
     }
-    
-    
 }
 

@@ -1,8 +1,15 @@
 package livelyrussell.Parser;
 
-public class BinaryExp extends Expression {
+import java.io.PrintStream;
+
+public class BinaryExp extends Expression{
 
     private Expression left;
+
+    @Override
+    public void print(PrintStream out) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public enum op {
         //Special Symbols

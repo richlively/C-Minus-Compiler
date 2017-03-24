@@ -1,5 +1,6 @@
 
 package livelyrussell.Parser;
+import java.io.PrintStream;
 import java.util.ArrayList;
 //simple exp -> add exp -> term -> factor -> call
 public class CallExp extends Expression{
@@ -12,6 +13,11 @@ public class CallExp extends Expression{
         super(Expression.type.CALL);
         id = i;
         arglist = a;
+    }
+
+    @Override
+    public void print(PrintStream out) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
