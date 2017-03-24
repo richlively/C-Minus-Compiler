@@ -346,6 +346,8 @@ public class CMinusParser implements Parser {
                 case LESS_EQUAL:
                 case EQUAL:
                 case NOT_EQUALS:
+                case RIGHTCURLY:
+                case RIGHTSQUARE:
                     return parseSimpleExpPrime(new VarExp(id));
                 default:
                     throw new CMinusParseException("Error parsing expression': Expected =, (, [, or factor-follow stuff.");
@@ -369,6 +371,7 @@ public class CMinusParser implements Parser {
                     return new AssignExp(left, parseExp());
                 case SEMICOLON:
                 case RIGHTPAREN:
+                case RIGHTSQUARE:
                 case STAR:
                 case SLASH:
                 case PLUS:
@@ -643,11 +646,23 @@ public class CMinusParser implements Parser {
      * @return
      */
     public Declaration parseFunDecl(String id, FunDecl.type type) {
-        //call parseParamList
+        
     }
 
-    private ArrayList<VarDecl> parseLocalDecls() {
-        //iterate over parseVarDeclPrime(), being sure to check for empty
+    private ArrayList<VarDecl> parseLocalDecls() throws IOException {
+        ArrayList<VarDecl> localdecls = new ArrayList<>();
+        //never mind, THIS is the worse while loop in the world
+        while (scan.viewNextToken().viewType() != Token.TokenType.SEMICOLON
+                && scan.viewNextToken().viewType() != Token.TokenType.NUM
+                && scan.viewNextToken().viewType() != Token.TokenType.LEFTPAREN
+                && scan.viewNextToken().viewType() != Token.TokenType.ID
+                && scan.viewNextToken().viewType() != Token.TokenType.IF
+                && scan.viewNextToken().viewType() != Token.TokenType.WHILE
+                && scan.viewNextToken().viewType() != Token.TokenType.RETURN
+                && scan.viewNextToken().viewType() != Token.TokenType.LEFTCURLY) {
+            localdecls.add(parseVarDeclPrime());
+        }
+        return localdecls;
     }
 
     private VarDecl parseVarDeclPrime() throws IOException, CMinusParseException {
@@ -686,10 +701,27 @@ public class CMinusParser implements Parser {
 
     /**
      *
-     * @return
+     * @return @throws java.io.IOException
      */
-    public BinaryExp parseAddExp() {
-        //parseTerm()
+    public BinaryExp parseAddExp() throws IOException {
+        Expression left = parseTerm();
+        BinaryExp.op oper = null; //initialize only to make Netbeans happy
+        if (null != scan.viewNextToken().viewType()) {
+            switch (scan.viewNextToken().viewType()) {
+                case PLUS:
+                    matchToken(Token.TokenType.PLUS);
+                    oper = BinaryExp.op.PLUS;
+                    break;
+                case MINUS:
+                    matchToken(Token.TokenType.MINUS);
+                    oper = BinaryExp.op.MINUS;
+                    break;
+                default:
+                    throw new CMinusParseException("Error parsing AddExp: Expected + or -");
+            }
+        }
+        Expression right = parseTerm();
+        return new BinaryExp(left, oper, right);
     }
 
     /**
@@ -697,9 +729,30 @@ public class CMinusParser implements Parser {
      * @param exp
      * @return
      */
-    public BinaryExp parseAddExpPrime(Expression exp) {
-        //it depends on where this came from what catchall actually is.
-        //This is sloppy and will need fixing
+    public Expression parseAddExpPrime(Expression exp) throws IOException {
+        Expression left = parseTermPrime(exp);
+        BinaryExp.op oper = null; //initialize only to make Netbeans happy
+        if (null != scan.viewNextToken().viewType()) {
+            switch (scan.viewNextToken().viewType()) {
+                case PLUS:
+                    matchToken(Token.TokenType.PLUS);
+                    oper = BinaryExp.op.PLUS;
+                    break;
+                case MINUS:
+                    matchToken(Token.TokenType.MINUS);
+                    oper = BinaryExp.op.MINUS;
+                    break;
+                case NUM:
+                case LEFTPAREN:
+                case ID:
+                    return left;
+                default:
+                    throw new CMinusParseException("Error parsing AddExp: Expected + or -");
+            }
+        }
+        Expression right = parseTerm();
+        return new BinaryExp(left, oper, right);
+
     }
 
     /**
@@ -707,32 +760,103 @@ public class CMinusParser implements Parser {
      * @param left
      * @return
      */
-    public BinaryExp parseTermPrime(Expression left) {
+    public Expression parseTermPrime(Expression left) throws CMinusParseException, IOException {
+        BinaryExp.op oper = null; //initialize only to make Netbeans happy
+        if (null != scan.viewNextToken().viewType()) {
+            switch (scan.viewNextToken().viewType()) {
+                case STAR:
+                    matchToken(Token.TokenType.STAR);
+                    oper = BinaryExp.op.STAR;
+                    break;
+                case SLASH:
+                    matchToken(Token.TokenType.SLASH);
+                    oper = BinaryExp.op.SLASH;
+                    break;
+                case NUM:
+                case ID:
+                case PLUS:
+                case MINUS:
+                case LEFTPAREN:
+                    return left;
+                default:
+                    throw new CMinusParseException("Error parsing AddExp: Expected + or -");
+            }
+        }
+        Expression right = parseFactor();
+        return new BinaryExp(left, oper, right);
+    }
 
+    /**
+     *
+     * @return @throws java.io.IOException
+     */
+    public Expression parseTerm() throws IOException {
+        Expression left = parseFactor();
+        return parseTermPrime(left);
     }
 
     /**
      *
      * @return
      */
-    public BinaryExp parseTerm() {
-        //in theory, you could call parseTermPrime() in here.
+    public Expression parseFactor() throws IOException {
+        if (null != scan.viewNextToken().viewType()) {
+            switch (scan.viewNextToken().viewType()) {
+                case NUM:
+                    //pass the integer value in the NUM token
+                    return new NumExp((Integer) scan.getNextToken().viewData());
+                case LEFTPAREN:
+                    matchToken(Token.TokenType.LEFTPAREN);
+                    Expression exp = parseExp();
+                    matchToken(Token.TokenType.RIGHTPAREN);
+                    return exp;
+                case ID:
+                    String id = scan.getNextToken().viewData().toString();
+                    return parseVarCall(id);
+                default:
+                    throw new CMinusParseException("Error parsing factor: Expected NUM, ( or ID");
+            }
+        }
+        throw new CMinusParseException("Critical Error parsing factor: Expected NUM, ( or ID");
     }
 
     /**
      *
+     * @param id
      * @return
      */
-    public Expression parseFactor() {
-
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Expression parseVarCall() {
-        //check for empty case using follow set
+    public Expression parseVarCall(String id) throws IOException {
+        if (null != scan.viewNextToken().viewType()) {
+            switch (scan.viewNextToken().viewType()) {
+                case LEFTPAREN:
+                    matchToken(Token.TokenType.LEFTPAREN);
+                    ArrayList<Expression> args = parseArgs();
+                    matchToken(Token.TokenType.RIGHTPAREN);
+                    return new CallExp(id, args);
+                case LEFTSQUARE:
+                    matchToken(Token.TokenType.LEFTSQUARE);
+                    Expression exp = parseExp();
+                    matchToken(Token.TokenType.RIGHTSQUARE);
+                    return new VarExp(id, exp);
+                case SEMICOLON:
+                case RIGHTPAREN:
+                case STAR:
+                case SLASH:
+                case PLUS:
+                case MINUS:
+                case GREATER_THAN:
+                case GREATER_EQUAL:
+                case LESS_THAN:
+                case LESS_EQUAL:
+                case EQUAL:
+                case NOT_EQUALS:
+                case RIGHTSQUARE:
+                    return new VarExp(id);
+                default:
+                    throw new CMinusParseException("Error Parsing varcall: expected (,),[,],; or an operator");
+            }
+        }
+        throw new CMinusParseException("Critical Error Parsing varcall: expected (,),[,],; or an operator");
     }
 
     /**
@@ -768,9 +892,8 @@ public class CMinusParser implements Parser {
             CMinusParser cmp = new CMinusParser(file, filename);
 
             cmp.parseFile();
-            
-            //print AST
 
+            //print AST
         } catch (Exception ex) {
             System.out.println("bad stuff happened");
         }
