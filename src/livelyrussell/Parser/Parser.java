@@ -15,4 +15,12 @@ public interface Parser {
      * @throws livelyrussell.Parser.CMinusParseException 
      */
     public Program parseFile() throws IOException, CMinusParseException;
+
+    public static class CodeGenerationException extends Exception {
+
+        public CodeGenerationException(String operand_invalid_type) {
+            System.out.println(operand_invalid_type);
+            printStackTrace();
+        }
+    }
 }

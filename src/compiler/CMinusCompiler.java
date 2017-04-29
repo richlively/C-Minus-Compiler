@@ -1,7 +1,7 @@
 package compiler;
 
 import x64codegen.X64AssemblyGenerator;
-import parser.*;
+import livelyrussell.Parser.*;
 import lowlevel.*;
 import java.util.*;
 import java.io.*;
@@ -29,10 +29,10 @@ public class CMinusCompiler implements Compiler {
 
         String fileName = filePrefix + ".c";
         try {
-            Parser myParser = new CMinusParser(fileName);
+            Parser myParser = new CMinusParser(new BufferedReader(new FileReader(fileName)), fileName);
 
-            Program parseTree = myParser.parse();
-            myParser.printAST(parseTree);
+            Program parseTree = myParser.parseFile();
+           parseTree.print(new PrintStream(filePrefix + ".o"), 0);
 
             CodeItem lowLevelCode = parseTree.genLLCode();
 

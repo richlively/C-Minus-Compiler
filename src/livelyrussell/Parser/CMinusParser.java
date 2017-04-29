@@ -16,7 +16,7 @@ public class CMinusParser implements Parser {
 
     private CMinusScanner scan;
 
-    CMinusParser(BufferedReader file, String filename) throws IOException {
+    public CMinusParser(BufferedReader file, String filename) throws IOException {
         this.scan = new CMinusScanner(file, filename);
     }
 
