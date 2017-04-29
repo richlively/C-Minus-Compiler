@@ -2,6 +2,7 @@ package livelyrussell.Parser;
 
 import java.io.PrintStream;
 import lowlevel.CodeItem;
+import lowlevel.Data;
 
 public class VarDecl extends Declaration {
 
@@ -31,6 +32,8 @@ public class VarDecl extends Declaration {
     }
 
     public CodeItem genLLCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Data retval = (Data) n.genLLCode();
+        retval.setname(this.id);
+        return retval;
     }
 }

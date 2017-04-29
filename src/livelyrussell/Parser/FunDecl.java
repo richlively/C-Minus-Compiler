@@ -4,12 +4,27 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import lowlevel.CodeItem;
+import lowlevel.FuncParam;
+import lowlevel.Function;
 
 public class FunDecl extends Declaration {
 
     @Override
     public CodeItem genLLCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int t;
+        if(kind == type.VOID){
+            t = 0;
+        } else {
+            t = 1;
+        }
+        String name = id;
+        FuncParam param;
+        if(params.size() > 0){
+            
+        } else {
+            param = null;
+        }
+        for
     }
 
     public enum type {

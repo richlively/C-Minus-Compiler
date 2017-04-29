@@ -32,7 +32,7 @@ public class CMinusCompiler implements Compiler {
             Parser myParser = new CMinusParser(new BufferedReader(new FileReader(fileName)), fileName);
 
             Program parseTree = myParser.parseFile();
-           parseTree.print(new PrintStream(filePrefix + ".o"), 0);
+            parseTree.print(new PrintStream(filePrefix + ".o"), 0);
 
             CodeItem lowLevelCode = parseTree.genLLCode();
 
@@ -126,7 +126,7 @@ public class CMinusCompiler implements Compiler {
     public static void main(String[] args) {
         String filePrefix = "test5";
         CMinusCompiler myCompiler = new CMinusCompiler();
-        myCompiler.setGenX64Code(true);
+        myCompiler.setGenX64Code(false);
         myCompiler.compile(filePrefix);
     }
 }
