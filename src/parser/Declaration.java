@@ -1,4 +1,4 @@
-package livelyrussell.Parser;
+package parser;
 
 public abstract class Declaration implements ParseObject{
     //all declaration have an ID

@@ -1,4 +1,4 @@
-package livelyrussell.Parser;
+package parser;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ public interface Parser {
      * Builds the Abstract Syntax Tree
      * @return a Program
      * @throws IOException 
-     * @throws livelyrussell.Parser.CMinusParseException 
+     * @throws parser.CMinusParseException 
      */
-    public Program parseFile() throws IOException, CMinusParseException;
+    public Program parse() throws IOException, CMinusParseException;
 }

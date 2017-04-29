@@ -1,4 +1,4 @@
-package livelyrussell.Parser;
+package parser;
 
 //simple exp -> add exp -> term -> factor -> var
 import java.io.PrintStream;

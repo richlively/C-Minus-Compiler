@@ -1,4 +1,4 @@
-package livelyrussell.Parser;
+package parser;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -241,7 +241,7 @@ public class CMinusParser implements Parser {
      * @return @throws java.io.IOException in the form of CMinusParseException
      */
     @Override
-    public Program parseFile() throws IOException, CMinusParseException {
+    public Program parse() throws IOException, CMinusParseException {
         ArrayList<Declaration> decls = new ArrayList<>();
         decls.add(parseDecl());
         while (scan.viewNextToken().viewType() != Token.TokenType.EOF) {
@@ -962,7 +962,7 @@ public class CMinusParser implements Parser {
             CMinusParser cmp = new CMinusParser(file, filename);
 
             //parse the program
-            Program p = cmp.parseFile();
+            Program p = cmp.parse();
 
             //choose to print to System.out or File
             System.out.println("Print to File.ast/System.out");

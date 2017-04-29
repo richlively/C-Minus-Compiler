@@ -1,4 +1,4 @@
-package livelyrussell.Parser;
+package parser;
 
 public abstract class Statement implements ParseObject{
 

@@ -1,4 +1,4 @@
-package livelyrussell.Parser;
+package parser;
 
 import java.io.PrintStream;
 
