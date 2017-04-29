@@ -3,6 +3,10 @@ package lowlevel;
 import java.util.*;
 import java.io.*;
 import dataflow.BitArraySet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import livelyrussell.Parser.Parser;
+import livelyrussell.Parser.Parser.CodeGenerationException;
 
 /**
  * This class is the primary low-level abstraction for a function
@@ -492,6 +496,7 @@ public class Function extends CodeItem {
 
 /***************************************************************************/
     // recursive routine which prints the function information
+  @Override
   public void printLLCode(PrintWriter outFile) {
     if (outFile == null) {
       System.out.print("(FUNCTION  " + getName() + "  [");
@@ -503,7 +508,11 @@ public class Function extends CodeItem {
       }
       System.out.println("]");
       for (BasicBlock curr = firstBlock; curr != null; curr=curr.getNextBlock()) {
-        curr.printLLCode(outFile);
+          try {
+              curr.printLLCode(outFile);
+          } catch (CodeGenerationException ex) {
+              Logger.getLogger(Function.class.getName()).log(Level.SEVERE, null, ex);
+          }
       }
       System.out.println(")");
     }
@@ -517,7 +526,11 @@ public class Function extends CodeItem {
       }
       outFile.println("]");
       for (BasicBlock curr = firstBlock; curr != null; curr=curr.getNextBlock()) {
-        curr.printLLCode(outFile);
+          try {
+              curr.printLLCode(outFile);
+          } catch (CodeGenerationException ex) {
+              Logger.getLogger(Function.class.getName()).log(Level.SEVERE, null, ex);
+          }
       }
       outFile.println(")");
     }

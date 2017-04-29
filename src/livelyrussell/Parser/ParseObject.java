@@ -15,5 +15,4 @@ public interface ParseObject {
      */
     public void print(PrintStream out, int indent);
     
-    public CodeItem genLLCode();
 }

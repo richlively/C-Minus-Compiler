@@ -5,7 +5,6 @@ import lowlevel.CodeItem;
 
 public class BinaryExp extends Expression {
 
-    @Override
     public CodeItem genLLCode() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -13,7 +12,6 @@ public class BinaryExp extends Expression {
     public enum op {
 
         //Special Symbols
-
         PLUS, MINUS, STAR, SLASH,
         //Comparators
         GREATER_THAN, GREATER_EQUAL, LESS_THAN,
