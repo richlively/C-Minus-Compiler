@@ -9,6 +9,8 @@ import optimizer.*;
 import x86codegen.*;
 import x64codegen.*;
 import dataflow.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CMinusCompiler implements Compiler {
 
@@ -124,9 +126,17 @@ public class CMinusCompiler implements Compiler {
     }
 
     public static void main(String[] args) {
-        String filePrefix = "test5";
+        System.out.println("File Prefix: ");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String filePrefix;
+        try {
+            filePrefix = br.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(CMinusCompiler.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
         CMinusCompiler myCompiler = new CMinusCompiler();
-        myCompiler.setGenX64Code(false);
+        CMinusCompiler.setGenX64Code(false);
         myCompiler.compile(filePrefix);
     }
 }
