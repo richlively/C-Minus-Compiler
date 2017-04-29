@@ -5,8 +5,7 @@ import java.io.*;
 import dataflow.BitArraySet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import livelyrussell.Parser.Parser;
-import livelyrussell.Parser.Parser.CodeGenerationException;
+import parser.Parser.CodeGenerationException;
 
 /**
  * This class is the primary low-level abstraction for a function
