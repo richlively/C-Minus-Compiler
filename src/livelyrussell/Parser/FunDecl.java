@@ -84,8 +84,7 @@ public class FunDecl extends Declaration {
         }
         out.println(tabs + "FunDecl: " + kind + " " + id);
 
-        for (Iterator<Param> it = params.iterator(); it.hasNext();) {
-            Param param = it.next();
+        for (Param param : params) {
             param.print(out, indent + 1);
         }
 
