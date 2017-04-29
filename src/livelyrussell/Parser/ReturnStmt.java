@@ -1,7 +1,7 @@
-
 package livelyrussell.Parser;
 
 import java.io.PrintStream;
+import lowlevel.CodeItem;
 
 public class ReturnStmt extends Statement {
 
@@ -19,7 +19,10 @@ public class ReturnStmt extends Statement {
             tabs += "\t";
         }
         out.println(tabs + "Return Statement: RETURN");
-        estmt.print(out, indent+1);
+        estmt.print(out, indent + 1);
     }
 
+    public CodeItem genLLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

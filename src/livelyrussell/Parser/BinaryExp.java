@@ -1,8 +1,14 @@
 package livelyrussell.Parser;
 
 import java.io.PrintStream;
+import lowlevel.CodeItem;
 
 public class BinaryExp extends Expression {
+
+    @Override
+    public CodeItem genLLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public enum op {
 

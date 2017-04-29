@@ -2,6 +2,7 @@ package livelyrussell.Parser;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import lowlevel.CodeItem;
 
 public class CompoundStmt extends Statement {
 
@@ -37,5 +38,10 @@ public class CompoundStmt extends Statement {
             Statement stmt = it.next();
             stmt.print(out, indent + 2);
         }
+    }
+
+    @Override
+    public CodeItem genLLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -1,6 +1,7 @@
 package livelyrussell.Parser;
 
 import java.io.PrintStream;
+import lowlevel.CodeItem;
 
 /**
  * Interface for any AST objects from the parser
@@ -13,4 +14,6 @@ public interface ParseObject {
      * @param indent how many times each line should be indented
      */
     public void print(PrintStream out, int indent);
+    
+    public CodeItem genLLCode();
 }

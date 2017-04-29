@@ -1,6 +1,7 @@
 package livelyrussell.Parser;
 
 import java.io.PrintStream;
+import lowlevel.CodeItem;
 
 public class AssignExp extends Expression {
 
@@ -24,5 +25,10 @@ public class AssignExp extends Expression {
         out.println(tabs + "Assign Expression: =");
         var.print(out, indent + 1);
         exp.print(out, indent + 1);
+    }
+
+    @Override
+    public CodeItem genLLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

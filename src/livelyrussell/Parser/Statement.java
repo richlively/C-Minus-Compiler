@@ -1,6 +1,6 @@
 package livelyrussell.Parser;
 
-public abstract class Statement implements ParseObject{
+public abstract class Statement implements ParseObject {
 
     public enum type {
         COMPOUND, EXP, SELECT, ITERATE, RETURN

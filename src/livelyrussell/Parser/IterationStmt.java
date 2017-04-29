@@ -1,11 +1,11 @@
 package livelyrussell.Parser;
 
 import java.io.PrintStream;
+import lowlevel.CodeItem;
 
 public class IterationStmt extends Statement {
 
     //WHILE ( exp ) stmt
-
     private Expression exp;
     private Statement stmt;
 
@@ -22,7 +22,11 @@ public class IterationStmt extends Statement {
             tabs += "\t";
         }
         out.println(tabs + "Iteration Statement: " + "WHILE");
-        exp.print(out, indent+1);
-        stmt.print(out, indent+1);
+        exp.print(out, indent + 1);
+        stmt.print(out, indent + 1);
+    }
+
+    public CodeItem genLLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

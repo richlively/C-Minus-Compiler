@@ -3,6 +3,7 @@ package livelyrussell.Parser;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import lowlevel.CodeItem;
 //simple exp -> add exp -> term -> factor -> call
 
 public class CallExp extends Expression {
@@ -29,6 +30,11 @@ public class CallExp extends Expression {
             Expression arg = it.next();
             arg.print(out, indent + 1);
         }
+    }
+
+    @Override
+    public CodeItem genLLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

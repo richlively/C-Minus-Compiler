@@ -1,9 +1,8 @@
-
 package livelyrussell.Parser;
 
 //simple exp -> add exp -> term -> factor -> NUM
-
 import java.io.PrintStream;
+import lowlevel.CodeItem;
 
 public class NumExp extends Expression {
 
@@ -23,4 +22,7 @@ public class NumExp extends Expression {
         out.println(tabs + "Num Expression: " + num);
     }
 
+    public CodeItem genLLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

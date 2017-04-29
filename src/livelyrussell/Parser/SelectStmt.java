@@ -1,6 +1,7 @@
 package livelyrussell.Parser;
 
 import java.io.PrintStream;
+import lowlevel.CodeItem;
 
 public class SelectStmt extends Statement {
 
@@ -35,4 +36,7 @@ public class SelectStmt extends Statement {
         }
     }
 
+    public CodeItem genLLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -2,6 +2,7 @@ package livelyrussell.Parser;
 
 //simple exp -> add exp -> term -> factor -> var
 import java.io.PrintStream;
+import lowlevel.CodeItem;
 
 public class VarExp extends Expression {
 
@@ -32,4 +33,7 @@ public class VarExp extends Expression {
         }
     }
 
+    public CodeItem genLLCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
