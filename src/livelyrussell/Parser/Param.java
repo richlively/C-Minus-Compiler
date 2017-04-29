@@ -6,7 +6,7 @@ import lowlevel.CodeItem;
 public class Param implements ParseObject {
 
     private boolean isvoid;
-    private String id;
+    public String id;
     //If id == VOID, there were no params
     //Also known as empty param-list.
     private boolean isArray;
@@ -29,6 +29,10 @@ public class Param implements ParseObject {
 
     Param() {
         this("", false, true);
+    }
+    
+    public boolean isVoid(){
+        return isvoid;
     }
 
     @Override

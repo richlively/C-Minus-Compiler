@@ -3,6 +3,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import lowlevel.CodeItem;
+import lowlevel.Function;
 
 public class CompoundStmt extends Statement {
 
@@ -40,8 +41,7 @@ public class CompoundStmt extends Statement {
         }
     }
 
-    @Override
-    public CodeItem genLLCode() {
+    public CodeItem genLLCode(Function fun) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

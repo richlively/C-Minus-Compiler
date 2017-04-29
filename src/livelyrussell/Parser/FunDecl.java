@@ -3,6 +3,7 @@ package livelyrussell.Parser;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import lowlevel.BasicBlock;
 import lowlevel.CodeItem;
 import lowlevel.FuncParam;
 import lowlevel.Function;
@@ -11,20 +12,53 @@ public class FunDecl extends Declaration {
 
     @Override
     public CodeItem genLLCode() {
+
+        //get function stuff
         int t;
-        if(kind == type.VOID){
+        if (kind == type.VOID) {
             t = 0;
         } else {
             t = 1;
         }
         String name = id;
-        FuncParam param;
-        if(params.size() > 0){
-            
+
+        //getting params
+        FuncParam head;
+        FuncParam tail;
+        if (params.size() > 0) {
+            Param holder = params.get(0);
+            int typer;
+            if (holder.isVoid()) {
+                typer = 0;
+            } else {
+                typer = 1;
+            }
+            String pname = holder.id;
+            head = new FuncParam(typer, pname);
+            tail = head;
         } else {
-            param = null;
+            head = null;
+            tail = null;
         }
-        for
+        for (int i = 1; i < params.size(); i++) {
+            Param holder = params.get(0);
+            int typer;
+            if (holder.isVoid()) {
+                typer = 0;
+            } else {
+                typer = 1;
+            }
+            String pname = holder.id;
+            tail.setNextParam(new FuncParam(typer, pname));
+            tail = tail.getNextParam();
+        }
+
+        Function retval = new Function(t, name, head);
+        retval.createBlock0();
+
+        //parse the comp stmt
+        cs.genLLCode(retval);
+        return retval;
     }
 
     public enum type {

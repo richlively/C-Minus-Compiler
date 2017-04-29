@@ -31,6 +31,7 @@ public class VarDecl extends Declaration {
         }
     }
 
+    @Override
     public CodeItem genLLCode() {
         Data retval = (Data) n.genLLCode();
         retval.setname(this.id);
