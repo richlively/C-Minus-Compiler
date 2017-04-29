@@ -50,7 +50,7 @@ public class CompoundStmt extends Statement {
 
         //gen stmts
         for(Statement stmt : stmtlist){
-            stmt.genLLCode();
+            stmt.genLLCode(fun);
         }
         
         return fun;

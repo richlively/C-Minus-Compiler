@@ -5,7 +5,7 @@ import lowlevel.Function;
 
 public abstract class Statement implements ParseObject {
 
-    void genLLCode() {
+    public CodeItem genLLCode(Function fun) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
