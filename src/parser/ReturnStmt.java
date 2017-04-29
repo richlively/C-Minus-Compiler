@@ -1,19 +1,16 @@
-package livelyrussell.Parser;
+
+package parser;
 
 import java.io.PrintStream;
 import lowlevel.CodeItem;
 
-public class AssignExp extends Expression {
+public class ReturnStmt extends Statement {
 
-    //first thing on right side of line 18 on page 492
+    public ExpressionStmt estmt;
 
-    private VarExp var;
-    private Expression exp;
-
-    public AssignExp(VarExp v, Expression e) {
-        super(Expression.type.ASSIGN);
-        var = v;
-        exp = e;
+    public ReturnStmt(ExpressionStmt e) {
+        super(Statement.type.RETURN);
+        estmt = e;
     }
 
     @Override
@@ -22,9 +19,8 @@ public class AssignExp extends Expression {
         for (int i = 0; i < indent; i++) {
             tabs += "\t";
         }
-        out.println(tabs + "Assign Expression: =");
-        var.print(out, indent + 1);
-        exp.print(out, indent + 1);
+        out.println(tabs + "Return Statement: RETURN");
+        estmt.print(out, indent + 1);
     }
 
     public CodeItem genLLCode() {

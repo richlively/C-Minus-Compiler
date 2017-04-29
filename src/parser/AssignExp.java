@@ -1,18 +1,19 @@
-package livelyrussell.Parser;
+package parser;
 
 import java.io.PrintStream;
 import lowlevel.CodeItem;
 
-public class IterationStmt extends Statement {
+public class AssignExp extends Expression {
 
-    //WHILE ( exp ) stmt
+    //first thing on right side of line 18 on page 492
+
+    private VarExp var;
     private Expression exp;
-    private Statement stmt;
 
-    IterationStmt(Expression e, Statement s) {
-        super(Statement.type.ITERATE);
+    public AssignExp(VarExp v, Expression e) {
+        super(Expression.type.ASSIGN);
+        var = v;
         exp = e;
-        stmt = s;
     }
 
     @Override
@@ -21,9 +22,9 @@ public class IterationStmt extends Statement {
         for (int i = 0; i < indent; i++) {
             tabs += "\t";
         }
-        out.println(tabs + "Iteration Statement: " + "WHILE");
+        out.println(tabs + "Assign Expression: =");
+        var.print(out, indent + 1);
         exp.print(out, indent + 1);
-        stmt.print(out, indent + 1);
     }
 
     public CodeItem genLLCode() {

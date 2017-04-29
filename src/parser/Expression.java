@@ -1,4 +1,4 @@
-package livelyrussell.Parser;
+package parser;
 
 public abstract class Expression implements ParseObject{
     protected enum type{

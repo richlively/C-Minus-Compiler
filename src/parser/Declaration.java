@@ -1,4 +1,4 @@
-package livelyrussell.Parser;
+package parser;
 
 import lowlevel.CodeItem;
 

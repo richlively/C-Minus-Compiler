@@ -1,15 +1,18 @@
-package livelyrussell.Parser;
+package parser;
 
 import java.io.PrintStream;
 import lowlevel.CodeItem;
 
-public class ReturnStmt extends Statement {
+public class IterationStmt extends Statement {
 
-    public ExpressionStmt estmt;
+    //WHILE ( exp ) stmt
+    private Expression exp;
+    private Statement stmt;
 
-    public ReturnStmt(ExpressionStmt e) {
-        super(Statement.type.RETURN);
-        estmt = e;
+    IterationStmt(Expression e, Statement s) {
+        super(Statement.type.ITERATE);
+        exp = e;
+        stmt = s;
     }
 
     @Override
@@ -18,8 +21,9 @@ public class ReturnStmt extends Statement {
         for (int i = 0; i < indent; i++) {
             tabs += "\t";
         }
-        out.println(tabs + "Return Statement: RETURN");
-        estmt.print(out, indent + 1);
+        out.println(tabs + "Iteration Statement: " + "WHILE");
+        exp.print(out, indent + 1);
+        stmt.print(out, indent + 1);
     }
 
     public CodeItem genLLCode() {

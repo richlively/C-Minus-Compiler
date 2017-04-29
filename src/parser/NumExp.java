@@ -1,4 +1,5 @@
-package livelyrussell.Parser;
+
+package parser;
 
 //simple exp -> add exp -> term -> factor -> NUM
 import java.io.PrintStream;

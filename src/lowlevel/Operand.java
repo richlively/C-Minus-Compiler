@@ -1,7 +1,6 @@
 package lowlevel;
 
 import java.io.*;
-import livelyrussell.Parser.Parser;
 
 /**
  * This class is abstracts an operand, one of the arguments to an Operation
@@ -102,7 +101,7 @@ public class Operand {
 /***************************************************************************/
   // support methods
     // converts type to a string for printing
-  private String printType () throws Parser.CodeGenerationException {
+  private String printType () {
     if (type == OperandType.INTEGER) {
       return ("i");
     }
@@ -119,11 +118,11 @@ public class Operand {
       return ("s");
     }
     else {
-      throw new Parser.CodeGenerationException("Operand: invalid type");
+      throw new parser.CodeGenerationException("Operand: invalid type");
     }
   }
     // prints an operand surrounded by parentheses
-  public void printLLCode(PrintWriter outFile) throws Parser.CodeGenerationException {
+  public void printLLCode(PrintWriter outFile) {
     if (outFile == null) {
       System.out.print("("+ printType() +" " + value + ")");
     }
