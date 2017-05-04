@@ -1,8 +1,10 @@
-
 package parser;
 
 import java.io.PrintStream;
+import lowlevel.BasicBlock;
 import lowlevel.CodeItem;
+import lowlevel.Function;
+import lowlevel.Operation;
 
 public class ReturnStmt extends Statement {
 
@@ -23,7 +25,16 @@ public class ReturnStmt extends Statement {
         estmt.print(out, indent + 1);
     }
 
-    public CodeItem genLLCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public CodeItem genLLCode(Function fun) {
+        BasicBlock curr = fun.getCurrBlock();
+        Operation oper = new Operation(Operation.OperationType.RETURN, curr);
+        curr.appendOper(oper);
+        if (estmt != null) {
+            estmt.genLLCode(fun);
+        }
+        oper.setSrcOperand(0, newOperand);
+        oper.setDestOperand(0, newOperand);
+
+        return fun;
     }
 }

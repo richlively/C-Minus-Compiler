@@ -12,6 +12,8 @@ public class FunDecl extends Declaration {
 
     @Override
     public CodeItem genLLCode() {
+        
+        //TODO: add a funcEntry thing
 
         //get function stuff
         int t;
@@ -58,6 +60,8 @@ public class FunDecl extends Declaration {
 
         //parse the comp stmt
         cs.genLLCode(retval);
+        
+        //TODO: Add a funcExit thing
         return retval;
     }
 
