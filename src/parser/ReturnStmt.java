@@ -28,13 +28,12 @@ public class ReturnStmt extends Statement {
     public CodeItem genLLCode(Function fun) {
         BasicBlock curr = fun.getCurrBlock();
         Operation oper = new Operation(Operation.OperationType.RETURN, curr);
-        curr.appendOper(oper);
         if (estmt != null) {
             estmt.genLLCode(fun);
         }
         oper.setSrcOperand(0, newOperand);
         oper.setDestOperand(0, newOperand);
-
+        curr.appendOper(oper);
         return fun;
     }
 }

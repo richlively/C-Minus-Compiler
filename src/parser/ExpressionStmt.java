@@ -2,6 +2,7 @@ package parser;
 
 import java.io.PrintStream;
 import lowlevel.CodeItem;
+import lowlevel.Function;
 
 public class ExpressionStmt extends Statement {
 
@@ -27,8 +28,8 @@ public class ExpressionStmt extends Statement {
         }
     }
 
-    public CodeItem genLLCode() {
-        exp.genLLCode();
+    public CodeItem genLLCode(Function fun) {
+        int r = exp.genLLCode(fun);
         return null;
     }
 }

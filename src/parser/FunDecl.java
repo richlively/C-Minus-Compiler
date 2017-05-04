@@ -7,13 +7,13 @@ import lowlevel.BasicBlock;
 import lowlevel.CodeItem;
 import lowlevel.FuncParam;
 import lowlevel.Function;
+import lowlevel.Operand;
+import lowlevel.Operation;
 
 public class FunDecl extends Declaration {
 
     @Override
     public CodeItem genLLCode() {
-        
-        //TODO: add a funcEntry thing
 
         //get function stuff
         int t;
@@ -27,6 +27,7 @@ public class FunDecl extends Declaration {
         //getting params
         FuncParam head;
         FuncParam tail;
+        Function fun = new Function(t, name);
         if (params.size() > 0) {
             Param holder = params.get(0);
             int typer;
@@ -38,12 +39,14 @@ public class FunDecl extends Declaration {
             String pname = holder.id;
             head = new FuncParam(typer, pname);
             tail = head;
+            fun.setFirstParam(head);
+            fun.getTable().put(head.getName(), head);
         } else {
             head = null;
             tail = null;
         }
         for (int i = 1; i < params.size(); i++) {
-            Param holder = params.get(0);
+            Param holder = params.get(i);
             int typer;
             if (holder.isVoid()) {
                 typer = 0;
@@ -53,16 +56,21 @@ public class FunDecl extends Declaration {
             String pname = holder.id;
             tail.setNextParam(new FuncParam(typer, pname));
             tail = tail.getNextParam();
+            fun.getTable().put(tail.getName(), tail);
         }
 
-        Function retval = new Function(t, name, head);
-        retval.createBlock0();
-
+        fun.createBlock0();
+        BasicBlock b = new BasicBlock(fun);
+        fun.appendBlock(b);
         //parse the comp stmt
-        cs.genLLCode(retval);
-        
-        //TODO: Add a funcExit thing
-        return retval;
+        cs.genLLCode(fun);
+        fun.genReturnBlock();
+        fun.appendBlock(fun.getReturnBlock());
+        if (fun.getFirstUnconnectedBlock() != null) {
+            fun.appendBlock(fun.getFirstUnconnectedBlock());
+        }
+
+        return fun;
     }
 
     public enum type {
