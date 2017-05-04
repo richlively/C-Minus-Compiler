@@ -1,8 +1,13 @@
 package parser;
 
 //simple exp -> add exp -> term -> factor -> var
+import compiler.CMinusCompiler;
 import java.io.PrintStream;
 import lowlevel.CodeItem;
+import lowlevel.Function;
+import lowlevel.LowLevelException;
+import lowlevel.Operand;
+import lowlevel.Operation;
 
 public class VarExp extends Expression {
 
@@ -33,7 +38,13 @@ public class VarExp extends Expression {
         }
     }
 
-    public CodeItem genLLCode() {
-        
+    public int genLLCode(Function fun) {
+        if(fun.getTable().containsKey(id)){
+            return (Integer) fun.getTable().get(id);
+        } else if(CMinusCompiler.globalHash.containsKey(id)) {
+            return (Integer) CMinusCompiler.globalHash.get(id);
+        } else {
+            throw new LowLevelException("Error: variable " + id + " was not declared prior to use.");
+        }
     }
 }

@@ -33,7 +33,6 @@ public class ExpressionStmt extends Statement {
      * @param fun
      * @return
      */
-    @Override
     public int genLLCode(Function fun) {
         int r = exp.genLLCode(fun);
         return r;
