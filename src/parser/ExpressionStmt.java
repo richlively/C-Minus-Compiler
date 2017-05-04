@@ -28,8 +28,14 @@ public class ExpressionStmt extends Statement {
         }
     }
 
-    public CodeItem genLLCode(Function fun) {
+    /**
+     *
+     * @param fun
+     * @return
+     */
+    @Override
+    public int genLLCode(Function fun) {
         int r = exp.genLLCode(fun);
-        return null;
+        return r;
     }
 }

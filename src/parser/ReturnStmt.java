@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import lowlevel.BasicBlock;
 import lowlevel.CodeItem;
 import lowlevel.Function;
+import lowlevel.Operand;
 import lowlevel.Operation;
 
 public class ReturnStmt extends Statement {
@@ -29,11 +30,17 @@ public class ReturnStmt extends Statement {
         BasicBlock curr = fun.getCurrBlock();
         Operation oper = new Operation(Operation.OperationType.RETURN, curr);
         if (estmt != null) {
-            estmt.genLLCode(fun);
+            int r = estmt.genLLCode(fun);
+            oper.setSrcOperand(0, new Operand(Operand.OperandType.REGISTER, r));
+            oper.setDestOperand(0, fun.getReturnBlock().getLastOper().getDestOperand(0));
         }
-        oper.setSrcOperand(0, newOperand);
-        oper.setDestOperand(0, newOperand);
         curr.appendOper(oper);
+        BasicBlock temp = new BasicBlock(fun);
+        curr.setNextBlock(temp);
+        curr = curr.getNextBlock();
+        Operation oper2 = new Operation(Operation.OperationType.JMP, curr);
+        temp.setFirstOper(oper2);
+        oper2.setDestOperand(0, new Operand(Operand.OperandType.BLOCK, fun.getReturnBlock()));
         return fun;
     }
 }

@@ -64,12 +64,10 @@ public class FunDecl extends Declaration {
         fun.appendBlock(b);
         //parse the comp stmt
         cs.genLLCode(fun);
-        fun.genReturnBlock();
         fun.appendBlock(fun.getReturnBlock());
         if (fun.getFirstUnconnectedBlock() != null) {
             fun.appendBlock(fun.getFirstUnconnectedBlock());
         }
-
         return fun;
     }
 
