@@ -337,7 +337,7 @@ public class X64RegisterAllocator {
         // to support caller save, we want to make the caller save registers live
         // during the JSR.  But we want the live range to ONLY be the JSR, so if
         // the oper just done was a JSR, we need to turn off use of those regs
-        boolean lastOperWasJSR = false;
+//        boolean lastOperWasJSR = false;
 
         physicalLiveRanges = new BitArraySet[availableRegs + 1];
         for (int i = 0; i < availableRegs + 1; i++) {
@@ -365,17 +365,17 @@ public class X64RegisterAllocator {
                     }
                 }
                 // need to turn off live ranges of caller save
-                if (lastOperWasJSR) {
-                    currentLiveness.remove(getNumFromMacro("EAX"));
-                    currentLiveness.remove(getNumFromMacro("RDI"));
-                    currentLiveness.remove(getNumFromMacro("RSI"));
-                    currentLiveness.remove(getNumFromMacro("RDX"));
-                    currentLiveness.remove(getNumFromMacro("RCX"));
-                    currentLiveness.remove(getNumFromMacro("R8"));
-                    currentLiveness.remove(getNumFromMacro("R9"));
-                    currentLiveness.remove(getNumFromMacro("R10"));
-                    currentLiveness.remove(getNumFromMacro("R11"));
-                }
+//                if (lastOperWasJSR) {
+//                    currentLiveness.remove(getNumFromMacro("EAX"));
+//                    currentLiveness.remove(getNumFromMacro("RDI"));
+//                    currentLiveness.remove(getNumFromMacro("RSI"));
+//                    currentLiveness.remove(getNumFromMacro("RDX"));
+//                    currentLiveness.remove(getNumFromMacro("RCX"));
+//                    currentLiveness.remove(getNumFromMacro("R8"));
+//                    currentLiveness.remove(getNumFromMacro("R9"));
+//                    currentLiveness.remove(getNumFromMacro("R10"));
+//                    currentLiveness.remove(getNumFromMacro("R11"));
+//                }
 
                 // update for uses
                 for (int i = 0; i < Operation.MAX_SRC_OPERANDS; i++) {
@@ -388,31 +388,43 @@ public class X64RegisterAllocator {
                 }
 
                 // update caller save if JSR
-                if (currOper.getType() == Operation.OperationType.CALL) {
-                    currentLiveness.add(getNumFromMacro("R10"));
-                    currentLiveness.add(getNumFromMacro("R11"));
-                    lastOperWasJSR = true;
-
-                    currentLiveness.add(getNumFromMacro("RDI"));
-                    currentLiveness.add(getNumFromMacro("RSI"));
-                    currentLiveness.add(getNumFromMacro("RDX"));
-                    currentLiveness.add(getNumFromMacro("RCX"));
-                    currentLiveness.add(getNumFromMacro("R8"));
-                    currentLiveness.add(getNumFromMacro("R9"));
-                    currentLiveness.add(getNumFromMacro("EAX"));
-
-                }
+//                if (currOper.getType() == Operation.OperationType.CALL) {
+//                    currentLiveness.add(getNumFromMacro("R10"));
+//                    currentLiveness.add(getNumFromMacro("R11"));
+//                    lastOperWasJSR = true;
+//
+//                    currentLiveness.add(getNumFromMacro("RDI"));
+//                    currentLiveness.add(getNumFromMacro("RSI"));
+//                    currentLiveness.add(getNumFromMacro("RDX"));
+//                    currentLiveness.add(getNumFromMacro("RCX"));
+//                    currentLiveness.add(getNumFromMacro("R8"));
+//                    currentLiveness.add(getNumFromMacro("R9"));
+//                    currentLiveness.add(getNumFromMacro("EAX"));
+//
+//                }
 
                 // now go through currentLiveness and update liveRanges
-                for (int i = 0; i < availableRegs + 1; i++) {
+               for (int i = 0; i < availableRegs + 1; i++) {				  
                     if (currentLiveness.contains(i)) {
                         physicalLiveRanges[i].add(currOper.getNum());
                     }
+					// if we are a JSR, we need to make all callerSave as used
+					if (currOper.getType() == Operation.OperationType.CALL) {
+						if (isCallerSave(i)){
+							physicalLiveRanges[i].add(currOper.getNum());
+						}
+					}
                 }
             }
         }
     }
 
+	private boolean isCallerSave (int regNum){
+		// 1-11 are callerSave
+		return (regNum <= 11);
+	}
+		
+		
     private int getNumFromMacro(Object macro) {
         // we are passed an Object (which should be a String).  We need to convert
         // it to an int physical reg num using following code:  Note caller save
@@ -812,7 +824,7 @@ public class X64RegisterAllocator {
                     Operand src = new Operand(Operand.OperandType.MACRO,
                             new String(getMacroNameFromNum(12)));
                     newOper.setDestOperand(0, src);
-                    currBlock.insertOperBefore(insertOper, newOper);
+		    currBlock.insertOperBefore(insertOper, newOper);
                     insertOper = newOper;
                 }
                 if (usedRegs[13]) {
