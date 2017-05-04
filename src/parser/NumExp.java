@@ -27,7 +27,6 @@ public class NumExp extends Expression {
         out.println(tabs + "Num Expression: " + num);
     }
 
-    
     public CodeItem genLLCode() {
         Data retval = new Data(Data.TYPE_INT, "");
         return retval;
