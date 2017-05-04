@@ -723,8 +723,10 @@ public class CMinusParser implements Parser {
                 && temp != Token.TokenType.IF
                 && temp != Token.TokenType.WHILE
                 && temp != Token.TokenType.RETURN
-                && temp != Token.TokenType.LEFTCURLY) {
+                && temp != Token.TokenType.LEFTCURLY
+                && temp != Token.TokenType.RIGHTCURLY) {
             localdecls.add(parseVarDeclPrime());
+            temp = scan.viewNextToken().viewType();
         }
         return localdecls;
     }

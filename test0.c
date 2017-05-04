@@ -1,2 +1,9 @@
 int howdy;
-int hello[5];
+
+void main(void) {
+	int hi;
+}
+
+int test(int i, int j) {
+	
+}
