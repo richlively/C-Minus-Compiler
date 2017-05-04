@@ -669,6 +669,19 @@ public class X64CodeGenerator {
             throw new X64CodegenException("convertCall: no numParams attr found");
         }
         int numParams = Integer.parseInt(attrValue);
+		
+			// Annotate call with uses of registers; only 1st 6 through reg
+		for (int i=0; i < numParams; i++){
+			   // only need to
+			if (i >= 6) {
+				break;
+			}
+			String macroName = getX64PassRegNameFromNum(i);
+            Operand src = new Operand(Operand.OperandType.MACRO, new String(macroName));
+            currOper.setSrcOperand(i+1, src);
+		}
+		
+		
         // if less than 6 params, all through reg and no add required
         if (numParams > 6) {
             numParams -=6;

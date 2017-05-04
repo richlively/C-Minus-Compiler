@@ -1,8 +1,10 @@
 package parser;
 
+import static compiler.CMinusCompiler.globalHash;
 import java.io.PrintStream;
 import lowlevel.CodeItem;
 import lowlevel.Data;
+import static lowlevel.Data.*;
 
 public class VarDecl extends Declaration {
 
@@ -33,8 +35,14 @@ public class VarDecl extends Declaration {
 
     @Override
     public CodeItem genLLCode() {
-        Data retval = (Data) n.genLLCode();
-        retval.setname(this.id);
+        boolean isNotArray = (n == null);
+        Data retval;
+        if (isNotArray) {
+            retval = new Data(TYPE_INT, id);
+        } else {
+            retval = new Data(TYPE_INT, id, true, n.getNum());
+        }
+        globalHash.put(id, retval);
         return retval;
     }
 }
