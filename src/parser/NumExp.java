@@ -13,6 +13,10 @@ public class NumExp extends Expression {
         super(Expression.type.NUM);
         num = n;
     }
+    
+    public int getNum() {
+        return num;
+    }
 
     @Override
     public void print(PrintStream out, int indent) {

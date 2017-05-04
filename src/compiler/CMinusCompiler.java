@@ -37,7 +37,8 @@ public class CMinusCompiler implements Compiler {
             Parser myParser = new CMinusParser(fileName);
 
             Program parseTree = myParser.parse();
-            parseTree.print(new PrintStream(filePrefix + ".o"), 0);
+            //parseTree.print(new PrintStream(filePrefix + ".o"), 0);
+            parseTree.print(System.out, 0);
 
             CodeItem lowLevelCode = parseTree.genLLCode();
 
@@ -136,7 +137,7 @@ public class CMinusCompiler implements Compiler {
             return;
         }
         CMinusCompiler myCompiler = new CMinusCompiler();
-        CMinusCompiler.setGenX64Code(false);
+        CMinusCompiler.setGenX64Code(true);
         myCompiler.compile(filePrefix);
     }
 }
