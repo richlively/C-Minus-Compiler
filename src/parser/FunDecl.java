@@ -38,7 +38,7 @@ public class FunDecl extends Declaration {
             head = new FuncParam(typer, pname);
             tail = head;
             fun.setFirstParam(head);
-            fun.getTable().put(head.getName(), head);
+            fun.getTable().put(pname, fun.getNewRegNum());
         } else {
             head = null;
             tail = null;
@@ -54,13 +54,14 @@ public class FunDecl extends Declaration {
             String pname = holder.id;
             tail.setNextParam(new FuncParam(typer, pname));
             tail = tail.getNextParam();
-            fun.getTable().put(tail.getName(), tail);
+            fun.getTable().put(pname, fun.getNewRegNum());
         }
 
         fun.createBlock0();
         BasicBlock b = new BasicBlock(fun);
         fun.appendBlock(b);
         //parse the comp stmt
+        fun.setCurrBlock(b);
         cs.genLLCode(fun);
         fun.appendBlock(fun.getReturnBlock());
         if (fun.getFirstUnconnectedBlock() != null) {
