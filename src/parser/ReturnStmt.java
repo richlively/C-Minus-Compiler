@@ -24,10 +24,10 @@ public class ReturnStmt extends Statement {
     }
 
     @Override
-    public void genLLCode(Function fun) {
+    public void genLLCode(Function fun, CompoundStmt cs) {
         BasicBlock curr = fun.getCurrBlock();
         if (estmt != null) {
-            estmt.genLLCode(fun);
+            estmt.genLLCode(fun, cs);
         }
         fun.genReturnBlock();
     }

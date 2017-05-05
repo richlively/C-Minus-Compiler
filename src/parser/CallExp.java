@@ -34,10 +34,10 @@ public class CallExp extends Expression {
     }
 
     @Override
-    public int genLLCode(Function fun) {
+    public int genLLCode(Function fun, CompoundStmt cs) {
         for (int i = arglist.size() - 1; i >= 0; i--){
 
-            int regNum = arglist.get(i).genLLCode(fun);
+            int regNum = arglist.get(i).genLLCode(fun, cs);
             Operation oper = new Operation(Operation.OperationType.PASS, fun.getCurrBlock());
             Operand opand1 = new Operand(Operand.OperandType.REGISTER, regNum);
             oper.setSrcOperand(0, opand1);

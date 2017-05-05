@@ -29,7 +29,7 @@ public class ExpressionStmt extends Statement {
     }
 
     @Override
-    public void genLLCode(Function fun) {
-        exp.genLLCode(fun);
+    public void genLLCode(Function fun, CompoundStmt cs) {
+        exp.genLLCode(fun, cs);
     }
 }

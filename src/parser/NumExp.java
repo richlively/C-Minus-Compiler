@@ -27,7 +27,7 @@ public class NumExp extends Expression {
         out.println(tabs + "Num Expression: " + num);
     }
 
-    public int genLLCode(Function fun) {
+    public int genLLCode(Function fun, CompoundStmt cs) {
         int i = fun.getNewRegNum();
         Operand opand = new Operand(Operand.OperandType.INTEGER, num);
         Operation oper = new Operation(Operation.OperationType.ASSIGN, fun.getCurrBlock());

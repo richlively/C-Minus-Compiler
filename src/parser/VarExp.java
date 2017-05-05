@@ -3,6 +3,7 @@ package parser;
 //simple exp -> add exp -> term -> factor -> var
 import compiler.CMinusCompiler;
 import java.io.PrintStream;
+import java.util.HashMap;
 import lowlevel.CodeItem;
 import lowlevel.Function;
 import lowlevel.LowLevelException;
@@ -25,8 +26,8 @@ public class VarExp extends Expression {
     public VarExp(String i) {
         this(i, null);
     }
-    
-    public String getID(){
+
+    public String getID() {
         return id;
     }
 
@@ -43,13 +44,21 @@ public class VarExp extends Expression {
     }
 
     @Override
-    public int genLLCode(Function fun) {
-        if(fun.getTable().containsKey(id)){
+    public int genLLCode(Function fun, CompoundStmt cs) {
+        if (cs != null) {
+            HashMap localTable = cs.getTable();
+            if (localTable.containsKey(id)) {
+                return (Integer) localTable.get(id);
+            }
+        }
+
+        if (fun.getTable().containsKey(id)) {
             return (Integer) fun.getTable().get(id);
-        } else if(CMinusCompiler.globalHash.containsKey(id)) {
+        } else if (CMinusCompiler.globalHash.containsKey(id)) {
             return (Integer) CMinusCompiler.globalHash.get(id);
         } else {
             throw new LowLevelException("Error: variable " + id + " was not declared prior to use.");
         }
+
     }
 }

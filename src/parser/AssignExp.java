@@ -30,10 +30,10 @@ public class AssignExp extends Expression {
     }
 
     @Override
-    public int genLLCode(Function fun) {
-        int v = var.genLLCode(fun);
+    public int genLLCode(Function fun, CompoundStmt cs) {
+        int v = var.genLLCode(fun, cs);
         String varid = var.getID();
-        int e = var.genLLCode(fun);
+        int e = exp.genLLCode(fun, cs);
         if (CMinusCompiler.globalHash.containsKey(varid)) {
             Operation oper = new Operation(Operation.OperationType.STORE_I, fun.getCurrBlock());
             Operand src = new Operand(Operand.OperandType.REGISTER, e);

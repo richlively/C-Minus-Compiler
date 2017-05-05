@@ -10,9 +10,9 @@ import lowlevel.Operation;
 public class BinaryExp extends Expression {
     
     @Override
-    public int genLLCode(Function fun) {
-        int leftreg = left.genLLCode(fun);
-        int rightreg = right.genLLCode(fun);
+    public int genLLCode(Function fun, CompoundStmt cs) {
+        int leftreg = left.genLLCode(fun, cs);
+        int rightreg = right.genLLCode(fun, cs);
         Operation.OperationType lloptype;
         switch (optype){
             case PLUS:

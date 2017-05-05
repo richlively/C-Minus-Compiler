@@ -31,10 +31,10 @@ public class IterationStmt extends Statement {
     }
 
     @Override
-    public void genLLCode(Function fun) {
+    public void genLLCode(Function fun, CompoundStmt cs) {
         BasicBlock mainpart = new BasicBlock(fun);
         BasicBlock post = new BasicBlock(fun);
-        int expreg = exp.genLLCode(fun);
+        int expreg = exp.genLLCode(fun, cs);
 
         Operation booloper = new Operation(Operation.OperationType.BEQ, fun.getCurrBlock());
         Operand oper1 = new Operand(Operand.OperandType.REGISTER, expreg);
@@ -47,7 +47,7 @@ public class IterationStmt extends Statement {
         fun.getLastBlock().appendOper(booloper);
         fun.appendBlock(mainpart);
         
-        stmt.genLLCode(fun);
+        stmt.genLLCode(fun, cs);
         
         Operation booloper2 = new Operation(Operation.OperationType.BEQ, mainpart);
         booloper.setSrcOperand(0, oper1);

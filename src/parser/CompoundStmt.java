@@ -2,19 +2,25 @@ package parser;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import lowlevel.Function;
 
 public class CompoundStmt extends Statement {
 
     private final ArrayList<VarDecl> localdecls;
     private final ArrayList<Statement> stmtlist;
+    private final HashMap symbolTable;
 
     public CompoundStmt(ArrayList<VarDecl> d, ArrayList<Statement> s) {
         super(Statement.type.COMPOUND);
         localdecls = d;
         stmtlist = s;
+        symbolTable = new HashMap();
     }
     
+    public HashMap getTable() {
+        return symbolTable;
+    }
 
     @Override
     public void print(PrintStream out, int indent) {
@@ -40,15 +46,15 @@ public class CompoundStmt extends Statement {
     }
 
     @Override
-    public void genLLCode(Function fun) {
+    public void genLLCode(Function fun, CompoundStmt cs) {
         //gen local_decls
         for (Declaration decl : localdecls) {
-            fun.getTable().put(decl.id, fun.getNewRegNum());
+            symbolTable.put(decl.id, fun.getNewRegNum());
         }
 
         //gen stmts
         for(Statement stmt : stmtlist){
-            stmt.genLLCode(fun);
+            stmt.genLLCode(fun, this);
         }
     }
 }

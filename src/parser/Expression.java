@@ -24,6 +24,6 @@ public abstract class Expression implements ParseObject{
         kind = t;
     }
     
-    public abstract int genLLCode(Function fun);
+    public abstract int genLLCode(Function fun, CompoundStmt cs);
 }
 

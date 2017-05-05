@@ -62,7 +62,7 @@ public class FunDecl extends Declaration {
         fun.appendBlock(b);
         //parse the comp stmt
         fun.setCurrBlock(b);
-        cs.genLLCode(fun);
+        cs.genLLCode(fun, null);
         fun.appendBlock(fun.getReturnBlock());
         if (fun.getFirstUnconnectedBlock() != null) {
             fun.appendBlock(fun.getFirstUnconnectedBlock());
