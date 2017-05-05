@@ -611,12 +611,13 @@ public class CMinusParser implements Parser {
                 case ID:
                 case WHILE:
                 case RETURN:
+                case IF:
                     ss = new SelectStmt(exp, ifstmt);
                     ifstmt.setParent(ss);
                     return ss;
                 default:
                     throw new CMinusParseException("Error parsing "
-                            + "SelectStmt: Expected ELSE or }");
+                            + "SelectStmt: Expected ELSE or } but instead got " + scan.viewNextToken().viewType());
             }
         }
         throw new CMinusParseException("Critical Error parsing "

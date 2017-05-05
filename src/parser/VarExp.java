@@ -49,13 +49,35 @@ public class VarExp extends Expression {
             HashMap localTable = cs.getTable();
             if (localTable.containsKey(id)) {
                 return (Integer) localTable.get(id);
+            } else {
+                ParseObject parent = cs.getParent();
+                while (parent != null) {
+                    if (parent instanceof Statement) {
+                        if (parent instanceof CompoundStmt) {
+                            localTable = ((CompoundStmt) parent).getTable();
+                            if (localTable.containsKey(id)) {
+                                return (Integer) localTable.get(id);
+                            }
+                        }
+                        parent = ((Statement)parent).getParent();
+                    } else {
+                        break;
+                    }
+                }
             }
         }
 
         if (fun.getTable().containsKey(id)) {
             return (Integer) fun.getTable().get(id);
         } else if (CMinusCompiler.globalHash.containsKey(id)) {
-            return (Integer) CMinusCompiler.globalHash.get(id);
+            int newReg = fun.getNewRegNum();
+            Operation oper = new Operation(Operation.OperationType.LOAD_I, fun.getCurrBlock());
+            Operand src = new Operand(Operand.OperandType.STRING, id);
+            Operand dest = new Operand(Operand.OperandType.REGISTER, newReg);
+            oper.setSrcOperand(0, src);
+            oper.setDestOperand(0, dest);
+            fun.getCurrBlock().appendOper(oper);
+            return newReg;
         } else {
             throw new LowLevelException("Error: variable " + id + " was not declared prior to use.");
         }

@@ -34,6 +34,6 @@ public abstract class Statement implements ParseObject {
         parent = null;
     }
 
-    public abstract void genLLCode(Function fun, CompoundStmt cs);
+    public abstract int genLLCode(Function fun, CompoundStmt cs);
     
 }

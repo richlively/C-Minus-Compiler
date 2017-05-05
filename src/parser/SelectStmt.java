@@ -41,7 +41,7 @@ public class SelectStmt extends Statement {
     }
 
     @Override
-    public void genLLCode(Function fun, CompoundStmt cs) {
+    public int genLLCode(Function fun, CompoundStmt cs) {
         BasicBlock postpart = new BasicBlock(fun);
         BasicBlock thenpart = new BasicBlock(fun);
         BasicBlock elsepart = null;
@@ -54,17 +54,18 @@ public class SelectStmt extends Statement {
         Operand oper2 = new Operand(Operand.OperandType.INTEGER, 0);
         Operand oper3;
         if (elsestmt != null) {
-            oper3 = new Operand(Operand.OperandType.BLOCK, elsepart);
+            oper3 = new Operand(Operand.OperandType.BLOCK, elsepart.getBlockNum());
         } else {
-            oper3 = new Operand(Operand.OperandType.BLOCK, thenpart);
+            oper3 = new Operand(Operand.OperandType.BLOCK, postpart.getBlockNum());
         }
         booloper.setSrcOperand(0, oper1);
         booloper.setSrcOperand(1, oper2);
-        booloper.setDestOperand(0, oper3);
+        booloper.setSrcOperand(2, oper3);
 
-        fun.getLastBlock().appendOper(booloper);
+        fun.getCurrBlock().appendOper(booloper);
 
         fun.appendBlock(thenpart);
+        fun.setCurrBlock(thenpart);
 
         ifstmt.genLLCode(fun, cs);
 
@@ -76,7 +77,7 @@ public class SelectStmt extends Statement {
             elsestmt.genLLCode(fun, cs);
 
             Operation postjump = new Operation(Operation.OperationType.JMP, fun.getCurrBlock());
-            postjump.setSrcOperand(0, new Operand(Operand.OperandType.BLOCK, postpart));
+            postjump.setSrcOperand(0, new Operand(Operand.OperandType.BLOCK, postpart.getBlockNum()));
 
             elsepart.appendOper(postjump);
 
@@ -84,6 +85,6 @@ public class SelectStmt extends Statement {
         }
 
         fun.setCurrBlock(postpart);
-
+        return 0;
     }
 }

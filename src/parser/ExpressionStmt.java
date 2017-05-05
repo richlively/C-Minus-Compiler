@@ -13,6 +13,10 @@ public class ExpressionStmt extends Statement {
         super(Statement.type.EXP);
         exp = ee;
     }
+    
+    public Expression getExp() {
+        return exp;
+    }
 
     @Override
     public void print(PrintStream out, int indent) {
@@ -29,7 +33,7 @@ public class ExpressionStmt extends Statement {
     }
 
     @Override
-    public void genLLCode(Function fun, CompoundStmt cs) {
-        exp.genLLCode(fun, cs);
+    public int genLLCode(Function fun, CompoundStmt cs) {
+        return exp.genLLCode(fun, cs);
     }
 }

@@ -32,7 +32,7 @@ public class NumExp extends Expression {
         Operand opand = new Operand(Operand.OperandType.INTEGER, num);
         Operation oper = new Operation(Operation.OperationType.ASSIGN, fun.getCurrBlock());
         oper.setSrcOperand(0, opand);
-        oper.setDestOperand(0, new Operand(Operand.OperandType.REGISTER, fun.getNewRegNum()));
+        oper.setDestOperand(0, new Operand(Operand.OperandType.REGISTER, i));
         fun.getCurrBlock().appendOper(oper);
         return i;
     }

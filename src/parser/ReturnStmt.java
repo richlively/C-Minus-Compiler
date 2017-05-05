@@ -3,6 +3,8 @@ package parser;
 import java.io.PrintStream;
 import lowlevel.BasicBlock;
 import lowlevel.Function;
+import lowlevel.Operand;
+import lowlevel.Operation;
 
 public class ReturnStmt extends Statement {
 
@@ -24,11 +26,21 @@ public class ReturnStmt extends Statement {
     }
 
     @Override
-    public void genLLCode(Function fun, CompoundStmt cs) {
+    public int genLLCode(Function fun, CompoundStmt cs) {
         BasicBlock curr = fun.getCurrBlock();
-        if (estmt != null) {
-            estmt.genLLCode(fun, cs);
+        int r;
+        if (estmt.getExp() != null) {
+            r = estmt.genLLCode(fun, cs);
+            Operation oper = new Operation(Operation.OperationType.ASSIGN, curr);
+            Operand opand = new Operand(Operand.OperandType.MACRO, "RetReg");
+            Operand opand2 = new Operand(Operand.OperandType.REGISTER, r);
+            oper.setSrcOperand(0, opand2);
+            oper.setDestOperand(0, opand);
+            fun.getCurrBlock().appendOper(oper);
+            fun.genReturnBlock();
+        } else {
+            fun.genReturnBlock();
         }
-        fun.genReturnBlock();
+        return 0;
     }
 }

@@ -40,6 +40,7 @@ public class AssignExp extends Expression {
             Operand dest = new Operand(Operand.OperandType.STRING, varid);
             oper.setSrcOperand(0, src);
             oper.setDestOperand(0, dest);
+            fun.getCurrBlock().appendOper(oper);
             return e;
         } else {
             Operation oper = new Operation(Operation.OperationType.ASSIGN, fun.getCurrBlock());
@@ -47,6 +48,7 @@ public class AssignExp extends Expression {
             Operand dest = new Operand(Operand.OperandType.REGISTER, v);
             oper.setSrcOperand(0, src);
             oper.setDestOperand(0, dest);
+            fun.getCurrBlock().appendOper(oper);
             return v;
         }
     }

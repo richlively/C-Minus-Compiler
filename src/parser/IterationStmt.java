@@ -31,7 +31,7 @@ public class IterationStmt extends Statement {
     }
 
     @Override
-    public void genLLCode(Function fun, CompoundStmt cs) {
+    public int genLLCode(Function fun, CompoundStmt cs) {
         BasicBlock mainpart = new BasicBlock(fun);
         BasicBlock post = new BasicBlock(fun);
         int expreg = exp.genLLCode(fun, cs);
@@ -39,12 +39,12 @@ public class IterationStmt extends Statement {
         Operation booloper = new Operation(Operation.OperationType.BEQ, fun.getCurrBlock());
         Operand oper1 = new Operand(Operand.OperandType.REGISTER, expreg);
         Operand oper2 = new Operand(Operand.OperandType.INTEGER, 0);
-        Operand oper3 = new Operand(Operand.OperandType.BLOCK, post);
+        Operand oper3 = new Operand(Operand.OperandType.BLOCK, post.getBlockNum());
         booloper.setSrcOperand(0, oper1);
         booloper.setSrcOperand(1, oper2);
-        booloper.setDestOperand(0, oper3);
+        booloper.setSrcOperand(2, oper3);
 
-        fun.getLastBlock().appendOper(booloper);
+        fun.getCurrBlock().appendOper(booloper);
         fun.appendBlock(mainpart);
         
         stmt.genLLCode(fun, cs);
@@ -52,12 +52,13 @@ public class IterationStmt extends Statement {
         Operation booloper2 = new Operation(Operation.OperationType.BEQ, mainpart);
         booloper.setSrcOperand(0, oper1);
         booloper.setSrcOperand(1, oper2);
-        booloper.setDestOperand(0, oper3);
+        booloper.setSrcOperand(2, oper3);
         
         mainpart.appendOper(booloper2);
         
         fun.appendBlock(post);
         fun.setCurrBlock(post);
         
+        return 0;
     }
 }

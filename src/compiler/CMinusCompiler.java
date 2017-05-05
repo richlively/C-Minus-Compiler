@@ -39,7 +39,7 @@ public class CMinusCompiler implements Compiler {
 
             Program parseTree = myParser.parse();
             //parseTree.print(new PrintStream(filePrefix + ".o"), 0);
-            parseTree.print(System.out, 0);
+            //parseTree.print(System.out, 0);
 
             CodeItem lowLevelCode = parseTree.genLLCode();
 
@@ -124,6 +124,7 @@ public class CMinusCompiler implements Compiler {
             }
 
         } catch (IOException ioe) {
+            Logger.getLogger(CMinusCompiler.class.getName()).log(Level.SEVERE, null, ioe);
         }
 
     }
