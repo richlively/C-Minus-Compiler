@@ -31,24 +31,33 @@ public class AssignExp extends Expression {
 
     @Override
     public int genLLCode(Function fun, CompoundStmt cs) {
+        //generate the var expression on the left side
         int v = var.genLLCode(fun, cs);
         String varid = var.getID();
+        //generate the expression on the right side
         int e = exp.genLLCode(fun, cs);
+        //if the variable is global use store, else use assign
         if (CMinusCompiler.globalHash.containsKey(varid)) {
             Operation oper = new Operation(Operation.OperationType.STORE_I, fun.getCurrBlock());
+            
             Operand src0 = new Operand(Operand.OperandType.REGISTER, e);
             Operand src1 = new Operand(Operand.OperandType.STRING, varid);
             oper.setSrcOperand(0, src0);
             oper.setSrcOperand(1, src1);
+
             fun.getCurrBlock().appendOper(oper);
+            //return the expression's regnum
             return e;
         } else {
             Operation oper = new Operation(Operation.OperationType.ASSIGN, fun.getCurrBlock());
+            
             Operand src = new Operand(Operand.OperandType.REGISTER, e);
             Operand dest = new Operand(Operand.OperandType.REGISTER, v);
             oper.setSrcOperand(0, src);
             oper.setDestOperand(0, dest);
+            
             fun.getCurrBlock().appendOper(oper);
+            //return the var expression's reg num
             return v;
         }
     }

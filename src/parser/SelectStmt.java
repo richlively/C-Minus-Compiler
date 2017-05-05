@@ -42,12 +42,14 @@ public class SelectStmt extends Statement {
 
     @Override
     public int genLLCode(Function fun, CompoundStmt cs) {
+        //create 2 or 3 blocks
         BasicBlock postpart = new BasicBlock(fun);
         BasicBlock thenpart = new BasicBlock(fun);
         BasicBlock elsepart = null;
         if (elsestmt != null) {
             elsepart = new BasicBlock(fun);
         }
+        //generate the condition
         int expreg = exp.genLLCode(fun, cs);
         Operation booloper = new Operation(Operation.OperationType.BEQ, fun.getCurrBlock());
         Operand oper1 = new Operand(Operand.OperandType.REGISTER, expreg);
@@ -66,20 +68,21 @@ public class SelectStmt extends Statement {
 
         fun.appendToCurrentBlock(thenpart);
         fun.setCurrBlock(thenpart);
-
+        //generate the 'then' code
         ifstmt.genLLCode(fun, cs);
 
         fun.appendToCurrentBlock(postpart);
 
         if (elsestmt != null) {
             fun.setCurrBlock(elsepart);
-
+            //generate the 'else' code
             elsestmt.genLLCode(fun, cs);
 
             Operation postjump = new Operation(Operation.OperationType.JMP, fun.getCurrBlock());
             postjump.setSrcOperand(0, new Operand(Operand.OperandType.BLOCK, postpart.getBlockNum()));
 
-            elsepart.appendOper(postjump);
+            //add to current block since we aren't sure how many blocks were added
+            fun.getCurrBlock().appendOper(postjump);
 
             fun.appendUnconnectedBlock(elsepart);
         }

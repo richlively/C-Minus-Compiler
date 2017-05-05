@@ -4,7 +4,6 @@ package parser;
 import compiler.CMinusCompiler;
 import java.io.PrintStream;
 import java.util.HashMap;
-import lowlevel.CodeItem;
 import lowlevel.Function;
 import lowlevel.LowLevelException;
 import lowlevel.Operand;
@@ -45,11 +44,16 @@ public class VarExp extends Expression {
 
     @Override
     public int genLLCode(Function fun, CompoundStmt cs) {
+        //find the variable
+        //check locally first
         if (cs != null) {
             HashMap localTable = cs.getTable();
+            //check my surrounding compound statements symbol table
             if (localTable.containsKey(id)) {
                 return (Integer) localTable.get(id);
             } else {
+                //check higher up in local scope up to the function's first
+                //compound statement
                 ParseObject parent = cs.getParent();
                 while (parent != null) {
                     if (parent instanceof Statement) {
@@ -67,9 +71,12 @@ public class VarExp extends Expression {
             }
         }
 
+        //check the function symbol table (func params)
         if (fun.getTable().containsKey(id)) {
             return (Integer) fun.getTable().get(id);
-        } else if (CMinusCompiler.globalHash.containsKey(id)) {
+        }
+        //check the global variables and load if found
+        else if (CMinusCompiler.globalHash.containsKey(id)) {
             int newReg = fun.getNewRegNum();
             Operation oper = new Operation(Operation.OperationType.LOAD_I, fun.getCurrBlock());
             Operand src = new Operand(Operand.OperandType.STRING, id);

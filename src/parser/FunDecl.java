@@ -12,8 +12,7 @@ public class FunDecl extends Declaration {
 
     @Override
     public CodeItem genLLCode() {
-
-        //get function stuff
+        //get function type and name
         int t;
         if (kind == type.VOID) {
             t = Data.TYPE_VOID;
@@ -40,6 +39,7 @@ public class FunDecl extends Declaration {
             
             fun.getTable().put(pname, fun.getNewRegNum());
         } else {
+            //no params, so add a single void param
             head = new FuncParam();
             tail = head;
         }

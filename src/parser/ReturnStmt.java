@@ -29,6 +29,7 @@ public class ReturnStmt extends Statement {
     public int genLLCode(Function fun, CompoundStmt cs) {
         BasicBlock curr = fun.getCurrBlock();
         int r;
+        //only assign to the RetReg if there is something to assign
         if (estmt.getExp() != null) {
             r = estmt.genLLCode(fun, cs);
             Operation oper = new Operation(Operation.OperationType.ASSIGN, curr);
@@ -37,10 +38,8 @@ public class ReturnStmt extends Statement {
             oper.setSrcOperand(0, opand2);
             oper.setDestOperand(0, opand);
             fun.getCurrBlock().appendOper(oper);
-            fun.genReturnBlock();
-        } else {
-            fun.genReturnBlock();
         }
+        fun.genReturnBlock();
         return 0;
     }
 }

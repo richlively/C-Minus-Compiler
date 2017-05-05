@@ -3,8 +3,8 @@ int main(void) {
 	int j;
 	int k;
 	
-	i = 5;
-	j = 1;
+	i = 0;
+	j = 2;
 	if (i > 0) {
 		putchar(65);
 	}

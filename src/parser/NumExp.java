@@ -28,6 +28,7 @@ public class NumExp extends Expression {
     }
 
     public int genLLCode(Function fun, CompoundStmt cs) {
+        //assign the number literal to a register (will be cleaned up later in optimizer)
         int i = fun.getNewRegNum();
         Operand opand = new Operand(Operand.OperandType.INTEGER, num);
         Operation oper = new Operation(Operation.OperationType.ASSIGN, fun.getCurrBlock());

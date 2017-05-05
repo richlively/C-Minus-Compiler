@@ -30,7 +30,7 @@ printInt_bb2:
 	movl	%EDI, %R15D
 printInt_bb3:
 	movl	$0, %EAX
-	movl	%EAX, %EDI
+	movl	%EAX, %R14D
 	movl	$10000, %EAX
 	cmpl	%EAX, %R15D
 	jl	printInt_bb6
@@ -41,6 +41,34 @@ printInt_bb5:
 	movl	$1, %EAX
 	movl	%EAX, %EDI
 	call	putDigit
+printInt_bb27:
+	popq	%R15
+	popq	%R14
+	ret
+printInt_bb15:
+	movl	$1, %EAX
+	cmpl	%EAX, %R14D
+	jne	printInt_bb13
+printInt_bb18:
+	movl	$0, %EAX
+	movl	%EAX, %EDI
+	call	putDigit
+printInt_bb17:
+	jmp	printInt_bb13
+printInt_bb22:
+	movl	$1, %EAX
+	cmpl	%EAX, %R14D
+	jne	printInt_bb20
+printInt_bb25:
+	movl	$0, %EAX
+	movl	%EAX, %EDI
+	call	putDigit
+printInt_bb24:
+	jmp	printInt_bb20
+printInt_bb6:
+	movl	$1000, %EAX
+	cmpl	%EAX, %R15D
+	jl	printInt_bb10
 printInt_bb11:
 	movl	$1000, %EDI
 	movl	$0, %EDX
@@ -57,7 +85,7 @@ printInt_bb11:
 	subl	%EDI, %EAX
 	movl	%EAX, %R15D
 	movl	$1, %EAX
-	movl	%EAX, %EDI
+	movl	%EAX, %R14D
 printInt_bb10:
 	movl	$100, %EAX
 	cmpl	%EAX, %R15D
@@ -78,15 +106,11 @@ printInt_bb14:
 	subl	%EDI, %EAX
 	movl	%EAX, %R15D
 	movl	$1, %EAX
-	movl	%EAX, %EDI
+	movl	%EAX, %R14D
 printInt_bb13:
 	movl	$10, %EAX
 	cmpl	%EAX, %R15D
 	jl	printInt_bb22
-printInt_bb18:
-	movl	$0, %EAX
-	movl	%EAX, %EDI
-	call	putDigit
 printInt_bb21:
 	movl	$10, %EDI
 	movl	$0, %EDX
@@ -105,29 +129,7 @@ printInt_bb21:
 printInt_bb20:
 	movl	%R15D, %EDI
 	call	putDigit
-printInt_bb25:
-	movl	$0, %EAX
-	movl	%EAX, %EDI
-	call	putDigit
-printInt_bb27:
-	popq	%R15
-	popq	%R14
-	ret
-printInt_bb15:
-	movl	$1, %EAX
-	cmpl	%EAX, %EDI
-	jne	printInt_bb21
-	jmp	printInt_bb13
-printInt_bb22:
-	movl	$1, %EAX
-	cmpl	%EAX, %EDI
-	jne	printInt_bb27
-	jmp	printInt_bb20
-printInt_bb6:
-	movl	$1000, %EAX
-	cmpl	%EAX, %R15D
-	jl	printInt_bb10
-	jmp	printInt_bb11
+	jmp	printInt_bb27
 .globl  main
 main:
 main_bb2:
@@ -241,10 +243,6 @@ main_bb23:
 	jne	main_bb27
 main_bb26:
 	movl	$1, %EAX
-main_bb29:
-	movl	$2, %EAX
-main_bb32:
-	movl	$10, %EAX
 	movl	%EAX, %R15D
 main_bb22:
 	movl	$10, %EAX
@@ -284,12 +282,20 @@ main_bb30:
 	movl	$0, %EAX
 	cmpl	%EAX, %EDX
 	jne	main_bb33
-	jmp	main_bb32
+main_bb32:
+	movl	$10, %EAX
+	movl	%EAX, %R15D
+main_bb31:
+	jmp	main_bb22
 main_bb27:
 	movl	$0, %EAX
 	cmpl	%EAX, %R14D
 	jne	main_bb30
-	jmp	main_bb29
+main_bb29:
+	movl	$2, %EAX
+	movl	%EAX, %R15D
+main_bb28:
+	jmp	main_bb22
 main_bb24:
 	movl	$0, %EAX
 	movl	%EAX, %R15D

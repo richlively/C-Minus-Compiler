@@ -5,6 +5,8 @@ import lowlevel.Function;
 public abstract class Statement implements ParseObject {
     
     private Integer register;
+    //parent is used for linking together parse objects for
+    //the purpose of connecting all the local symbol tables
     private ParseObject parent;
     
     public Integer getRegister() {

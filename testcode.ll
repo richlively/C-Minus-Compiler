@@ -52,6 +52,43 @@
   )
   (BB 4
   )
+  (BB 27
+    (OPER 94 Func_Exit []  [])
+    (OPER 95 Return []  [(m RetReg)])
+  )
+  (BB 15
+    (OPER 57 Mov [(r 29)]  [(i 1)])
+    (OPER 58 EQ [(r 30)]  [(r 3)(r 29)])
+    (OPER 59 BEQ []  [(r 30)(i 0)(bb 17)])
+  )
+  (BB 18
+    (OPER 60 Mov [(r 31)]  [(i 0)])
+    (OPER 61 Pass []  [(r 31)])
+    (OPER 62 JSR []  [(s putDigit)])
+    (OPER 65 Mov [(r 32)]  [(m RetReg)])
+  )
+  (BB 17
+    (OPER 66 Jmp []  [(bb 13)])
+  )
+  (BB 22
+    (OPER 82 Mov [(r 41)]  [(i 1)])
+    (OPER 83 EQ [(r 42)]  [(r 3)(r 41)])
+    (OPER 84 BEQ []  [(r 42)(i 0)(bb 24)])
+  )
+  (BB 25
+    (OPER 85 Mov [(r 43)]  [(i 0)])
+    (OPER 86 Pass []  [(r 43)])
+    (OPER 87 JSR []  [(s putDigit)])
+    (OPER 90 Mov [(r 44)]  [(m RetReg)])
+  )
+  (BB 24
+    (OPER 91 Jmp []  [(bb 20)])
+  )
+  (BB 6
+    (OPER 23 Mov [(r 11)]  [(i 1000)])
+    (OPER 24 GTE [(r 12)]  [(r 1)(r 11)])
+    (OPER 25 BEQ []  [(r 12)(i 0)(bb 10)])
+  )
   (BB 11
     (OPER 26 Mov [(r 13)]  [(i 1000)])
     (OPER 27 Div_I [(r 14)]  [(r 1)(r 13)])
@@ -90,14 +127,6 @@
     (OPER 68 GTE [(r 34)]  [(r 1)(r 33)])
     (OPER 69 BEQ []  [(r 34)(i 0)(bb 22)])
   )
-  (BB 18
-    (OPER 60 Mov [(r 31)]  [(i 0)])
-    (OPER 61 Pass []  [(r 31)])
-    (OPER 62 JSR []  [(s putDigit)])
-    (OPER 65 Mov [(r 32)]  [(m RetReg)])
-  )
-  (BB 17
-  )
   (BB 21
     (OPER 70 Mov [(r 35)]  [(i 10)])
     (OPER 71 Div_I [(r 36)]  [(r 1)(r 35)])
@@ -114,35 +143,6 @@
     (OPER 92 Pass []  [(r 1)])
     (OPER 93 JSR []  [(s putDigit)])
     (OPER 96 Mov [(r 45)]  [(m RetReg)])
-  )
-  (BB 25
-    (OPER 85 Mov [(r 43)]  [(i 0)])
-    (OPER 86 Pass []  [(r 43)])
-    (OPER 87 JSR []  [(s putDigit)])
-    (OPER 90 Mov [(r 44)]  [(m RetReg)])
-  )
-  (BB 24
-  )
-  (BB 27
-    (OPER 94 Func_Exit []  [])
-    (OPER 95 Return []  [(m RetReg)])
-  )
-  (BB 15
-    (OPER 57 Mov [(r 29)]  [(i 1)])
-    (OPER 58 EQ [(r 30)]  [(r 3)(r 29)])
-    (OPER 59 BEQ []  [(r 30)(i 0)(bb 17)])
-    (OPER 66 Jmp []  [(bb 13)])
-  )
-  (BB 22
-    (OPER 82 Mov [(r 41)]  [(i 1)])
-    (OPER 83 EQ [(r 42)]  [(r 3)(r 41)])
-    (OPER 84 BEQ []  [(r 42)(i 0)(bb 24)])
-    (OPER 91 Jmp []  [(bb 20)])
-  )
-  (BB 6
-    (OPER 23 Mov [(r 11)]  [(i 1000)])
-    (OPER 24 GTE [(r 12)]  [(r 1)(r 11)])
-    (OPER 25 BEQ []  [(r 12)(i 0)(bb 10)])
     (OPER 97 Jmp []  [(bb 4)])
   )
 )
@@ -276,18 +276,6 @@
   )
   (BB 25
   )
-  (BB 29
-    (OPER 139 Mov [(r 69)]  [(i 2)])
-    (OPER 140 Mov [(r 6)]  [(r 69)])
-  )
-  (BB 28
-  )
-  (BB 32
-    (OPER 144 Mov [(r 72)]  [(i 10)])
-    (OPER 145 Mov [(r 6)]  [(r 72)])
-  )
-  (BB 31
-  )
   (BB 22
     (OPER 154 Mov [(r 75)]  [(i 10)])
     (OPER 155 EQ [(r 76)]  [(r 6)(r 75)])
@@ -338,12 +326,24 @@
     (OPER 141 Mov [(r 70)]  [(i 0)])
     (OPER 142 EQ [(r 71)]  [(r 5)(r 70)])
     (OPER 143 BEQ []  [(r 71)(i 0)(bb 33)])
+  )
+  (BB 32
+    (OPER 144 Mov [(r 72)]  [(i 10)])
+    (OPER 145 Mov [(r 6)]  [(r 72)])
+  )
+  (BB 31
     (OPER 149 Jmp []  [(bb 28)])
   )
   (BB 27
     (OPER 136 Mov [(r 67)]  [(i 0)])
     (OPER 137 EQ [(r 68)]  [(r 4)(r 67)])
     (OPER 138 BEQ []  [(r 68)(i 0)(bb 30)])
+  )
+  (BB 29
+    (OPER 139 Mov [(r 69)]  [(i 2)])
+    (OPER 140 Mov [(r 6)]  [(r 69)])
+  )
+  (BB 28
     (OPER 150 Jmp []  [(bb 25)])
   )
   (BB 24

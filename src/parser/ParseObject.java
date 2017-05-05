@@ -1,7 +1,6 @@
 package parser;
 
 import java.io.PrintStream;
-import lowlevel.CodeItem;
 
 /**
  * Interface for any AST objects from the parser

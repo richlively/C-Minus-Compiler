@@ -35,11 +35,13 @@ public class VarDecl extends Declaration {
 
     @Override
     public CodeItem genLLCode() {
+        //create the variable and adds to the global symbol table
         boolean isNotArray = (n == null);
         Data retval;
         if (isNotArray) {
             retval = new Data(TYPE_INT, id);
         } else {
+            //arrays not supported elsewhere in project
             retval = new Data(TYPE_INT, id, true, n.getNum());
         }
         globalHash.put(id, retval);

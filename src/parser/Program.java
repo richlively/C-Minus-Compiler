@@ -30,7 +30,7 @@ public class Program implements ParseObject {
             head = decls.get(0).genLLCode();
             tail = head;
         } else {
-            //If we don't have the first one, no reason to continue
+            //no decls - return null
             return null;
         }
         for(int i = 1; i < decls.size(); i++){

@@ -1,7 +1,6 @@
 package parser;
 
 import java.io.PrintStream;
-import lowlevel.CodeItem;
 import lowlevel.Function;
 import lowlevel.LowLevelException;
 import lowlevel.Operand;
@@ -11,8 +10,10 @@ public class BinaryExp extends Expression {
     
     @Override
     public int genLLCode(Function fun, CompoundStmt cs) {
+        //generate the left and right hand sides
         int leftreg = left.genLLCode(fun, cs);
         int rightreg = right.genLLCode(fun, cs);
+        //convert op enum to llop enum
         Operation.OperationType lloptype;
         switch (optype){
             case PLUS:
@@ -48,13 +49,16 @@ public class BinaryExp extends Expression {
             default:
                 throw new LowLevelException("Error; invalid Optype");
         }
+        //generate the relop
         Operation oper = new Operation(lloptype, fun.getCurrBlock());
         
         oper.setSrcOperand(1, new Operand(Operand.OperandType.REGISTER, rightreg));
         oper.setSrcOperand(0, new Operand(Operand.OperandType.REGISTER, leftreg));
         Operand retoper = new Operand(Operand.OperandType.REGISTER, fun.getNewRegNum());
         oper.setDestOperand(0, retoper);
+        
         fun.getCurrBlock().appendOper(oper);
+        //return the destination reg num
         return (int) retoper.getValue();
     }
 

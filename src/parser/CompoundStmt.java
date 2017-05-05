@@ -9,6 +9,7 @@ public class CompoundStmt extends Statement {
 
     private final ArrayList<VarDecl> localdecls;
     private final ArrayList<Statement> stmtlist;
+    //used for scope
     private final HashMap symbolTable;
 
     public CompoundStmt(ArrayList<VarDecl> d, ArrayList<Statement> s) {
