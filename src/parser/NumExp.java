@@ -30,10 +30,9 @@ public class NumExp extends Expression {
     public int genLLCode(Function fun) {
         int i = fun.getNewRegNum();
         Operand opand = new Operand(Operand.OperandType.INTEGER, num);
-        Operand opand2 = new Operand(Operand.OperandType.REGISTER, i);
         Operation oper = new Operation(Operation.OperationType.ASSIGN, fun.getCurrBlock());
         oper.setSrcOperand(0, opand);
-        oper.setDestOperand(0, opand2);
+        fun.getCurrBlock().appendOper(oper);
         return i;
     }
 }
