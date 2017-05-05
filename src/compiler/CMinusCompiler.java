@@ -64,11 +64,12 @@ public class CMinusCompiler implements Compiler {
             if (genX64Code) {
                 X64CodeGenerator x64gen = new X64CodeGenerator(lowLevelCode);
                 x64gen.convertToX64();
+                fileName = filePrefix + ".x64";
             } else {
                 X86CodeGenerator x86gen = new X86CodeGenerator(lowLevelCode);
                 x86gen.convertToX86();
+                fileName = filePrefix + ".x86";
             }
-            fileName = filePrefix + ".x86";
             outFile
                     = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
             lowLevelCode.printLLCode(outFile);
