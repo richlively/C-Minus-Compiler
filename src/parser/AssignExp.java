@@ -36,10 +36,10 @@ public class AssignExp extends Expression {
         int e = exp.genLLCode(fun, cs);
         if (CMinusCompiler.globalHash.containsKey(varid)) {
             Operation oper = new Operation(Operation.OperationType.STORE_I, fun.getCurrBlock());
-            Operand src = new Operand(Operand.OperandType.REGISTER, e);
-            Operand dest = new Operand(Operand.OperandType.STRING, varid);
-            oper.setSrcOperand(0, src);
-            oper.setDestOperand(0, dest);
+            Operand src0 = new Operand(Operand.OperandType.REGISTER, e);
+            Operand src1 = new Operand(Operand.OperandType.STRING, varid);
+            oper.setSrcOperand(0, src0);
+            oper.setSrcOperand(1, src1);
             fun.getCurrBlock().appendOper(oper);
             return e;
         } else {

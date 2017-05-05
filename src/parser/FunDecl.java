@@ -37,11 +37,11 @@ public class FunDecl extends Declaration {
             String pname = holder.id;
             head = new FuncParam(typer, pname);
             tail = head;
-            fun.setFirstParam(head);
+            
             fun.getTable().put(pname, fun.getNewRegNum());
         } else {
-            head = null;
-            tail = null;
+            head = new FuncParam();
+            tail = head;
         }
         for (int i = 1; i < params.size(); i++) {
             Param holder = params.get(i);
@@ -56,7 +56,7 @@ public class FunDecl extends Declaration {
             tail = tail.getNextParam();
             fun.getTable().put(pname, fun.getNewRegNum());
         }
-
+        fun.setFirstParam(head);
         fun.createBlock0();
         BasicBlock b = new BasicBlock(fun);
         fun.appendBlock(b);

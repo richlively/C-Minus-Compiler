@@ -41,6 +41,7 @@ public class CallExp extends Expression {
             Operation oper = new Operation(Operation.OperationType.PASS, fun.getCurrBlock());
             Operand opand1 = new Operand(Operand.OperandType.REGISTER, regNum);
             oper.setSrcOperand(0, opand1);
+            oper.addAttribute(new Attribute("PARAM_NUM", Integer.toString(i)));
             fun.getCurrBlock().appendOper(oper);
         }
         

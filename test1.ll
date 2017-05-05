@@ -18,7 +18,7 @@
     (OPER 15 Mov [(r 6)]  [(r 13)])
   )
   (BB 4
-    (OPER 16 BEQ []  [])
+    (OPER 16 BEQ []  [(r 10)(i 0)(bb 5)])
   )
   (BB 5
     (OPER 17 Mov [(r 14)]  [(i 0)])

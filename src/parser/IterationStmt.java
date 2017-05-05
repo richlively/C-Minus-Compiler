@@ -50,9 +50,9 @@ public class IterationStmt extends Statement {
         stmt.genLLCode(fun, cs);
         
         Operation booloper2 = new Operation(Operation.OperationType.BEQ, mainpart);
-        booloper.setSrcOperand(0, oper1);
-        booloper.setSrcOperand(1, oper2);
-        booloper.setSrcOperand(2, oper3);
+        booloper2.setSrcOperand(0, oper1);
+        booloper2.setSrcOperand(1, oper2);
+        booloper2.setSrcOperand(2, oper3);
         
         mainpart.appendOper(booloper2);
         
