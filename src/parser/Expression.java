@@ -1,13 +1,19 @@
 package parser;
 
-import lowlevel.CodeItem;
 import lowlevel.Function;
 
 public abstract class Expression implements ParseObject{
 
-    public int genLLCode(Function fun) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Integer register;
+    
+    public Integer getRegister() {
+        return register;
     }
+    
+    public void setRegister(Integer r) {
+        register = r;
+    }
+    
     protected enum type{
         VAR,NUM,BINARY,CALL,ASSIGN
     }
@@ -17,5 +23,7 @@ public abstract class Expression implements ParseObject{
     Expression(Expression.type t){
         kind = t;
     }
+    
+    public abstract int genLLCode(Function fun);
 }
 

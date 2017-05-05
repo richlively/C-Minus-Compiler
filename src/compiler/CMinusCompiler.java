@@ -30,6 +30,7 @@ public class CMinusCompiler implements Compiler {
         return genX64Code;
     }
 
+    @Override
     public void compile(String filePrefix) {
 
         String fileName = filePrefix + ".c";

@@ -40,7 +40,7 @@ public class CallExp extends Expression {
         
         for (int i = arglist.size() - 1; i >= 0; i--){
             //How do we get the parameter's register numbers?
-            int regNum = arglist.get(i).getRegNum();
+            int regNum = arglist.get(i).getRegister();
             Operation oper = new Operation(Operation.OperationType.PASS, fun.getCurrBlock());
             Operand opand1 = new Operand(Operand.OperandType.REGISTER, regNum);
             oper.setSrcOperand(0, opand1);
@@ -49,7 +49,8 @@ public class CallExp extends Expression {
         
         
         //we want to return the value where the function stores the data after it's done.
-        return ;
+        //TODO: uninitialized
+        return -1;
     }
 
 }

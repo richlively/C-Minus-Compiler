@@ -5,9 +5,14 @@ import lowlevel.Function;
 
 public abstract class Statement implements ParseObject {
     
+    Integer register;
     
-    public void genLLCode(Function fun) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Integer getRegister() {
+        return register;
+    }
+    
+    public void setRegister(Integer r) {
+        register = r;
     }
 
     public enum type {
@@ -19,4 +24,6 @@ public abstract class Statement implements ParseObject {
         kind = t;
     }
 
+    public abstract void genLLCode(Function fun);
+    
 }

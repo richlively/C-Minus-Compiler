@@ -1,7 +1,6 @@
 package parser;
 
 import java.io.PrintStream;
-import lowlevel.CodeItem;
 import lowlevel.Function;
 
 public class AssignExp extends Expression {
@@ -28,7 +27,6 @@ public class AssignExp extends Expression {
         exp.print(out, indent + 1);
     }
     
-    @Override
     public int genLLCode(Function fun) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
