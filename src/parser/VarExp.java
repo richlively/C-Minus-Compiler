@@ -25,6 +25,10 @@ public class VarExp extends Expression {
     public VarExp(String i) {
         this(i, null);
     }
+    
+    public String getID(){
+        return id;
+    }
 
     @Override
     public void print(PrintStream out, int indent) {

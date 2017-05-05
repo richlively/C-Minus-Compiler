@@ -2,10 +2,7 @@ package parser;
 
 import java.io.PrintStream;
 import lowlevel.BasicBlock;
-import lowlevel.CodeItem;
 import lowlevel.Function;
-import lowlevel.Operand;
-import lowlevel.Operation;
 
 public class ReturnStmt extends Statement {
 
