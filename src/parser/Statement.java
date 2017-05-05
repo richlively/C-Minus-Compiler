@@ -1,11 +1,11 @@
 package parser;
 
-import lowlevel.CodeItem;
 import lowlevel.Function;
 
 public abstract class Statement implements ParseObject {
     
-    Integer register;
+    private Integer register;
+    private ParseObject parent;
     
     public Integer getRegister() {
         return register;
@@ -13,6 +13,14 @@ public abstract class Statement implements ParseObject {
     
     public void setRegister(Integer r) {
         register = r;
+    }
+    
+    public ParseObject getParent() {
+        return parent;
+    }
+    
+    public void setParent(ParseObject po) {
+        parent = po;
     }
 
     public enum type {
@@ -22,6 +30,8 @@ public abstract class Statement implements ParseObject {
 
     Statement(Statement.type t) {
         kind = t;
+        register = null;
+        parent = null;
     }
 
     public abstract void genLLCode(Function fun);

@@ -535,7 +535,9 @@ public class CMinusParser implements Parser {
         Expression e = parseExp();
         matchToken(Token.TokenType.RIGHTPAREN);
         Statement s = parseStmt();
-        return new IterationStmt(e, s);
+        IterationStmt is = new IterationStmt(e, s);
+        s.setParent(is);
+        return is;
     }
 
     /**
@@ -547,7 +549,11 @@ public class CMinusParser implements Parser {
         ArrayList<VarDecl> localDecls = parseLocalDecls();
         ArrayList<Statement> stmtList = parseStmtList();
         matchToken(Token.TokenType.RIGHTCURLY);
-        return new CompoundStmt(localDecls, stmtList);
+        CompoundStmt cs = new CompoundStmt(localDecls, stmtList);
+        for (Statement s : stmtList) {
+            s.setParent(cs);
+        }
+        return cs;
     }
 
     /**
@@ -572,7 +578,9 @@ public class CMinusParser implements Parser {
     public ReturnStmt parseReturnStmt() throws IOException {
         matchToken(Token.TokenType.RETURN);
         ExpressionStmt e = parseEStmt();
-        return new ReturnStmt(e);
+        ReturnStmt rs = new ReturnStmt(e);
+        e.setParent(rs);
+        return rs;
     }
 
     /**
@@ -586,11 +594,16 @@ public class CMinusParser implements Parser {
         matchToken(Token.TokenType.RIGHTPAREN);
         Statement ifstmt = parseStmt();
         if (null != scan.viewNextToken().viewType()) {
+            SelectStmt ss;
             switch (scan.viewNextToken().viewType()) {
                 //[else stmt]
                 case ELSE:
                     matchToken(Token.TokenType.ELSE);
-                    return new SelectStmt(exp, ifstmt, parseStmt());
+                    Statement elsestmt = parseStmt();
+                    ss = new SelectStmt(exp, ifstmt, elsestmt);
+                    ifstmt.setParent(ss);
+                    elsestmt.setParent(ss);
+                    return ss;
                 // no else
                 case RIGHTCURLY:
                 case NUM:
@@ -598,7 +611,9 @@ public class CMinusParser implements Parser {
                 case ID:
                 case WHILE:
                 case RETURN:
-                    return new SelectStmt(exp, ifstmt);
+                    ss = new SelectStmt(exp, ifstmt);
+                    ifstmt.setParent(ss);
+                    return ss;
                 default:
                     throw new CMinusParseException("Error parsing "
                             + "SelectStmt: Expected ELSE or }");
@@ -709,7 +724,9 @@ public class CMinusParser implements Parser {
         ArrayList<Param> params = parseParamList();
         matchToken(Token.TokenType.RIGHTPAREN);
         CompoundStmt cs = parseCompStmt();
-        return new FunDecl(id, cs, params, type);
+        FunDecl fd = new FunDecl(id, cs, params, type);
+        cs.setParent(fd);
+        return fd;
     }
 
     private ArrayList<VarDecl> parseLocalDecls() throws IOException {
