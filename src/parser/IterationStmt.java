@@ -27,12 +27,8 @@ public class IterationStmt extends Statement {
         stmt.print(out, indent + 1);
     }
 
-    public CodeItem genLLCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public void genLLCode(Function fun) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 }
