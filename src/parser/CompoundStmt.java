@@ -2,10 +2,6 @@ package parser;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import lowlevel.Attribute;
-import lowlevel.CodeItem;
 import lowlevel.Function;
 
 public class CompoundStmt extends Statement {

@@ -2,7 +2,6 @@ package parser;
 
 import compiler.CMinusCompiler;
 import java.io.PrintStream;
-import lowlevel.CodeItem;
 import lowlevel.Function;
 import lowlevel.Operand;
 import lowlevel.Operation;
