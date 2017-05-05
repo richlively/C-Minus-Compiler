@@ -2,13 +2,11 @@ package parser;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import lowlevel.BasicBlock;
 import lowlevel.CodeItem;
+import lowlevel.Data;
 import lowlevel.FuncParam;
 import lowlevel.Function;
-import lowlevel.Operand;
-import lowlevel.Operation;
 
 public class FunDecl extends Declaration {
 
@@ -18,9 +16,9 @@ public class FunDecl extends Declaration {
         //get function stuff
         int t;
         if (kind == type.VOID) {
-            t = 0;
+            t = Data.TYPE_VOID;
         } else {
-            t = 1;
+            t = Data.TYPE_INT;
         }
         String name = id;
 
@@ -32,9 +30,9 @@ public class FunDecl extends Declaration {
             Param holder = params.get(0);
             int typer;
             if (holder.isVoid()) {
-                typer = 0;
+                typer = Data.TYPE_VOID;
             } else {
-                typer = 1;
+                typer = Data.TYPE_INT;
             }
             String pname = holder.id;
             head = new FuncParam(typer, pname);
@@ -49,9 +47,9 @@ public class FunDecl extends Declaration {
             Param holder = params.get(i);
             int typer;
             if (holder.isVoid()) {
-                typer = 0;
+                typer = Data.TYPE_VOID;
             } else {
-                typer = 1;
+                typer = Data.TYPE_INT;
             }
             String pname = holder.id;
             tail.setNextParam(new FuncParam(typer, pname));
