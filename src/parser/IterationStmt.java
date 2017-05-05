@@ -51,9 +51,9 @@ public class IterationStmt extends Statement {
         stmt.genLLCode(fun, cs);
         
         expreg = exp.genLLCode(fun, cs);
-        Operation booloper2 = new Operation(Operation.OperationType.BEQ, fun.getCurrBlock());
+        Operation booloper2 = new Operation(Operation.OperationType.BNE, fun.getCurrBlock());
         oper1 = new Operand(Operand.OperandType.REGISTER, expreg);
-        oper2 = new Operand(Operand.OperandType.INTEGER, 1);
+        oper2 = new Operand(Operand.OperandType.INTEGER, 0);
         oper3 = new Operand(Operand.OperandType.BLOCK, mainpart.getBlockNum());
         booloper2.setSrcOperand(0, oper1);
         booloper2.setSrcOperand(1, oper2);

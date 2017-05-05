@@ -1,0 +1,36 @@
+(FUNCTION  main  [(void )]
+  (BB 2
+    (OPER 3 Func_Entry []  [])
+  )
+  (BB 3
+    (OPER 4 Mov [(r 3)]  [(i 0)])
+    (OPER 5 Mov [(r 2)]  [(r 3)])
+    (OPER 6 Mov [(r 4)]  [(i 10)])
+    (OPER 7 LT [(r 5)]  [(r 2)(r 4)])
+    (OPER 8 BEQ []  [(r 5)(i 0)(bb 5)])
+  )
+  (BB 4
+    (OPER 9 Mov [(r 6)]  [(i 65)])
+    (OPER 10 Pass []  [(r 6)])
+    (OPER 11 JSR []  [(s putchar)])
+    (OPER 14 Mov [(r 7)]  [(m RetReg)])
+    (OPER 15 Mov [(r 8)]  [(i 1)])
+    (OPER 16 Add_I [(r 9)]  [(r 2)(r 8)])
+    (OPER 17 Mov [(r 2)]  [(r 9)])
+    (OPER 18 Mov [(r 10)]  [(i 10)])
+    (OPER 19 LT [(r 11)]  [(r 2)(r 10)])
+    (OPER 20 BNE []  [(r 11)(i 0)(bb 4)])
+  )
+  (BB 5
+    (OPER 21 Mov [(r 12)]  [(i 66)])
+    (OPER 22 Pass []  [(r 12)])
+    (OPER 23 JSR []  [(s putchar)])
+    (OPER 26 Mov [(r 13)]  [(m RetReg)])
+    (OPER 27 Mov [(r 14)]  [(i 0)])
+    (OPER 28 Mov [(m RetReg)]  [(r 14)])
+  )
+  (BB 8
+    (OPER 29 Func_Exit []  [])
+    (OPER 30 Return []  [(m RetReg)])
+  )
+)

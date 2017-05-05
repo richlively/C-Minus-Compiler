@@ -1,0 +1,36 @@
+(FUNCTION  main  [(void )]
+  (BB 2
+    (OPER 31 Mov [(r 1)]  [(m EDI)])
+  )
+  (BB 3
+    (OPER 4 Mov [(r 3)]  [(i 0)])
+    (OPER 5 Mov [(r 2)]  [(r 3)])
+    (OPER 6 Mov [(r 4)]  [(i 10)])
+    (OPER 32 Cmp [(m Flags)]  [(r 2)(r 4)])
+    (OPER 33 BGE []  [(bb 5)(m Flags)])
+  )
+  (BB 4
+    (OPER 9 Mov [(r 6)]  [(i 65)])
+    (OPER 34 Mov [(m EDI)]  [(r 6)])
+    (OPER 11 JSR []  [(s putchar)(m EDI)])
+    (OPER 14 Mov [(r 7)]  [(m EAX)])
+    (OPER 15 Mov [(r 8)]  [(i 1)])
+    (OPER 35 Mov [(r 9)]  [(r 2)])
+    (OPER 16 Add_I [(r 9)]  [(r 9)(r 8)])
+    (OPER 17 Mov [(r 2)]  [(r 9)])
+    (OPER 18 Mov [(r 10)]  [(i 10)])
+    (OPER 36 Cmp [(m Flags)]  [(r 2)(r 10)])
+    (OPER 37 BLT []  [(bb 4)(m Flags)])
+  )
+  (BB 5
+    (OPER 21 Mov [(r 12)]  [(i 66)])
+    (OPER 38 Mov [(m EDI)]  [(r 12)])
+    (OPER 23 JSR []  [(s putchar)(m EDI)])
+    (OPER 26 Mov [(r 13)]  [(m EAX)])
+    (OPER 27 Mov [(r 14)]  [(i 0)])
+    (OPER 28 Mov [(m EAX)]  [(r 14)])
+  )
+  (BB 8
+    (OPER 30 Return []  [(m EAX)])
+  )
+)

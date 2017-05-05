@@ -1,0 +1,46 @@
+(FUNCTION  fact  [(int x)]
+  (BB 2
+    (OPER 23 Mov [(r 1)]  [(m EDI)])
+  )
+  (BB 3
+    (OPER 4 Mov [(r 2)]  [(i 1)])
+    (OPER 24 Cmp [(m Flags)]  [(r 1)(r 2)])
+    (OPER 25 BLE []  [(bb 6)(m Flags)])
+  )
+  (BB 5
+    (OPER 7 Mov [(r 4)]  [(i 1)])
+    (OPER 26 Mov [(r 5)]  [(r 1)])
+    (OPER 8 Sub_I [(r 5)]  [(r 5)(r 4)])
+    (OPER 27 Mov [(m EDI)]  [(r 5)])
+    (OPER 28 Mov [(m EAX)]  [(r 1)])
+    (OPER 14 Mul [(m EAX)(m EDX)]  [(m EAX)(r 6)])
+    (OPER 29 Mov [(r 7)]  [(m EAX)])
+    (OPER 15 Mov [(m EAX)]  [(r 7)])
+  )
+  (BB 9
+    (OPER 21 Return []  [(m EAX)])
+  )
+  (BB 6
+    (OPER 18 Mov [(r 8)]  [(i 1)])
+    (OPER 19 Mov [(m EAX)]  [(r 8)])
+    (OPER 22 Jmp []  [(bb 9)])
+  )
+)
+(FUNCTION  main  [(void )]
+  (BB 2
+    (OPER 22 Mov [(r 1)]  [(m EDI)])
+  )
+  (BB 3
+    (OPER 8 Mov [(r 2)]  [(r 3)])
+    (OPER 9 Mov [(r 4)]  [(i 0)])
+    (OPER 23 Cmp [(m Flags)]  [(r 2)(r 4)])
+    (OPER 24 BLE []  [(bb 8)(m Flags)])
+  )
+  (BB 6
+    (OPER 25 Mov [(m EDI)]  [(r 2)])
+    (OPER 26 Mov [(m EDI)]  [(r 6)])
+  )
+  (BB 8
+    (OPER 20 Return []  [(m EAX)])
+  )
+)

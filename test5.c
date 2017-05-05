@@ -1,42 +1,19 @@
-int a;
+int x;
+int y;
+int z[5];
 
-int addThem(int d, int e) {
-  int f;
-  f = d + e;
-
-  return f;
+int add(int a[], int b, int c) {
+	int sum[5];
+	int e;
+	while (e<5){
+		sum[e]=a[e]+b+c;
+		e=e+1;
+	}
 }
 
-int main (void) {
-
-  int b;
-  int c;
-  int g;
-  int h;
-  int i;
-
-  b = 5;
-
-  if (b == 5) {
-    a = 3;
-  }
-  else {
-    a = 4;
-  }
-
-  g = 0;
-  i = 1;
-  while (i <= 8) {
-    g = g + i;
-    i = i+1;
-  }
-  h = g / 3;
-  g = h * 4;
-
-  c = addThem(a, b);
-  putchar (c+g);
-  putchar (10);
- 
-  return 0;
+void main(void) {
+	x=1;
+	y=3;
+	int w = 2;
+	add(z[5], (x-y)*w, x);
 }
-
