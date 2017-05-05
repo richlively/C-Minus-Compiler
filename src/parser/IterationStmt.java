@@ -46,10 +46,15 @@ public class IterationStmt extends Statement {
 
         fun.getCurrBlock().appendOper(booloper);
         fun.appendBlock(mainpart);
+        fun.setCurrBlock(mainpart);
         
         stmt.genLLCode(fun, cs);
         
-        Operation booloper2 = new Operation(Operation.OperationType.BEQ, mainpart);
+        expreg = exp.genLLCode(fun, cs);
+        Operation booloper2 = new Operation(Operation.OperationType.BEQ, fun.getCurrBlock());
+        oper1 = new Operand(Operand.OperandType.REGISTER, expreg);
+        oper2 = new Operand(Operand.OperandType.INTEGER, 1);
+        oper3 = new Operand(Operand.OperandType.BLOCK, mainpart.getBlockNum());
         booloper2.setSrcOperand(0, oper1);
         booloper2.setSrcOperand(1, oper2);
         booloper2.setSrcOperand(2, oper3);
