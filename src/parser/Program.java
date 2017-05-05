@@ -25,15 +25,18 @@ public class Program implements ParseObject {
     
     public CodeItem genLLCode() {
         CodeItem head;
+        CodeItem tail;
         if(decls.size() > 0){
             head = decls.get(0).genLLCode();
+            tail = head;
         } else {
             //If we don't have the first one, no reason to continue
             return null;
         }
         for(int i = 1; i < decls.size(); i++){
             CodeItem holder = decls.get(i).genLLCode();
-            head.setNextItem(holder);
+            tail.setNextItem(holder);
+            tail = tail.getNextItem();
         }
         return head;
     }
