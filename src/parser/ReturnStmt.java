@@ -26,21 +26,21 @@ public class ReturnStmt extends Statement {
         estmt.print(out, indent + 1);
     }
 
-    public CodeItem genLLCode(Function fun) {
+    @Override
+    public void genLLCode(Function fun) {
         BasicBlock curr = fun.getCurrBlock();
         Operation oper = new Operation(Operation.OperationType.RETURN, curr);
         if (estmt != null) {
-            int r = estmt.genLLCode(fun);
-            oper.setSrcOperand(0, new Operand(Operand.OperandType.REGISTER, r));
-            oper.setDestOperand(0, fun.getReturnBlock().getLastOper().getDestOperand(0));
+            estmt.genLLCode(fun);
         }
+        oper.setSrcOperand(0, new Operand(Operand.OperandType.MACRO, "RetReg"));
         curr.appendOper(oper);
         BasicBlock temp = new BasicBlock(fun);
         curr.setNextBlock(temp);
         curr = curr.getNextBlock();
         Operation oper2 = new Operation(Operation.OperationType.JMP, curr);
         temp.setFirstOper(oper2);
-        oper2.setDestOperand(0, new Operand(Operand.OperandType.BLOCK, fun.getReturnBlock()));
-        return fun;
+        //not sure what the BB target is.
+        oper2.setSrcOperand(0, new Operand(Operand.OperandType.BLOCK, temp));
     }
 }

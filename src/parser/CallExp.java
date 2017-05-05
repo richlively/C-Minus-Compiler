@@ -2,8 +2,10 @@ package parser;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Iterator;
-import lowlevel.CodeItem;
+import lowlevel.Attribute;
+import lowlevel.Function;
+import lowlevel.Operand;
+import lowlevel.Operation;
 //simple exp -> add exp -> term -> factor -> call
 
 public class CallExp extends Expression {
@@ -26,15 +28,26 @@ public class CallExp extends Expression {
             tabs += "\t";
         }
         out.println(tabs + "Call Expression: " + id);
-        for (Iterator<Expression> it = arglist.iterator(); it.hasNext();) {
-            Expression arg = it.next();
+        for (Expression arg : arglist) {
             arg.print(out, indent + 1);
         }
     }
 
     @Override
-    public CodeItem genLLCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int genLLCode(Function fun) {   
+        Operation op = new Operation(Operation.OperationType.CALL, fun.getCurrBlock());
+        op.addAttribute(new Attribute("numParams", Integer.toString(arglist.size())));
+        
+        for (int i = arglist.size() - 1; i >= 0; i--){
+            //How do we get the parameter's register numbers?
+            int regNum = arglist.get(i).getRegNum();
+            Operation oper = new Operation(Operation.OperationType.PASS, fun.getCurrBlock());
+            Operand opand1 = new Operand(Operand.OperandType.REGISTER, regNum);
+            oper.setSrcOperand(0, opand1);
+            fun.getCurrBlock().appendOper(oper);
+        }
+        
+        return 
     }
 
 }

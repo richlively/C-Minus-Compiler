@@ -42,7 +42,8 @@ public class CompoundStmt extends Statement {
         }
     }
 
-    public CodeItem genLLCode(Function fun) {
+    @Override
+    public void genLLCode(Function fun) {
         //gen local_decls
         for (Declaration decl : localdecls) {
             fun.getTable().put(decl.id, fun.getNewRegNum());
@@ -52,7 +53,5 @@ public class CompoundStmt extends Statement {
         for(Statement stmt : stmtlist){
             stmt.genLLCode(fun);
         }
-        
-        return fun;
     }
 }

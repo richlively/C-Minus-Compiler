@@ -38,6 +38,7 @@ public class VarExp extends Expression {
         }
     }
 
+    @Override
     public int genLLCode(Function fun) {
         if(fun.getTable().containsKey(id)){
             return (Integer) fun.getTable().get(id);
