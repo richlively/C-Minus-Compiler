@@ -48,6 +48,7 @@ public class CallExp extends Expression {
         Operation op = new Operation(Operation.OperationType.CALL, fun.getCurrBlock());
         op.addAttribute(new Attribute("numParams", Integer.toString(arglist.size())));
         op.setSrcOperand(0, new Operand(Operand.OperandType.STRING, id));
+        fun.getCurrBlock().appendOper(op);
         
         //pull from the RetReg and store to a normal reg.
         Operation returner = new Operation(Operation.OperationType.ASSIGN, fun.genReturnBlock());
@@ -55,6 +56,7 @@ public class CallExp extends Expression {
         Operand newreg = new Operand(Operand.OperandType.REGISTER, fun.getNewRegNum());
         returner.setSrcOperand(0, retreg);
         returner.setDestOperand(0, newreg);
+        fun.getCurrBlock().appendOper(returner);
         
         //return normal reg.
         return (Integer) newreg.getValue();
