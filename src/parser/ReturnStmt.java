@@ -29,18 +29,9 @@ public class ReturnStmt extends Statement {
     @Override
     public void genLLCode(Function fun) {
         BasicBlock curr = fun.getCurrBlock();
-        Operation oper = new Operation(Operation.OperationType.RETURN, curr);
         if (estmt != null) {
             estmt.genLLCode(fun);
         }
-        oper.setSrcOperand(0, new Operand(Operand.OperandType.MACRO, "RetReg"));
-        curr.appendOper(oper);
-        BasicBlock temp = new BasicBlock(fun);
-        curr.setNextBlock(temp);
-        curr = curr.getNextBlock();
-        Operation oper2 = new Operation(Operation.OperationType.JMP, curr);
-        temp.setFirstOper(oper2);
-        //not sure what the BB target is.
-        oper2.setSrcOperand(0, new Operand(Operand.OperandType.BLOCK, temp));
+        fun.genReturnBlock();
     }
 }

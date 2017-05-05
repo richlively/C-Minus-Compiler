@@ -34,23 +34,29 @@ public class CallExp extends Expression {
     }
 
     @Override
-    public int genLLCode(Function fun) {   
-        Operation op = new Operation(Operation.OperationType.CALL, fun.getCurrBlock());
-        op.addAttribute(new Attribute("numParams", Integer.toString(arglist.size())));
-        
+    public int genLLCode(Function fun) {
         for (int i = arglist.size() - 1; i >= 0; i--){
-            //How do we get the parameter's register numbers?
-            int regNum = arglist.get(i).getRegister();
+
+            int regNum = arglist.get(i).genLLCode(fun);
             Operation oper = new Operation(Operation.OperationType.PASS, fun.getCurrBlock());
             Operand opand1 = new Operand(Operand.OperandType.REGISTER, regNum);
             oper.setSrcOperand(0, opand1);
             fun.getCurrBlock().appendOper(oper);
         }
         
+        Operation op = new Operation(Operation.OperationType.CALL, fun.getCurrBlock());
+        op.addAttribute(new Attribute("numParams", Integer.toString(arglist.size())));
+        op.setSrcOperand(0, new Operand(Operand.OperandType.STRING, id));
         
-        //we want to return the value where the function stores the data after it's done.
-        //TODO: uninitialized
-        return -1;
+        //pull from the RetReg and store to a normal reg.
+        Operation returner = new Operation(Operation.OperationType.ASSIGN, fun.genReturnBlock());
+        Operand retreg = new Operand(Operand.OperandType.MACRO, "RetReg");
+        Operand newreg = new Operand(Operand.OperandType.REGISTER, fun.getNewRegNum());
+        returner.setSrcOperand(0, retreg);
+        returner.setDestOperand(0, newreg);
+        
+        //return normal reg.
+        return (Integer) newreg.getValue();
     }
 
 }
