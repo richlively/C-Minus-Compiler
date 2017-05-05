@@ -54,7 +54,7 @@ public class BinaryExp extends Expression {
         oper.setSrcOperand(1, new Operand(Operand.OperandType.REGISTER, leftreg));
         Operand retoper = new Operand(Operand.OperandType.REGISTER, fun.getNewRegNum());
         oper.setDestOperand(0, retoper);
-        fun.getCurrBlock().appendOper(oper);
+        fun.getLastBlock().appendOper(oper);
         return (int) retoper.getValue();
     }
 
