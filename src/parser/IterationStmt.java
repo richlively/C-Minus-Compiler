@@ -45,7 +45,7 @@ public class IterationStmt extends Statement {
         booloper.setSrcOperand(2, oper3);
 
         fun.getCurrBlock().appendOper(booloper);
-        fun.appendBlock(mainpart);
+        fun.appendToCurrentBlock(mainpart);
         fun.setCurrBlock(mainpart);
         
         stmt.genLLCode(fun, cs);
@@ -61,7 +61,7 @@ public class IterationStmt extends Statement {
         
         mainpart.appendOper(booloper2);
         
-        fun.appendBlock(post);
+        fun.appendToCurrentBlock(post);
         fun.setCurrBlock(post);
         
         return 0;

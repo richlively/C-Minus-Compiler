@@ -1,4 +1,4 @@
-int main() {
+int main(void) {
 	int i;
 	int j;
 	int k;
@@ -14,4 +14,5 @@ int main() {
 	else {
 		putchar(67);
 	}
+	putchar(68);
 }

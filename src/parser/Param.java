@@ -1,7 +1,6 @@
 package parser;
 
 import java.io.PrintStream;
-import lowlevel.CodeItem;
 
 public class Param implements ParseObject {
 
@@ -51,9 +50,5 @@ public class Param implements ParseObject {
             }
         }
         out.println();
-    }
-
-    public CodeItem genLLCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

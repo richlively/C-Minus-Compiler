@@ -64,12 +64,12 @@ public class SelectStmt extends Statement {
 
         fun.getCurrBlock().appendOper(booloper);
 
-        fun.appendBlock(thenpart);
+        fun.appendToCurrentBlock(thenpart);
         fun.setCurrBlock(thenpart);
 
         ifstmt.genLLCode(fun, cs);
 
-        fun.appendBlock(postpart);
+        fun.appendToCurrentBlock(postpart);
 
         if (elsestmt != null) {
             fun.setCurrBlock(elsepart);
